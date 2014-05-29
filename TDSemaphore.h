@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Todd Ditchendorf. All rights reserved.
 //
 
-#import "TDLocking.h"
+#import "TDSync.h"
 
-@interface TDSemaphore : NSObject <TDLocking>
+@interface TDSemaphore : NSObject <TDSync>
 
 + (instancetype)semaphoreWithValue:(NSInteger)value;
 - (instancetype)initWithValue:(NSInteger)value;

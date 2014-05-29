@@ -7,7 +7,7 @@
 //
 
 #import "TDSynchronousChannel.h"
-#import "TDLocking.h"
+#import "TDSync.h"
 #import "TDSemaphore.h"
 
 @interface TDSynchronousChannel ()
