@@ -7,7 +7,7 @@ Semaphores allow you to vend a desired number of permits accross multiple thread
 
 For example, you may have a pool of a limited number of resources you'd like to vend accross multiple threads. A semaphore can help you do this in a thread-safe manner.
 
-####Creation
+####Create
 
 Create a semaphore with 7 available permits:
 
@@ -45,7 +45,7 @@ Synchronous channels allow two threads to rendezvous while one thread passes an 
 
 So if you have a thread which cannot continue execution until it is guaranteed to have successfully passed an object to another thread, a synchronous channel can help.
 
-####Creation
+####Create
 
 Create a synchronous channel:
 
