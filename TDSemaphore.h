@@ -1,6 +1,6 @@
 //
 //  TDSemaphore.h
-//  Panthro
+//  Thread Utils
 //
 //  Created by Todd Ditchendorf on 5/31/13.
 //  Copyright (c) 2013 Todd Ditchendorf. All rights reserved.

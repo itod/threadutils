@@ -1,6 +1,6 @@
 //
 //  TDSynchronousChannel.h
-//  Panthro
+//  Thread Utils
 //
 //  Created by Todd Ditchendorf on 5/19/14.
 //
