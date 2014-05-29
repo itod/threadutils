@@ -42,22 +42,22 @@
 
 
 - (void)put:(id)obj {
-    NSAssert(_putPermit), @"");
-    NSAssert(_takePermit), @"");
+    NSAssert(_putPermit, @"");
+    NSAssert(_takePermit, @"");
 
     [_putPermit acquire];
-    NSAssert(!_item), @"");
+    NSAssert(!_item, @"");
     self.item = obj;
     [_takePermit relinquish];
 }
 
 
 - (id)take {
-    NSAssert(_putPermit), @"");
-    NSAssert(_takePermit), @"");
+    NSAssert(_putPermit, @"");
+    NSAssert(_takePermit, @"");
     
     [_takePermit acquire];
-    NSAssert(_item), @"");
+    NSAssert(_item, @"");
     id obj = [[_item retain] autorelease];
     self.item = nil;
     [_putPermit relinquish];
