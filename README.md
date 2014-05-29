@@ -5,7 +5,7 @@ Some Cocoa Thread Utilities
 
 Semaphores allow you to vend a desired number of permits accross multiple threads in a thread-safe manner. 
 
-For example, you may have a pool of a limited number of resources you'd like to vend accross multiple threads. A semaphore can help you do this in a thread-safe manner.
+For example, you may have a pool of a limited number of resources you'd like to vend accross multiple threads. A semaphore can help you do this.
 
 ####Create
 
