@@ -51,6 +51,8 @@ Create a synchronous channel:
 
     TDSynchronousChannel *chan = [TDSynchronousChannel synchronousChannel];
 
+####Give
+
 The "giver" thread should call `-put:`, which will block until another thread has successfully taken the object:
 
     // on "giver" thread
@@ -59,6 +61,7 @@ The "giver" thread should call `-put:`, which will block until another thread ha
     
     [chan put:obj]; // blocks until `obj` taken by another thread
 
+####Take
 The "taker" thread should call `-take`, which will block until another thread has given an object to be taken:
 
     // on "taker" thread
