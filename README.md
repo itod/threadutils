@@ -1,4 +1,4 @@
-threadutils
+Some Cocoa Thread Utilities
 ===========
 
-Cocoa Thread Utilities
+
