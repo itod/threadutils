@@ -42,12 +42,14 @@
 
 
 - (void)put:(id)obj {
+    NSParameterAssert(obj);
     NSAssert(_putPermit, @"");
     NSAssert(_takePermit, @"");
 
     [_putPermit acquire];
     NSAssert(!_item, @"");
     self.item = obj;
+    NSAssert(_item, @"");
     [_takePermit relinquish];
 }
 
@@ -62,6 +64,7 @@
     self.item = nil;
     [_putPermit relinquish];
 
+    NSAssert(obj, @"");
     return obj;
 }
 
