@@ -1,6 +1,6 @@
-//
 //  TDSync.h
-//  Thread Utils
+//  ThreadUtils
+//
 //
 //  Created by Todd Ditchendorf on 5/19/14.
 //
@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol TDSync <NSObject>
+@interface TDSync : NSObject
 
-- (void)acquire;
-- (void)relinquish;
++ (instancetype)sync;
+
+- (id)awaitPause;
+- (void)pauseWithInfo:(id)info;
+
+- (id)awaitResume;
+- (void)resumeWithInfo:(id)info;
 @end
-
