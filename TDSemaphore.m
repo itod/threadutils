@@ -7,7 +7,6 @@
 //
 
 #import "TDSemaphore.h"
-#import "TDSync.h"
 
 @interface TDSemaphore ()
 - (void)lock;
