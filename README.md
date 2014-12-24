@@ -69,3 +69,5 @@ The "taker" thread should call `-take`, which will block until another thread ha
     id obj = [chan take]; // blocks until another thread "gives"    
 
 Note that the order in which these two threads "arrive" at the rendezvous (that is, the order they call `-put:` or `-take`) does not matter. Indeed, across threads it can be difficult to define execution "order" at all. Neither thread will continue beyond the rendezvous point until the object has been successfully taken.
+
+Note that the  `-put:` and `-take` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
