@@ -15,6 +15,6 @@ FOUNDATION_EXPORT double TDThreadUtilsVersionNumber;
 FOUNDATION_EXPORT const unsigned char TDThreadUtilsVersionString[];
 
 #import <TDThreadUtils/TDSemaphore.h>
-#import <TDThreadUtils/TDSyncrhonousChannel.h>
+#import <TDThreadUtils/TDSynchronousChannel.h>
 
 
