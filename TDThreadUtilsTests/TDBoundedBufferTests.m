@@ -8,7 +8,10 @@
 
 #import "TDTest.h"
 
-#define FOOBAR @"foobar"
+#define ONE @"one"
+#define TWO @"two"
+#define THREE @"three"
+#define FOUR @"four"
 
 @interface TDBoundedBufferTests : XCTestCase
 @property (retain) TDBoundedBuffer *buff;
@@ -30,11 +33,11 @@
     [super tearDown];
 }
 
-- (void)test1With1Thread {
+- (void)test1Size1Obj1Thread {
     
     self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
-    [buff put:FOOBAR];
-    TDEqualObjects(FOOBAR, [buff take]);
+    [buff put:ONE];
+    TDEqualObjects(ONE, [buff take]);
 
     [done fulfill];
     
@@ -43,20 +46,44 @@
     }];
 }
 
-- (void)test1With2Threads {
+- (void)test1Size1Obj2Threads {
     
     self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
     
     TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
-        [buff put:FOOBAR];
+        [buff put:ONE];
     });
     
-    TDEqualObjects(FOOBAR, [buff take]);
+    TDEqualObjects(ONE, [buff take]);
     
     [done fulfill];
     
     [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
         TDNil(err);
+    }];
+}
+
+- (void)test1Size2Objs2Threads {
+    
+    self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
+    
+    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+        self.flag = YES;
+        [buff put:ONE];
+        [buff put:TWO];
+    });
+    
+    TDFalse(flag);
+    TDEqualObjects(ONE, [buff take]);
+    TDTrue(flag);
+    TDEqualObjects(TWO, [buff take]);
+    self.flag = NO;
+    
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
+        TDNil(err);
+        TDFalse(flag);
     }];
 }
 
