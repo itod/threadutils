@@ -8,6 +8,10 @@
 
 #import "TDTest.h"
 
+@interface TDSemaphore ()
+@property (assign) NSInteger value;
+@end
+
 @interface TDSemaphoreTests : XCTestCase
 @property (nonatomic, retain) TDSemaphore *sem;
 @end
@@ -27,7 +31,8 @@
 - (void)test1Permit {
     self.sem = [TDSemaphore semaphoreWithValue:1];
     
-    TDTrue(YES);
+    [sem acquire];
+    TDEquals(0, sem.value);
 }
 
 @synthesize sem=sem;

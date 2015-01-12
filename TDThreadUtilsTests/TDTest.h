@@ -16,3 +16,4 @@
 #define TDNotNil(e) XCTAssertNotNil((e), @"")
 #define TDEquals(e1, e2) XCTAssertEqual((e1), (e2), @"")
 #define TDEqualObjects(e1, e2) XCTAssertEqualObjects((e1), (e2), @"")
+#define TDFail() XCTFail(@"")
