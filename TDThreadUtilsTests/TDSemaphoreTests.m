@@ -6,27 +6,25 @@
 //  Copyright (c) 2015 Todd Ditchendorf. All rights reserved.
 //
 
-#import "TDTest.h"
+#import "TDBaseTestCase.h"
 
 @interface TDSemaphore ()
 @property (assign) NSInteger value;
 @end
 
-@interface TDSemaphoreTests : XCTestCase
+@interface TDSemaphoreTests : TDBaseTestCase
 @property (retain) TDSemaphore *sem;
-@property (retain) XCTestExpectation *done;
 @end
 
 @implementation TDSemaphoreTests
 
 - (void)setUp {
     [super setUp];
-    self.done = [self expectationWithDescription:@"done"];
+    // here
 }
 
 - (void)tearDown {
     self.sem = nil;
-    self.done = nil;
     [super tearDown];
 }
 
@@ -38,7 +36,7 @@
     [sem acquire];
     TDEquals(0, sem.value);
     
-    TDPerformOnMainThreadAfterDelay(0.1, ^{
+    TDAtomicInBackground(0.1, ^{
         TDEquals(0, sem.value);
         [sem relinquish];
         TDEquals(1, sem.value);
@@ -61,7 +59,7 @@
     [sem acquire];
     TDEquals(0, sem.value);
     
-    TDPerformOnMainThreadAfterDelay(0.1, ^{
+    TDAtomicInBackground(0.1, ^{
         TDEquals(0, sem.value);
         [sem relinquish];
         TDEquals(1, sem.value);
@@ -88,7 +86,7 @@
     [sem acquire];
     TDEquals(0, sem.value);
     
-    TDPerformOnMainThreadAfterDelay(0.1, ^{
+    TDAtomicInBackground(0.1, ^{
         TDEquals(0, sem.value);
         [sem relinquish];
         TDEquals(1, sem.value);
@@ -105,30 +103,31 @@
     }];
 }
 
+// this is timing dependent. fix.
 - (void)test2Permits3Threads {
     
     self.sem = [TDSemaphore semaphoreWithValue:2];
     TDEquals(2, sem.value);
     
-    TDPerformOnBackgroundThread(^{
+    TDAtomicInBackground(0.1, ^{
         [sem acquire];
         TDTrue(sem.value < 2);
     });
-    TDPerformOnBackgroundThread(^{
+    TDAtomicInBackgroundNow(^{
         [sem acquire];
         TDTrue(sem.value < 2);
     });
     
-    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
+    TDAtomicInBackground(0.1, ^{
         [sem relinquish];
         TDTrue(sem.value > 0 && sem.value <= 2);
     });
-    TDPerformOnBackgroundThreadAfterDelay(0.2, ^{
+    TDAtomicInBackground(0.2, ^{
         [sem relinquish];
         TDTrue(sem.value > 0 && sem.value <= 2);
     });
     
-    TDPerformOnMainThreadAfterDelay(0.3, ^{
+    TDAtomic(0.3, ^{
         [done fulfill];
     });
 
@@ -139,5 +138,4 @@
 }
 
 @synthesize sem=sem;
-@synthesize done=done;
 @end

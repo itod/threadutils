@@ -21,6 +21,11 @@
 #define TDAssert(expr) NSAssert((expr), @"assertion failure in %s.", __PRETTY_FUNCTION__);
 #define TDCAssert(expr) NSCAssert((expr), @"assertion failure in %s.", __PRETTY_FUNCTION__);
 
+#define TDAtomicNow(block) [self performAtomic:(block)]
+#define TDAtomic(delay, block) [self performAtomic:(delay) :(block)]
+#define TDAtomicInBackgroundNow(block) [self performAtomicInBackground:(block)]
+#define TDAtomicInBackground(delay, block) [self performAtomicInBackground:(delay) :(block)]
+
 void TDPerformOnMainThread(void (^block)(void));
 void TDPerformOnBackgroundThread(void (^block)(void));
 void TDPerformOnMainThreadAfterDelay(double delay, void (^block)(void));

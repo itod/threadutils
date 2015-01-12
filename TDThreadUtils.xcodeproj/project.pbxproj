@@ -15,9 +15,10 @@
 		D3AF43761A645916005C309E /* TDBoundedBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AF43741A645916005C309E /* TDBoundedBuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3AF43771A645916005C309E /* TDBoundedBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF43751A645916005C309E /* TDBoundedBuffer.m */; };
 		D3AF437B1A645FCA005C309E /* TDBoundedBufferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF437A1A645FCA005C309E /* TDBoundedBufferTests.m */; };
+		D3AF437D1A646CFE005C309E /* TDBaseTestCase.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AF437C1A646CFE005C309E /* TDBaseTestCase.h */; };
 		D3C0C7471A641527004C8B9A /* TDThreadUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D3C0C7461A641527004C8B9A /* TDThreadUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3C0C74D1A641527004C8B9A /* TDThreadUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */; };
-		D3C0C7541A641528004C8B9A /* TDThreadUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C0C7531A641528004C8B9A /* TDThreadUtilsTests.m */; };
+		D3C0C7541A641528004C8B9A /* TDBaseTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C0C7531A641528004C8B9A /* TDBaseTestCase.m */; };
 		D3C0C7631A641609004C8B9A /* TDSemaphore.h in Headers */ = {isa = PBXBuildFile; fileRef = D3C0C75D1A641609004C8B9A /* TDSemaphore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3C0C7641A641609004C8B9A /* TDSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C0C75E1A641609004C8B9A /* TDSemaphore.m */; };
 		D3C0C7651A641609004C8B9A /* TDInterpreter.h in Headers */ = {isa = PBXBuildFile; fileRef = D3C0C75F1A641609004C8B9A /* TDInterpreter.h */; };
@@ -46,12 +47,13 @@
 		D3AF43741A645916005C309E /* TDBoundedBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBoundedBuffer.h; sourceTree = "<group>"; };
 		D3AF43751A645916005C309E /* TDBoundedBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBoundedBuffer.m; sourceTree = "<group>"; };
 		D3AF437A1A645FCA005C309E /* TDBoundedBufferTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDBoundedBufferTests.m; sourceTree = "<group>"; };
+		D3AF437C1A646CFE005C309E /* TDBaseTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBaseTestCase.h; sourceTree = "<group>"; };
 		D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TDThreadUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C0C7451A641527004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3C0C7461A641527004C8B9A /* TDThreadUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDThreadUtils.h; sourceTree = "<group>"; };
 		D3C0C74C1A641527004C8B9A /* TDThreadUtilsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TDThreadUtilsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C0C7521A641528004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D3C0C7531A641528004C8B9A /* TDThreadUtilsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TDThreadUtilsTests.m; sourceTree = "<group>"; };
+		D3C0C7531A641528004C8B9A /* TDBaseTestCase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TDBaseTestCase.m; sourceTree = "<group>"; };
 		D3C0C75D1A641609004C8B9A /* TDSemaphore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSemaphore.h; sourceTree = "<group>"; };
 		D3C0C75E1A641609004C8B9A /* TDSemaphore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSemaphore.m; sourceTree = "<group>"; };
 		D3C0C75F1A641609004C8B9A /* TDInterpreter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDInterpreter.h; sourceTree = "<group>"; };
@@ -129,7 +131,8 @@
 			children = (
 				D308DC951A64182F00767C2D /* TDTest.h */,
 				D308DC971A641AB500767C2D /* TDTest.m */,
-				D3C0C7531A641528004C8B9A /* TDThreadUtilsTests.m */,
+				D3AF437C1A646CFE005C309E /* TDBaseTestCase.h */,
+				D3C0C7531A641528004C8B9A /* TDBaseTestCase.m */,
 				D308DC9D1A643F3E00767C2D /* TDSemaphoreTests.m */,
 				D3AF437A1A645FCA005C309E /* TDBoundedBufferTests.m */,
 				D308DC931A64178000767C2D /* TDSynchronousChannelTests.m */,
@@ -158,6 +161,7 @@
 				D3C0C7651A641609004C8B9A /* TDInterpreter.h in Headers */,
 				D308DCA21A6441C100767C2D /* TDSync.h in Headers */,
 				D3C0C7471A641527004C8B9A /* TDThreadUtils.h in Headers */,
+				D3AF437D1A646CFE005C309E /* TDBaseTestCase.h in Headers */,
 				D3AF43761A645916005C309E /* TDBoundedBuffer.h in Headers */,
 				D3C0C7631A641609004C8B9A /* TDSemaphore.h in Headers */,
 			);
@@ -274,7 +278,7 @@
 				D308DC941A64178000767C2D /* TDSynchronousChannelTests.m in Sources */,
 				D308DC9E1A643F3E00767C2D /* TDSemaphoreTests.m in Sources */,
 				D308DC981A641AB500767C2D /* TDTest.m in Sources */,
-				D3C0C7541A641528004C8B9A /* TDThreadUtilsTests.m in Sources */,
+				D3C0C7541A641528004C8B9A /* TDBaseTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

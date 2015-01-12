@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Todd Ditchendorf. All rights reserved.
 //
 
-#import "TDTest.h"
+#import "TDBaseTestCase.h"
 
 #define FOOBAR @"foobar"
 
@@ -14,23 +14,19 @@
 @property (retain) id item;
 @end
 
-@interface TDSynchronousChannelTests : XCTestCase
+@interface TDSynchronousChannelTests : TDBaseTestCase
 @property (retain) TDSynchronousChannel *chan;
-@property (retain) XCTestExpectation *done;
-@property (assign) BOOL flag;
 @end
 
 @implementation TDSynchronousChannelTests
 
 - (void)setUp {
     [super setUp];
-    self.flag = NO;
-    self.done = [self expectationWithDescription:@"done"];
+    // here
 }
 
 - (void)tearDown {
     self.chan = nil;
-    self.done = nil;
     [super tearDown];
 }
 
@@ -38,10 +34,9 @@
     
     self.chan = [TDSynchronousChannel synchronousChannel];
     
-    TDPerformOnBackgroundThread(^{
+    TDAtomicInBackgroundNow(^{
         TDFalse(flag);
         self.flag = YES;
-        TDEqualObjects(FOOBAR, chan.item);
         TDEqualObjects(FOOBAR, [chan take]);
         TDNil(chan.item);
     });
@@ -64,10 +59,9 @@
     
     self.chan = [TDSynchronousChannel synchronousChannel];
     
-    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+    TDAtomicInBackground(0.5, ^{
         TDFalse(flag);
         self.flag = YES;
-        TDEqualObjects(FOOBAR, chan.item);
         TDEqualObjects(FOOBAR, [chan take]);
         TDNil(chan.item);
     });
@@ -87,6 +81,4 @@
 }
 
 @synthesize chan=chan;
-@synthesize done=done;
-@synthesize flag=flag;
 @end

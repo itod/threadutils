@@ -6,30 +6,26 @@
 //  Copyright (c) 2015 Todd Ditchendorf. All rights reserved.
 //
 
-#import "TDTest.h"
+#import "TDBaseTestCase.h"
 
 #define ONE @"one"
 #define TWO @"two"
 #define THREE @"three"
 #define FOUR @"four"
 
-@interface TDBoundedBufferTests : XCTestCase
+@interface TDBoundedBufferTests : TDBaseTestCase
 @property (retain) TDBoundedBuffer *buff;
-@property (retain) XCTestExpectation *done;
-@property (assign) BOOL flag;
 @end
 
 @implementation TDBoundedBufferTests
 
 - (void)setUp {
     [super setUp];
-    self.flag = NO;
-    self.done = [self expectationWithDescription:@"done"];
+    // here
 }
 
 - (void)tearDown {
     self.buff = nil;
-    self.done = nil;
     [super tearDown];
 }
 
@@ -50,11 +46,13 @@
     
     self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
     
-    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+    TDAtomicInBackground(0.5, ^{
         [buff put:ONE];
+        self.flag = YES;
     });
     
     TDEqualObjects(ONE, [buff take]);
+    TDTrue(flag);
     
     [done fulfill];
     
@@ -67,7 +65,7 @@
     
     self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
     
-    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+    TDAtomicInBackground(0.5, ^{
         self.flag = YES;
         [buff put:ONE];
         [buff put:TWO];
@@ -91,17 +89,16 @@
     
     self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
     
-    TDPerformOnBackgroundThread(^{
+    TDAtomicInBackgroundNow(^{
         self.flag = YES;
         [buff put:ONE];
     });
     
-    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+    TDAtomicInBackground(0.5, ^{
         self.flag = NO;
         [buff put:TWO];
     });
     
-    TDFalse(flag);
     TDEqualObjects(ONE, [buff take]);
     TDTrue(flag);
     TDEqualObjects(TWO, [buff take]);
@@ -115,7 +112,29 @@
     }];
 }
 
+- (void)test1Size2Objs4Threads {
+    
+    self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
+    
+    TDAtomicInBackgroundNow(^{
+        self.flag = YES;
+        [buff put:ONE];
+    });
+    
+    TDAtomicInBackgroundNow(^{
+        self.flag = NO;
+        [buff put:TWO];
+        TDEqualObjects(TWO, [buff take]);
+    });
+    
+    TDEqualObjects(ONE, [buff take]);
+    
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
+        TDNil(err);
+    }];
+}
+
 @synthesize buff=buff;
-@synthesize done=done;
-@synthesize flag=flag;
 @end
