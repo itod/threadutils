@@ -44,7 +44,8 @@
         [done fulfill];
     });
     
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *error) {
+    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
+        TDNil(err);
         TDEquals(1, sem.value);
     }];
 }
