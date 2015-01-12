@@ -37,16 +37,16 @@
     self.chan = [TDSynchronousChannel synchronousChannel];
     
     TDPerformOnBackgroundThread(^{
-        TDFalse(self.flag);
+        TDFalse(flag);
         self.flag = YES;
         TDEqualObjects(@"foobar", chan.item);
         TDEqualObjects(@"foobar", [chan take]);
         TDNil(chan.item);
     });
     
-    TDFalse(self.flag);
+    TDFalse(flag);
     [chan put:@"foobar"];
-    TDTrue(self.flag);
+    TDTrue(flag);
     TDEqualObjects(nil, chan.item);
     
     [done fulfill];
@@ -54,7 +54,7 @@
     [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
         TDNil(err);
         TDNil(chan.item);
-        TDTrue(self.flag);
+        TDTrue(flag);
     }];
 }
 
@@ -63,16 +63,16 @@
     self.chan = [TDSynchronousChannel synchronousChannel];
     
     TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
-        TDFalse(self.flag);
+        TDFalse(flag);
         self.flag = YES;
         TDEqualObjects(@"foobar", chan.item);
         TDEqualObjects(@"foobar", [chan take]);
         TDNil(chan.item);
     });
     
-    TDFalse(self.flag);
+    TDFalse(flag);
     [chan put:@"foobar"];
-    TDTrue(self.flag);
+    TDTrue(flag);
     TDEqualObjects(nil, chan.item);
     
     [done fulfill];
@@ -80,10 +80,11 @@
     [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
         TDNil(err);
         TDNil(chan.item);
-        TDTrue(self.flag);
+        TDTrue(flag);
     }];
 }
 
 @synthesize chan=chan;
 @synthesize done=done;
+@synthesize flag=flag;
 @end
