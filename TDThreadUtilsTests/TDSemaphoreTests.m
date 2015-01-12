@@ -14,22 +14,24 @@
 
 @interface TDSemaphoreTests : XCTestCase
 @property (nonatomic, retain) TDSemaphore *sem;
+@property (nonatomic, retain) XCTestExpectation *done;
 @end
 
 @implementation TDSemaphoreTests
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.done = [self expectationWithDescription:@"done"];
 }
 
 - (void)tearDown {
     self.sem = nil;
+    self.done = nil;
     [super tearDown];
 }
 
 - (void)test1Permit {
-    XCTestExpectation *done = [self expectationWithDescription:@"done"];
+    
     self.sem = [TDSemaphore semaphoreWithValue:1];
     
     [sem acquire];
@@ -48,4 +50,5 @@
 }
 
 @synthesize sem=sem;
+@synthesize done=done;
 @end
