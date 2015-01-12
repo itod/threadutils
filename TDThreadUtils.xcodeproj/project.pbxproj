@@ -1,0 +1,433 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D3C0C7471A641527004C8B9A /* TDThreadUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D3C0C7461A641527004C8B9A /* TDThreadUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D3C0C74D1A641527004C8B9A /* TDThreadUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */; };
+		D3C0C7541A641528004C8B9A /* TDThreadUtilsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C0C7531A641528004C8B9A /* TDThreadUtilsTests.m */; };
+		D3C0C7631A641609004C8B9A /* TDSemaphore.h in Headers */ = {isa = PBXBuildFile; fileRef = D3C0C75D1A641609004C8B9A /* TDSemaphore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D3C0C7641A641609004C8B9A /* TDSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C0C75E1A641609004C8B9A /* TDSemaphore.m */; };
+		D3C0C7651A641609004C8B9A /* TDSync.h in Headers */ = {isa = PBXBuildFile; fileRef = D3C0C75F1A641609004C8B9A /* TDSync.h */; };
+		D3C0C7661A641609004C8B9A /* TDSync.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C0C7601A641609004C8B9A /* TDSync.m */; };
+		D3C0C7671A641609004C8B9A /* TDSynchronousChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = D3C0C7611A641609004C8B9A /* TDSynchronousChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D3C0C7681A641609004C8B9A /* TDSynchronousChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = D3C0C7621A641609004C8B9A /* TDSynchronousChannel.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D3C0C74E1A641527004C8B9A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D3C0C7381A641526004C8B9A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D3C0C7401A641526004C8B9A;
+			remoteInfo = TDThreadUtils;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TDThreadUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3C0C7451A641527004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3C0C7461A641527004C8B9A /* TDThreadUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDThreadUtils.h; sourceTree = "<group>"; };
+		D3C0C74C1A641527004C8B9A /* TDThreadUtilsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TDThreadUtilsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3C0C7521A641528004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3C0C7531A641528004C8B9A /* TDThreadUtilsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TDThreadUtilsTests.m; sourceTree = "<group>"; };
+		D3C0C75D1A641609004C8B9A /* TDSemaphore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSemaphore.h; sourceTree = "<group>"; };
+		D3C0C75E1A641609004C8B9A /* TDSemaphore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSemaphore.m; sourceTree = "<group>"; };
+		D3C0C75F1A641609004C8B9A /* TDSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSync.h; sourceTree = "<group>"; };
+		D3C0C7601A641609004C8B9A /* TDSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSync.m; sourceTree = "<group>"; };
+		D3C0C7611A641609004C8B9A /* TDSynchronousChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSynchronousChannel.h; sourceTree = "<group>"; };
+		D3C0C7621A641609004C8B9A /* TDSynchronousChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSynchronousChannel.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D3C0C73D1A641526004C8B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3C0C7491A641527004C8B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3C0C74D1A641527004C8B9A /* TDThreadUtils.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D3C0C7371A641526004C8B9A = {
+			isa = PBXGroup;
+			children = (
+				D3C0C7431A641526004C8B9A /* TDThreadUtils */,
+				D3C0C7501A641527004C8B9A /* TDThreadUtilsTests */,
+				D3C0C7421A641526004C8B9A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D3C0C7421A641526004C8B9A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */,
+				D3C0C74C1A641527004C8B9A /* TDThreadUtilsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D3C0C7431A641526004C8B9A /* TDThreadUtils */ = {
+			isa = PBXGroup;
+			children = (
+				D3C0C7461A641527004C8B9A /* TDThreadUtils.h */,
+				D3C0C75D1A641609004C8B9A /* TDSemaphore.h */,
+				D3C0C75E1A641609004C8B9A /* TDSemaphore.m */,
+				D3C0C75F1A641609004C8B9A /* TDSync.h */,
+				D3C0C7601A641609004C8B9A /* TDSync.m */,
+				D3C0C7611A641609004C8B9A /* TDSynchronousChannel.h */,
+				D3C0C7621A641609004C8B9A /* TDSynchronousChannel.m */,
+				D3C0C7441A641527004C8B9A /* Supporting Files */,
+			);
+			path = TDThreadUtils;
+			sourceTree = "<group>";
+		};
+		D3C0C7441A641527004C8B9A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D3C0C7451A641527004C8B9A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D3C0C7501A641527004C8B9A /* TDThreadUtilsTests */ = {
+			isa = PBXGroup;
+			children = (
+				D3C0C7531A641528004C8B9A /* TDThreadUtilsTests.m */,
+				D3C0C7511A641528004C8B9A /* Supporting Files */,
+			);
+			path = TDThreadUtilsTests;
+			sourceTree = "<group>";
+		};
+		D3C0C7511A641528004C8B9A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D3C0C7521A641528004C8B9A /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D3C0C73E1A641526004C8B9A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3C0C7671A641609004C8B9A /* TDSynchronousChannel.h in Headers */,
+				D3C0C7651A641609004C8B9A /* TDSync.h in Headers */,
+				D3C0C7471A641527004C8B9A /* TDThreadUtils.h in Headers */,
+				D3C0C7631A641609004C8B9A /* TDSemaphore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D3C0C7401A641526004C8B9A /* TDThreadUtils */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D3C0C7571A641528004C8B9A /* Build configuration list for PBXNativeTarget "TDThreadUtils" */;
+			buildPhases = (
+				D3C0C73C1A641526004C8B9A /* Sources */,
+				D3C0C73D1A641526004C8B9A /* Frameworks */,
+				D3C0C73E1A641526004C8B9A /* Headers */,
+				D3C0C73F1A641526004C8B9A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TDThreadUtils;
+			productName = TDThreadUtils;
+			productReference = D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D3C0C74B1A641527004C8B9A /* TDThreadUtilsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D3C0C75A1A641528004C8B9A /* Build configuration list for PBXNativeTarget "TDThreadUtilsTests" */;
+			buildPhases = (
+				D3C0C7481A641527004C8B9A /* Sources */,
+				D3C0C7491A641527004C8B9A /* Frameworks */,
+				D3C0C74A1A641527004C8B9A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D3C0C74F1A641527004C8B9A /* PBXTargetDependency */,
+			);
+			name = TDThreadUtilsTests;
+			productName = TDThreadUtilsTests;
+			productReference = D3C0C74C1A641527004C8B9A /* TDThreadUtilsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D3C0C7381A641526004C8B9A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Todd Ditchendorf";
+				TargetAttributes = {
+					D3C0C7401A641526004C8B9A = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					D3C0C74B1A641527004C8B9A = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = D3C0C73B1A641526004C8B9A /* Build configuration list for PBXProject "TDThreadUtils" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D3C0C7371A641526004C8B9A;
+			productRefGroup = D3C0C7421A641526004C8B9A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D3C0C7401A641526004C8B9A /* TDThreadUtils */,
+				D3C0C74B1A641527004C8B9A /* TDThreadUtilsTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D3C0C73F1A641526004C8B9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3C0C74A1A641527004C8B9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D3C0C73C1A641526004C8B9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3C0C7661A641609004C8B9A /* TDSync.m in Sources */,
+				D3C0C7681A641609004C8B9A /* TDSynchronousChannel.m in Sources */,
+				D3C0C7641A641609004C8B9A /* TDSemaphore.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D3C0C7481A641527004C8B9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3C0C7541A641528004C8B9A /* TDThreadUtilsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D3C0C74F1A641527004C8B9A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D3C0C7401A641526004C8B9A /* TDThreadUtils */;
+			targetProxy = D3C0C74E1A641527004C8B9A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		D3C0C7551A641528004C8B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		D3C0C7561A641528004C8B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		D3C0C7581A641528004C8B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = TDThreadUtils/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D3C0C7591A641528004C8B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = TDThreadUtils/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		D3C0C75B1A641528004C8B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TDThreadUtilsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D3C0C75C1A641528004C8B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TDThreadUtilsTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D3C0C73B1A641526004C8B9A /* Build configuration list for PBXProject "TDThreadUtils" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3C0C7551A641528004C8B9A /* Debug */,
+				D3C0C7561A641528004C8B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D3C0C7571A641528004C8B9A /* Build configuration list for PBXNativeTarget "TDThreadUtils" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3C0C7581A641528004C8B9A /* Debug */,
+				D3C0C7591A641528004C8B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D3C0C75A1A641528004C8B9A /* Build configuration list for PBXNativeTarget "TDThreadUtilsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D3C0C75B1A641528004C8B9A /* Debug */,
+				D3C0C75C1A641528004C8B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D3C0C7381A641526004C8B9A /* Project object */;
+}
