@@ -49,7 +49,7 @@
     }
     
     NSAssert([_array count] <= _size, @"");
-    NSAssert(_putIndex < [_array count], @"");
+    NSAssert(_putIndex < _size, @"");
 }
 
 
@@ -64,7 +64,7 @@
     }
 
     NSAssert([_array count] <= _size, @"");
-    NSAssert(_takeIndex < [_array count], @"");
+    NSAssert(_takeIndex < _size, @"");
     return obj;
 }
 
