@@ -8,6 +8,8 @@
 
 #import "TDTest.h"
 
+#define FOOBAR @"foobar"
+
 @interface TDSynchronousChannel ()
 @property (retain) id item;
 @end
@@ -39,13 +41,13 @@
     TDPerformOnBackgroundThread(^{
         TDFalse(flag);
         self.flag = YES;
-        TDEqualObjects(@"foobar", chan.item);
-        TDEqualObjects(@"foobar", [chan take]);
+        TDEqualObjects(FOOBAR, chan.item);
+        TDEqualObjects(FOOBAR, [chan take]);
         TDNil(chan.item);
     });
     
     TDFalse(flag);
-    [chan put:@"foobar"];
+    [chan put:FOOBAR];
     TDTrue(flag);
     TDEqualObjects(nil, chan.item);
     
@@ -65,13 +67,13 @@
     TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
         TDFalse(flag);
         self.flag = YES;
-        TDEqualObjects(@"foobar", chan.item);
-        TDEqualObjects(@"foobar", [chan take]);
+        TDEqualObjects(FOOBAR, chan.item);
+        TDEqualObjects(FOOBAR, [chan take]);
         TDNil(chan.item);
     });
     
     TDFalse(flag);
-    [chan put:@"foobar"];
+    [chan put:FOOBAR];
     TDTrue(flag);
     TDEqualObjects(nil, chan.item);
     
