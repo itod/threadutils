@@ -87,6 +87,34 @@
     }];
 }
 
+- (void)test1Size2Objs3Threads {
+    
+    self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
+    
+    TDPerformOnBackgroundThread(^{
+        self.flag = YES;
+        [buff put:ONE];
+    });
+    
+    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+        self.flag = NO;
+        [buff put:TWO];
+    });
+    
+    TDFalse(flag);
+    TDEqualObjects(ONE, [buff take]);
+    TDTrue(flag);
+    TDEqualObjects(TWO, [buff take]);
+    TDFalse(flag);
+    
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
+        TDNil(err);
+        TDFalse(flag);
+    }];
+}
+
 @synthesize buff=buff;
 @synthesize done=done;
 @synthesize flag=flag;
