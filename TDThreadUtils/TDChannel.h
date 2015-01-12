@@ -1,5 +1,5 @@
 //
-//  TDSync.h
+//  TDChannel.h
 //  TDThreadUtils
 //
 //  Created by Todd Ditchendorf on 1/12/15.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol TDSync <NSObject>
-- (void)acquire;
-- (void)relinquish;
+@protocol TDChannel <NSObject>
+- (void)put:(id)obj;
+- (id)take;
 @end

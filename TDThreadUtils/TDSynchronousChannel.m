@@ -6,9 +6,8 @@
 //
 //
 
-#import "TDSynchronousChannel.h"
-#import "TDSync.h"
-#import "TDSemaphore.h"
+#import <TDThreadUtils/TDSynchronousChannel.h>
+#import <TDThreadUtils/TDSemaphore.h>
 
 @interface TDSynchronousChannel ()
 @property (retain) TDSemaphore *putPermit;

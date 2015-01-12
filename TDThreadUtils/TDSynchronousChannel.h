@@ -6,9 +6,9 @@
 //
 //
 
-#import <Foundation/Foundation.h>
+#import <TDThreadUtils/TDChannel.h>
 
-@interface TDSynchronousChannel : NSObject
+@interface TDSynchronousChannel : NSObject <TDChannel>
 
 + (instancetype)synchronousChannel;
 

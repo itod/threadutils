@@ -6,15 +6,15 @@
 //
 //
 
-#import "TDSync.h"
-#import "TDSynchronousChannel.h"
+#import "TDInterpreter.h"
+#import <TDThreadUtils/TDSynchronousChannel.h>
 
-@interface TDSync ()
+@interface TDInterpreter ()
 @property (retain) TDSynchronousChannel *pauseChannel;
 @property (retain) TDSynchronousChannel *resumeChannel;
 @end
 
-@implementation TDSync
+@implementation TDInterpreter
 
 + (instancetype)sync {
     return [[[self alloc] init] autorelease];

@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Todd Ditchendorf. All rights reserved.
 //
 
-#import "TDSemaphore.h"
+#import <TDThreadUtils/TDSemaphore.h>
 
 @interface TDSemaphore ()
 - (void)lock;
