@@ -13,8 +13,8 @@
 @end
 
 @interface TDSemaphoreTests : XCTestCase
-@property (nonatomic, retain) TDSemaphore *sem;
-@property (nonatomic, retain) XCTestExpectation *done;
+@property (retain) TDSemaphore *sem;
+@property (retain) XCTestExpectation *done;
 @end
 
 @implementation TDSemaphoreTests
@@ -119,20 +119,20 @@
         TDTrue(sem.value < 2);
     });
     
-    TDPerformOnBackgroundThreadAfterDelay(0.33, ^{
+    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         [sem relinquish];
         TDTrue(sem.value > 0 && sem.value <= 2);
     });
-    TDPerformOnBackgroundThreadAfterDelay(0.66, ^{
+    TDPerformOnBackgroundThreadAfterDelay(0.2, ^{
         [sem relinquish];
         TDTrue(sem.value > 0 && sem.value <= 2);
     });
     
-    TDPerformOnMainThreadAfterDelay(1.0, ^{
+    TDPerformOnMainThreadAfterDelay(0.3, ^{
         [done fulfill];
     });
 
-    [self waitForExpectationsWithTimeout:20.0 handler:^(NSError *err) {
+    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
         TDNil(err);
         TDEquals(2, sem.value);
     }];
