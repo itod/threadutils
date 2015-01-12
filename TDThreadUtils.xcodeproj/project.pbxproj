@@ -31,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		D308DC931A64178000767C2D /* TDSemaphoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSemaphoreTests.m; sourceTree = "<group>"; };
+		D308DC951A64182F00767C2D /* TDTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDTest.h; sourceTree = "<group>"; };
 		D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TDThreadUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C0C7451A641527004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3C0C7461A641527004C8B9A /* TDThreadUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDThreadUtils.h; sourceTree = "<group>"; };
@@ -108,6 +109,7 @@
 		D3C0C7501A641527004C8B9A /* TDThreadUtilsTests */ = {
 			isa = PBXGroup;
 			children = (
+				D308DC951A64182F00767C2D /* TDTest.h */,
 				D3C0C7531A641528004C8B9A /* TDThreadUtilsTests.m */,
 				D308DC931A64178000767C2D /* TDSemaphoreTests.m */,
 				D3C0C7511A641528004C8B9A /* Supporting Files */,

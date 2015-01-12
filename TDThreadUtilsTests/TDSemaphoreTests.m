@@ -6,12 +6,10 @@
 //  Copyright (c) 2015 Todd Ditchendorf. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <XCTest/XCTest.h>
-#import <TDThreadUtils/TDSemaphore.h>
+#import "TDTest.h"
 
 @interface TDSemaphoreTests : XCTestCase
-
+@property (nonatomic, retain) TDSemaphore *sem;
 @end
 
 @implementation TDSemaphoreTests
@@ -22,20 +20,15 @@
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
+    self.sem = nil;
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+- (void)test1Permit {
+    self.sem = [TDSemaphore semaphoreWithValue:1];
+    
+    TDTrue(YES);
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
-}
-
+@synthesize sem=sem;
 @end
