@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D308DC941A64178000767C2D /* TDSemaphoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D308DC931A64178000767C2D /* TDSemaphoreTests.m */; };
+		D308DC941A64178000767C2D /* TDSynchronousChannelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D308DC931A64178000767C2D /* TDSynchronousChannelTests.m */; };
 		D308DC981A641AB500767C2D /* TDTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D308DC971A641AB500767C2D /* TDTest.m */; };
-		D308DC9E1A643F3E00767C2D /* TDSynchronousChannelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D308DC9D1A643F3E00767C2D /* TDSynchronousChannelTests.m */; };
+		D308DC9E1A643F3E00767C2D /* TDSemaphoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D308DC9D1A643F3E00767C2D /* TDSemaphoreTests.m */; };
 		D308DCA01A64415600767C2D /* TDChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = D308DC9F1A64415600767C2D /* TDChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D308DCA21A6441C100767C2D /* TDSync.h in Headers */ = {isa = PBXBuildFile; fileRef = D308DCA11A6441C100767C2D /* TDSync.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3AF43761A645916005C309E /* TDBoundedBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AF43741A645916005C309E /* TDBoundedBuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -36,10 +36,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D308DC931A64178000767C2D /* TDSemaphoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSemaphoreTests.m; sourceTree = "<group>"; };
+		D308DC931A64178000767C2D /* TDSynchronousChannelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSynchronousChannelTests.m; sourceTree = "<group>"; };
 		D308DC951A64182F00767C2D /* TDTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDTest.h; sourceTree = "<group>"; };
 		D308DC971A641AB500767C2D /* TDTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDTest.m; sourceTree = "<group>"; };
-		D308DC9D1A643F3E00767C2D /* TDSynchronousChannelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSynchronousChannelTests.m; sourceTree = "<group>"; };
+		D308DC9D1A643F3E00767C2D /* TDSemaphoreTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TDSemaphoreTests.m; sourceTree = "<group>"; };
 		D308DC9F1A64415600767C2D /* TDChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDChannel.h; sourceTree = "<group>"; };
 		D308DCA11A6441C100767C2D /* TDSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDSync.h; sourceTree = "<group>"; };
 		D3AF43741A645916005C309E /* TDBoundedBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TDBoundedBuffer.h; sourceTree = "<group>"; };
@@ -128,8 +128,8 @@
 				D308DC951A64182F00767C2D /* TDTest.h */,
 				D308DC971A641AB500767C2D /* TDTest.m */,
 				D3C0C7531A641528004C8B9A /* TDThreadUtilsTests.m */,
-				D308DC931A64178000767C2D /* TDSemaphoreTests.m */,
-				D308DC9D1A643F3E00767C2D /* TDSynchronousChannelTests.m */,
+				D308DC9D1A643F3E00767C2D /* TDSemaphoreTests.m */,
+				D308DC931A64178000767C2D /* TDSynchronousChannelTests.m */,
 				D3C0C7511A641528004C8B9A /* Supporting Files */,
 			);
 			path = TDThreadUtilsTests;
@@ -267,8 +267,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D308DC941A64178000767C2D /* TDSemaphoreTests.m in Sources */,
-				D308DC9E1A643F3E00767C2D /* TDSynchronousChannelTests.m in Sources */,
+				D308DC941A64178000767C2D /* TDSynchronousChannelTests.m in Sources */,
+				D308DC9E1A643F3E00767C2D /* TDSemaphoreTests.m in Sources */,
 				D308DC981A641AB500767C2D /* TDTest.m in Sources */,
 				D3C0C7541A641528004C8B9A /* TDThreadUtilsTests.m in Sources */,
 			);

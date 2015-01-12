@@ -89,6 +89,8 @@
     self = [super init];
     if (self) {
         self.buffer = [[[TDBufferArray alloc] initWithSize:size] autorelease];
+        self.putPermits = [TDSemaphore semaphoreWithValue:size];
+        self.takePermits = [TDSemaphore semaphoreWithValue:0];
     }
     return self;
 }
