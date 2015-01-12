@@ -30,9 +30,10 @@
     [super tearDown];
 }
 
-- (void)test1Permit {
+- (void)test1Permit2Threads {
     
     self.sem = [TDSemaphore semaphoreWithValue:1];
+    TDEquals(1, sem.value);
     
     [sem acquire];
     TDEquals(0, sem.value);
@@ -47,6 +48,93 @@
     [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
         TDNil(err);
         TDEquals(1, sem.value);
+    }];
+}
+
+- (void)test2Permits2Threads {
+    
+    self.sem = [TDSemaphore semaphoreWithValue:2];
+    TDEquals(2, sem.value);
+    
+    [sem acquire];
+    TDEquals(1, sem.value);
+    [sem acquire];
+    TDEquals(0, sem.value);
+    
+    TDPerformOnMainThreadAfterDelay(0.1, ^{
+        TDEquals(0, sem.value);
+        [sem relinquish];
+        TDEquals(1, sem.value);
+        [sem relinquish];
+        TDEquals(2, sem.value);
+        [done fulfill];
+    });
+    
+    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
+        TDNil(err);
+        TDEquals(2, sem.value);
+    }];
+}
+
+- (void)test3Permits2Threads {
+    
+    self.sem = [TDSemaphore semaphoreWithValue:3];
+    TDEquals(3, sem.value);
+    
+    [sem acquire];
+    TDEquals(2, sem.value);
+    [sem acquire];
+    TDEquals(1, sem.value);
+    [sem acquire];
+    TDEquals(0, sem.value);
+    
+    TDPerformOnMainThreadAfterDelay(0.1, ^{
+        TDEquals(0, sem.value);
+        [sem relinquish];
+        TDEquals(1, sem.value);
+        [sem relinquish];
+        TDEquals(2, sem.value);
+        [sem relinquish];
+        TDEquals(3, sem.value);
+        [done fulfill];
+    });
+    
+    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
+        TDNil(err);
+        TDEquals(3, sem.value);
+    }];
+}
+
+- (void)test2Permits3Threads {
+    
+    self.sem = [TDSemaphore semaphoreWithValue:2];
+    TDEquals(2, sem.value);
+    
+    TDPerformOnBackgroundThread(^{
+        [sem acquire];
+        TDTrue(sem.value < 2);
+    });
+    TDPerformOnBackgroundThread(^{
+        [sem acquire];
+        TDTrue(sem.value < 2);
+    });
+    
+    TDPerformOnBackgroundThreadAfterDelay(0.33, ^{
+        [sem relinquish];
+        TDTrue(sem.value > 0 && sem.value <= 2);
+    });
+    TDPerformOnBackgroundThreadAfterDelay(0.66, ^{
+        [sem relinquish];
+        TDTrue(sem.value > 0 && sem.value <= 2);
+    });
+    
+    TDPerformOnMainThreadAfterDelay(1.0, ^{
+        [done fulfill];
+    });
+
+    [self waitForExpectationsWithTimeout:20.0 handler:^(NSError *err) {
+        TDNil(err);
+        TDEquals(2, sem.value);
     }];
 }
 
