@@ -29,10 +29,22 @@
 }
 
 - (void)test1Permit {
+    XCTestExpectation *done = [self expectationWithDescription:@"done"];
     self.sem = [TDSemaphore semaphoreWithValue:1];
     
     [sem acquire];
     TDEquals(0, sem.value);
+    
+    TDPerformOnMainThreadAfterDelay(0.1, ^{
+        TDEquals(0, sem.value);
+        [sem relinquish];
+        TDEquals(1, sem.value);
+        [done fulfill];
+    });
+    
+    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *error) {
+        TDEquals(1, sem.value);
+    }];
 }
 
 @synthesize sem=sem;
