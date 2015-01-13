@@ -13,7 +13,7 @@
 - (void)lock;
 - (void)unlock;
 
-- (BOOL)reached;
+- (BOOL)fired;
 - (void)wait;
 
 @property (assign) BOOL flag;
@@ -50,7 +50,7 @@
     [[self retain] autorelease];
     [self lock];
     
-    while (![self reached]) {
+    while (![self fired]) {
         [self wait];
     }
     
@@ -73,7 +73,7 @@
 #pragma mark -
 #pragma mark Private Business
 
-- (BOOL)reached {
+- (BOOL)fired {
     return _flag;
 }
 
