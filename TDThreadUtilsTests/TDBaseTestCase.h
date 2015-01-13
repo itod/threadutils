@@ -10,6 +10,7 @@
 
 @interface TDBaseTestCase : XCTestCase {
     XCTestExpectation *done;
+    TDThreshold *threshold;
     BOOL flag;
     NSInteger counter;
 }
@@ -20,6 +21,7 @@
 - (void)performAtomicInBackground:(NSTimeInterval)delay :(void(^)(void))block;
 
 @property (retain) XCTestExpectation *done;
+@property (retain) TDThreshold *threshold;
 @property (assign) BOOL flag;
 @property (assign) NSInteger counter;
 @end

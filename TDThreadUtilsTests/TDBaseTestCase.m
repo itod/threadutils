@@ -16,6 +16,7 @@
 
 - (void)dealloc {
     self.done = nil;
+    self.threshold = nil;
     [super dealloc];
 }
 
@@ -76,6 +77,7 @@
 }
 
 @synthesize done=done;
+@synthesize threshold=threshold;
 @synthesize flag=flag;
 @synthesize counter=counter;
 @end

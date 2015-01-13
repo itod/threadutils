@@ -31,19 +31,24 @@
 - (void)test1Permit2Threads {
     
     self.sem = [TDSemaphore semaphoreWithValue:1];
+    self.threshold = [TDThreshold thresholdWithValue:2];
     TDEquals(1, sem.value);
     
     [sem acquire];
     TDEquals(0, sem.value);
     
-    TDAtomicInBackground(0.1, ^{
+    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         TDEquals(0, sem.value);
         [sem relinquish];
         TDEquals(1, sem.value);
-        [done fulfill];
+        
+        [threshold acquire];
     });
     
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
+    [threshold acquire];
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
         TDNil(err);
         TDEquals(1, sem.value);
     }];
@@ -52,6 +57,7 @@
 - (void)test2Permits2Threads {
     
     self.sem = [TDSemaphore semaphoreWithValue:2];
+    self.threshold = [TDThreshold thresholdWithValue:2];
     TDEquals(2, sem.value);
     
     [sem acquire];
@@ -59,16 +65,21 @@
     [sem acquire];
     TDEquals(0, sem.value);
     
-    TDAtomicInBackground(0.1, ^{
+    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         TDEquals(0, sem.value);
         [sem relinquish];
         TDEquals(1, sem.value);
+        
         [sem relinquish];
         TDEquals(2, sem.value);
-        [done fulfill];
+
+        [threshold acquire];
     });
     
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
+    [threshold acquire];
+    [done fulfill];
+
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
         TDNil(err);
         TDEquals(2, sem.value);
     }];
@@ -77,6 +88,7 @@
 - (void)test3Permits2Threads {
     
     self.sem = [TDSemaphore semaphoreWithValue:3];
+    self.threshold = [TDThreshold thresholdWithValue:2];
     TDEquals(3, sem.value);
     
     [sem acquire];
@@ -86,7 +98,7 @@
     [sem acquire];
     TDEquals(0, sem.value);
     
-    TDAtomicInBackground(0.1, ^{
+    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         TDEquals(0, sem.value);
         [sem relinquish];
         TDEquals(1, sem.value);
@@ -94,44 +106,51 @@
         TDEquals(2, sem.value);
         [sem relinquish];
         TDEquals(3, sem.value);
-        [done fulfill];
+        
+        [threshold acquire];
     });
+
+    [threshold acquire];
+    [done fulfill];
     
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
         TDNil(err);
         TDEquals(3, sem.value);
     }];
 }
 
-// this is timing dependent. fix.
-- (void)test2Permits3Threads {
+- (void)test2Permits5Threads {
     
     self.sem = [TDSemaphore semaphoreWithValue:2];
+    self.threshold = [TDThreshold thresholdWithValue:5];
     TDEquals(2, sem.value);
     
-    TDAtomicInBackground(0.1, ^{
+    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         [sem acquire];
         TDTrue(sem.value < 2);
+        [threshold acquire];
     });
-    TDAtomicInBackgroundNow(^{
+    TDPerformOnBackgroundThread(^{
         [sem acquire];
         TDTrue(sem.value < 2);
+        [threshold acquire];
     });
     
-    TDAtomicInBackground(0.1, ^{
+    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         [sem relinquish];
         TDTrue(sem.value > 0 && sem.value <= 2);
+        [threshold acquire];
     });
-    TDAtomicInBackground(0.2, ^{
+    TDPerformOnBackgroundThreadAfterDelay(0.2, ^{
         [sem relinquish];
         TDTrue(sem.value > 0 && sem.value <= 2);
+        [threshold acquire];
     });
     
-    TDAtomic(0.3, ^{
-        [done fulfill];
-    });
+    [threshold acquire];
+    [done fulfill];
 
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
         TDNil(err);
         TDEquals(2, sem.value);
     }];
