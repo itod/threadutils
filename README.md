@@ -53,7 +53,7 @@ Create a bounded buffer with the desired buffer size:
 
 The "giver" thread should call `-put:`, which will either:
 
-* Return immediately if the buffer currently contains 3 or fewer items.
+* return immediately if the buffer currently contains 3 or fewer items.
 
 OR
 
@@ -70,7 +70,7 @@ Example:
 ####Take
 The "taker" thread should call `-take`, which will either:
 
-* Extract and return an item immediately if the buffer currently contains 1 or more items.
+* extract and return an item immediately if the buffer currently contains 1 or more items.
 
 OR
 
