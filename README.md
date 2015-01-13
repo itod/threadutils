@@ -1,11 +1,13 @@
 Some Cocoa Thread Utilities
 ===========
 
-[Semaphore](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
-[Bounded Buffer](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
-[Synchronous Channel](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
-[Threshold](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
-[Trigger](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
+* [Semaphore](https://github.com/itod/threadutils#some-cocoa-thread-utilities#semaphore)
+* [Bounded Buffer](https://github.com/itod/threadutils#some-cocoa-thread-utilities#bounded-buffer)
+* [Synchronous Channel](https://github.com/itod/threadutils#some-cocoa-thread-utilities#synchronous-channel)
+* [Threshold](https://github.com/itod/threadutils#some-cocoa-thread-utilities#threshold)
+* [Trigger](https://github.com/itod/threadutils#some-cocoa-thread-utilities#trigger)
+
+----
 
 ##Semaphore
 
