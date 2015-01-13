@@ -152,27 +152,73 @@
 - (void)test1Size2Objs4ThreadsTakeOnMain {
     
     self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
+    self.threshold = [TDThreshold thresholdWithValue:4];
     
     TDPerformOnBackgroundThread(^{
-        self.counter++;
         id obj = [buff take];
         TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
+        self.counter++;
+        [threshold acquire];
     });
     
     TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
-        self.counter++;
         [buff put:TWO];
+        self.counter++;
+        [threshold acquire];
     });
     
     TDPerformOnBackgroundThread(^{
-        self.counter++;
         [buff put:ONE];
+        self.counter++;
+        [threshold acquire];
     });
     
     id obj = [buff take];
     TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
     
+    [threshold acquire];
     TDEquals(3, counter);
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
+        TDNil(err);
+    }];
+}
+
+- (void)test1Size2Objs5Threads {
+    
+    self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
+    self.threshold = [TDThreshold thresholdWithValue:5];
+    
+    TDPerformOnBackgroundThread(^{
+        id obj = [buff take];
+        TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
+        self.counter++;
+        [threshold acquire];
+    });
+    
+    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+        [buff put:TWO];
+        self.counter++;
+        [threshold acquire];
+    });
+    
+    TDPerformOnBackgroundThread(^{
+        [buff put:ONE];
+        self.counter++;
+        [threshold acquire];
+    });
+    
+    TDPerformOnBackgroundThread(^{
+        id obj = [buff take];
+        TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
+        
+        self.counter++;
+        [threshold acquire];
+    });
+    
+    [threshold acquire];
+    TDEquals(4, counter);
     [done fulfill];
     
     [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
