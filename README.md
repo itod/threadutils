@@ -1,4 +1,4 @@
-Some Cocoa Thread Utilities
+Some Cocoa Concurrency Utilities
 ===========
 
 * [Semaphore](https://github.com/itod/threadutils#semaphore)
