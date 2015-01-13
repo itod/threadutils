@@ -41,10 +41,10 @@
 
     if (![self available]) {
         [self broadcast];
-    } else {
-        while ([self available]) {
-            [self wait];
-        }
+    }
+    
+    while ([self available]) {
+        [self wait];
     }
 
     [self unlock];
