@@ -116,3 +116,55 @@ The "taker" thread should call `-take`, which will block until another thread ha
 Note that the order in which these two threads "arrive" at the rendezvous (that is, the order they call `-put:` or `-take`) does not matter. Indeed, across threads it can be difficult to define execution "order" at all. Neither thread will continue beyond the rendezvous point until the object has been successfully taken.
 
 Note that the  `-put:` and `-take` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
+
+##Threshold
+
+A threshold is a way to block multiple threads until a threshold is met.
+
+A threshold object will block any thread that calls its `-await` method until a given number of threads have have done so. At that point, the threshold is met, and all waiting threads will be unblocked and allowed to continue.
+
+A threshold is useful for designs which call for a specific number of independent actors or tasks (represented as threads) with no centralized mediator or controller. Using a threshold, these threads can be created and blocked until the exact moment when the desired number are waiting. Then, they all continue simultaneously.
+
+####Create
+
+Usage is simple. Create a threshold with the desired limit:
+
+    TDThreshold *th = [TDThreshold thresholdWithValue:4];
+
+####Await
+
+On any thread which should block until the threshold limit is reached, call `-await`.
+
+    [th await]; // blocks until threshold limit is reached
+
+In this example, when `-await` is called for the fourth time (on the fourth thread), the three waiting threads, and the current fourth thread will all unblock and continue execution "simultaneously" (note the precise meaning of "simultaneously" is dependent on the number of cores on your device's processor and the thread scheduling behavior of your operating system).
+
+Note that the  `-await` method uses signal broadcasting techniques (specifically, `NSConditionLock`). It **DOES NOT** involve any polling or busy waiting. 
+
+##Trigger
+
+A trigger is a way to block multiple threads until a "fire" signal is explicitly sent by a controller.
+
+Triggers are very similar to thresholds, but are approriate for designs that call for a controller or mediator to unblock all waiting threads in response to a specific signal.
+
+####Create
+
+    TDTrigger *trig = [TDTrigger trigger];
+
+####Await
+
+On any thread you wish to block, call `-await`:
+
+    [trig await]; // blocks until "fire" signal sent by controller
+
+This will block the current thread until the "fire" signal is sent by some other controlling thread.
+
+####Fire
+
+When your application is ready for all waiting threads to proceed with execution, "fire" the trigger on an unblocked controlling thread:
+
+    [trig fire]; // unblocks all threads waiting on this trigger
+
+All threads that were waiting on this trigger now unblock and proceed simultaneously.
+
+Note that the  `-await` and `-fire` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
