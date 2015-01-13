@@ -48,7 +48,7 @@
 #pragma mark -
 #pragma mark TDSync 
 
-- (void)acquire {
+- (void)await {
     [[self retain] autorelease];
     [self lock];
     
@@ -63,11 +63,6 @@
     }
 
     [self unlock];
-}
-
-
-- (void)relinquish {
-    NSAssert(0, @"should never call");
 }
 
 

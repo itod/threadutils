@@ -8,11 +8,10 @@
 
 #import <TDThreadUtils/TDSync.h>
 
-@interface TDThreshold : NSObject <TDSync>
+@interface TDThreshold : NSObject
 
 + (instancetype)thresholdWithValue:(NSInteger)value;
 - (instancetype)initWithValue:(NSInteger)value;
 
-- (void)acquire;
-- (void)relinquish;
+- (void)await;
 @end

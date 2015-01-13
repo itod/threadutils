@@ -29,7 +29,7 @@
     self.th = [TDThreshold thresholdWithValue:1];
     
     self.counter++;
-    [th acquire];
+    [th await];
     
     [done fulfill];
     
@@ -45,7 +45,7 @@
     
     TDPerformOnBackgroundThread(^{
         self.counter++;
-        [th acquire];
+        [th await];
         [done fulfill];
     });
     
@@ -61,11 +61,11 @@
     
     TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         self.counter++;
-        [th acquire];
+        [th await];
     });
     
     self.counter++;
-    [th acquire];
+    [th await];
     [done fulfill];
     
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
@@ -80,16 +80,16 @@
     
     TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         self.counter++;
-        [th acquire];
+        [th await];
     });
     
     TDPerformOnBackgroundThreadAfterDelay(0.2, ^{
         self.counter++;
-        [th acquire];
+        [th await];
     });
     
     self.counter++;
-    [th acquire];
+    [th await];
     [done fulfill];
     
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
@@ -104,21 +104,21 @@
     
     TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         self.counter++;
-        [th acquire];
+        [th await];
     });
     
     TDPerformOnBackgroundThreadAfterDelay(0.2, ^{
         self.counter++;
-        [th acquire];
+        [th await];
     });
     
     TDPerformOnBackgroundThreadAfterDelay(0.3, ^{
         self.counter++;
-        [th acquire];
+        [th await];
     });
     
     self.counter++;
-    [th acquire];
+    [th await];
     [done fulfill];
     
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {

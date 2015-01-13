@@ -121,25 +121,25 @@
         id obj = [buff take];
         TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
     TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
         [buff put:TWO];
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
     TDPerformOnBackgroundThread(^{
         id obj = [buff take];
         TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
     [buff put:ONE];
     
-    [threshold acquire];
+    [threshold await];
     
     TDEquals(3, counter);
     [done fulfill];
@@ -158,25 +158,25 @@
         id obj = [buff take];
         TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
     TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
         [buff put:TWO];
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
     TDPerformOnBackgroundThread(^{
         [buff put:ONE];
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
     id obj = [buff take];
     TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
     
-    [threshold acquire];
+    [threshold await];
     TDEquals(3, counter);
     [done fulfill];
     
@@ -194,19 +194,19 @@
         id obj = [buff take];
         TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
     TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
         [buff put:TWO];
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
     TDPerformOnBackgroundThread(^{
         [buff put:ONE];
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
     TDPerformOnBackgroundThread(^{
@@ -214,10 +214,10 @@
         TDTrue([obj isEqual:ONE] || [obj isEqual:TWO]);
         
         self.counter++;
-        [threshold acquire];
+        [threshold await];
     });
     
-    [threshold acquire];
+    [threshold await];
     TDEquals(4, counter);
     [done fulfill];
     

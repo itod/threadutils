@@ -42,10 +42,10 @@
         [sem relinquish];
         TDEquals(1, sem.value);
         
-        [threshold acquire];
+        [threshold await];
     });
     
-    [threshold acquire];
+    [threshold await];
     [done fulfill];
     
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
@@ -73,10 +73,10 @@
         [sem relinquish];
         TDEquals(2, sem.value);
 
-        [threshold acquire];
+        [threshold await];
     });
     
-    [threshold acquire];
+    [threshold await];
     [done fulfill];
 
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
@@ -107,10 +107,10 @@
         [sem relinquish];
         TDEquals(3, sem.value);
         
-        [threshold acquire];
+        [threshold await];
     });
 
-    [threshold acquire];
+    [threshold await];
     [done fulfill];
     
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
@@ -128,26 +128,26 @@
     TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         [sem acquire];
         TDTrue(sem.value < 2);
-        [threshold acquire];
+        [threshold await];
     });
     TDPerformOnBackgroundThread(^{
         [sem acquire];
         TDTrue(sem.value < 2);
-        [threshold acquire];
+        [threshold await];
     });
     
     TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
         [sem relinquish];
         TDTrue(sem.value > 0 && sem.value <= 2);
-        [threshold acquire];
+        [threshold await];
     });
     TDPerformOnBackgroundThreadAfterDelay(0.2, ^{
         [sem relinquish];
         TDTrue(sem.value > 0 && sem.value <= 2);
-        [threshold acquire];
+        [threshold await];
     });
     
-    [threshold acquire];
+    [threshold await];
     [done fulfill];
 
     [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
