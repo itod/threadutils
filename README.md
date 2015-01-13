@@ -143,9 +143,9 @@ Note that the  `-await` method uses signal broadcasting techniques (specifically
 
 ##Trigger
 
-A trigger is a way to block multiple threads until a "fire" signal is explicitly sent by a controller.
+A trigger is a way to block multiple threads until a "fire" signal is explicitly sent by a controller thread.
 
-Triggers are very similar to thresholds, but are approriate for designs that call for a controller or mediator to unblock all waiting threads in response to a specific signal.
+Triggers are very similar to thresholds, but are approriate for designs that call for a controller or mediator to unblock all waiting threads in response to a specific signal explicitly coded by the programmer.
 
 ####Create
 
