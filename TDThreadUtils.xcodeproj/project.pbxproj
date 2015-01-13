@@ -28,6 +28,9 @@
 		D3AF43D31A658166005C309E /* TDBoundedBufferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF43C21A65811F005C309E /* TDBoundedBufferTests.m */; };
 		D3AF43D41A658166005C309E /* TDSynchronousChannelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF43C41A65811F005C309E /* TDSynchronousChannelTests.m */; };
 		D3AF43D51A658166005C309E /* TDThresholdTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF43C71A65811F005C309E /* TDThresholdTests.m */; };
+		D3AF43E51A659AFE005C309E /* TDTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF43E41A659AFE005C309E /* TDTrigger.m */; };
+		D3AF43E71A659B01005C309E /* TDTrigger.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AF43E61A659B01005C309E /* TDTrigger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D3AF43E91A659BEA005C309E /* TDTriggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3AF43E81A659BEA005C309E /* TDTriggerTests.m */; };
 		D3C0C74D1A641527004C8B9A /* TDThreadUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +66,9 @@
 		D3AF43C51A65811F005C309E /* TDTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDTest.h; path = tests/TDTest.h; sourceTree = SOURCE_ROOT; };
 		D3AF43C61A65811F005C309E /* TDTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDTest.m; path = tests/TDTest.m; sourceTree = SOURCE_ROOT; };
 		D3AF43C71A65811F005C309E /* TDThresholdTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDThresholdTests.m; path = tests/TDThresholdTests.m; sourceTree = SOURCE_ROOT; };
+		D3AF43E41A659AFE005C309E /* TDTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDTrigger.m; path = src/TDTrigger.m; sourceTree = SOURCE_ROOT; };
+		D3AF43E61A659B01005C309E /* TDTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDTrigger.h; path = include/TDThreadUtils/TDTrigger.h; sourceTree = SOURCE_ROOT; };
+		D3AF43E81A659BEA005C309E /* TDTriggerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDTriggerTests.m; path = tests/TDTriggerTests.m; sourceTree = SOURCE_ROOT; };
 		D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TDThreadUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C0C7451A641527004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../src/Info.plist; sourceTree = "<group>"; };
 		D3C0C74C1A641527004C8B9A /* TDThreadUtilsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TDThreadUtilsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,6 +124,8 @@
 				D3AF43B61A65809A005C309E /* TDBoundedBuffer.m */,
 				D3AF43AB1A658078005C309E /* TDSynchronousChannel.h */,
 				D3AF43B91A65809A005C309E /* TDSynchronousChannel.m */,
+				D3AF43E61A659B01005C309E /* TDTrigger.h */,
+				D3AF43E41A659AFE005C309E /* TDTrigger.m */,
 				D3AF43AD1A658078005C309E /* TDThreshold.h */,
 				D3AF43BA1A65809A005C309E /* TDThreshold.m */,
 				D3AF43A81A658078005C309E /* TDInterpreter.h */,
@@ -145,6 +153,7 @@
 				D3AF43C31A65811F005C309E /* TDSemaphoreTests.m */,
 				D3AF43C21A65811F005C309E /* TDBoundedBufferTests.m */,
 				D3AF43C41A65811F005C309E /* TDSynchronousChannelTests.m */,
+				D3AF43E81A659BEA005C309E /* TDTriggerTests.m */,
 				D3AF43C71A65811F005C309E /* TDThresholdTests.m */,
 				D3C0C7511A641528004C8B9A /* Supporting Files */,
 			);
@@ -176,6 +185,7 @@
 				D3AF43AE1A658078005C309E /* TDBoundedBuffer.h in Headers */,
 				D3AF43C81A65811F005C309E /* TDBaseTestCase.h in Headers */,
 				D3AF43AF1A658078005C309E /* TDChannel.h in Headers */,
+				D3AF43E71A659B01005C309E /* TDTrigger.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +289,7 @@
 				D3AF43BB1A65809A005C309E /* TDBoundedBuffer.m in Sources */,
 				D3AF43BD1A65809A005C309E /* TDSemaphore.m in Sources */,
 				D3AF43BC1A65809A005C309E /* TDInterpreter.m in Sources */,
+				D3AF43E51A659AFE005C309E /* TDTrigger.m in Sources */,
 				D3AF43BF1A65809A005C309E /* TDThreshold.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -291,6 +302,7 @@
 				D3AF43D51A658166005C309E /* TDThresholdTests.m in Sources */,
 				D3AF43D41A658166005C309E /* TDSynchronousChannelTests.m in Sources */,
 				D3AF43D11A658166005C309E /* TDBaseTestCase.m in Sources */,
+				D3AF43E91A659BEA005C309E /* TDTriggerTests.m in Sources */,
 				D3AF43D01A658166005C309E /* TDTest.m in Sources */,
 				D3AF43D31A658166005C309E /* TDBoundedBufferTests.m in Sources */,
 			);
