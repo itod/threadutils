@@ -6,9 +6,13 @@
 //  Copyright (c) 2015 Todd Ditchendorf. All rights reserved.
 //
 
-#import <TDThreadUtils/TDSemaphore.h>
+#import <TDThreadUtils/TDSync.h>
 
-@interface TDThreshold : TDSemaphore <TDSync>
+@interface TDThreshold : NSObject <TDSync>
 
 + (instancetype)thresholdWithValue:(NSInteger)value;
+- (instancetype)initWithValue:(NSInteger)value;
+
+- (void)acquire;
+- (void)relinquish;
 @end

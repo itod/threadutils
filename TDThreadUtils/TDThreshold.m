@@ -9,14 +9,13 @@
 #import <TDThreadUtils/TDThreshold.h>
 #import <TDThreadUtils/TDSemaphore.h>
 
-@interface TDSemaphore ()
+@interface TDThreshold ()
 - (void)lock;
 - (void)unlock;
 
 - (void)decrement;
-- (void)increment;
 
-- (BOOL)available;
+- (BOOL)reached;
 - (void)wait;
 
 @property (assign) NSInteger value;
@@ -30,6 +29,22 @@
 }
 
 
+- (instancetype)initWithValue:(NSInteger)value {
+    self = [super init];
+    if (self) {
+        self.value = value;
+        self.monitor = [[[NSCondition alloc] init] autorelease];
+    }
+    return self;
+}
+
+
+- (void)dealloc {
+    self.monitor = nil;
+    [super dealloc];
+}
+
+
 #pragma mark -
 #pragma mark TDSync 
 
@@ -39,11 +54,11 @@
     
     [self decrement];
 
-    if (![self available]) {
+    if ([self reached]) {
         [self broadcast];
     }
     
-    while ([self available]) {
+    while (![self reached]) {
         [self wait];
     }
 
@@ -57,16 +72,42 @@
 
 
 #pragma mark -
-#pragma mark Private
+#pragma mark Private Business
 
-- (void)increment {
-    NSAssert(0, @"should never call");
+- (void)decrement {
+    self.value--;
+}
+
+
+- (BOOL)reached {
+    return _value <= 0;
+}
+
+
+#pragma mark -
+#pragma mark Private Convenience
+
+- (void)lock {
+    NSAssert(_monitor, @"");
+    [_monitor lock];
+}
+
+
+- (void)unlock {
+    NSAssert(_monitor, @"");
+    [_monitor unlock];
+}
+
+
+- (void)wait {
+    NSAssert(_monitor, @"");
+    [_monitor wait];
 }
 
 
 - (void)broadcast {
-    NSAssert(self.monitor, @"");
-    [self.monitor broadcast];
+    NSAssert(_monitor, @"");
+    [_monitor broadcast];
 }
 
 @end
