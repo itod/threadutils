@@ -34,7 +34,7 @@
     
     self.chan = [TDSynchronousChannel synchronousChannel];
     
-    TDPerformOnBackgroundThread(^{
+    TDAtomicInBackgroundNow(^{
         TDFalse(flag);
         self.flag = YES;
         TDEqualObjects(FOOBAR, [chan take]);
