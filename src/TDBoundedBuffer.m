@@ -24,6 +24,7 @@
 
 - (instancetype)initWithSize:(NSUInteger)size {
     NSParameterAssert(NSNotFound != size);
+    NSParameterAssert(size > 0);
     self = [super init];
     if (self) {
         self.size = size;
@@ -85,7 +86,8 @@
 
 
 - (instancetype)initWithSize:(NSUInteger)size {
-    NSAssert(NSNotFound != size, @"");
+    NSParameterAssert(NSNotFound != size);
+    NSParameterAssert(size > 0);
     self = [super init];
     if (self) {
         self.buffer = [[[TDBufferArray alloc] initWithSize:size] autorelease];
