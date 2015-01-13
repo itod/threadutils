@@ -38,17 +38,14 @@
     [self lock];
     
     [self decrement];
-    //NSLog(@"decremented value: %ld, %@", self.value, [[NSThread currentThread] name]);
 
     if (![self available]) {
         [self broadcast];
     } else {
         while ([self available]) {
             [self wait];
-            //NSLog(@"waking up with value: %ld, %@", self.value, [[NSThread currentThread] name]);
         }
     }
-    //NSLog(@"leaving: %ld, %@", self.value, [[NSThread currentThread] name]);
 
     [self unlock];
 }

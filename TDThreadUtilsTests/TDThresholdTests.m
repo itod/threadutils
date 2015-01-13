@@ -33,7 +33,7 @@
     
     [done fulfill];
     
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
         TDNil(err);
         TDEquals(1, counter);
     }];
@@ -49,7 +49,7 @@
         [done fulfill];
     });
     
-    [self waitForExpectationsWithTimeout:2.0 handler:^(NSError *err) {
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
         TDNil(err);
         TDEquals(1, counter);
     }];
@@ -92,7 +92,7 @@
     [th acquire];
     [done fulfill];
     
-    [self waitForExpectationsWithTimeout:1.0 handler:^(NSError *err) {
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
         TDNil(err);
         TDEquals(3, counter);
     }];
