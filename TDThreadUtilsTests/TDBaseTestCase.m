@@ -8,6 +8,10 @@
 
 #import "TDBaseTestCase.h"
 
+@interface TDBaseTestCase ()
+@property (assign) NSUInteger threadCounter;
+@end
+
 @implementation TDBaseTestCase
 
 - (void)dealloc {
@@ -17,8 +21,13 @@
 
 - (void)setUp {
     [super setUp];
+    [[NSThread currentThread] setName:@"MAIN"];
+    
+    self.threadCounter = 0;
+
     self.done = [self expectationWithDescription:@"done"];
     self.flag = NO;
+    self.counter = 0;
 }
 
 - (void)tearDown {
@@ -46,6 +55,7 @@
     TDPerformOnBackgroundThread(^{
         TDNotNil(block);
         @synchronized(self) {
+            [self nameCurrentBackgroundThread];
             block();
         }
     });
@@ -55,11 +65,17 @@
     TDPerformOnBackgroundThreadAfterDelay(delay, ^{
         TDNotNil(block);
         @synchronized(self) {
+            [self nameCurrentBackgroundThread];
             block();
         }
     });
 }
 
+- (void)nameCurrentBackgroundThread { // PRE: lock held
+    [[NSThread currentThread] setName:[NSString stringWithFormat:@"BG#%lu", ++self.threadCounter]];
+}
+
 @synthesize done=done;
 @synthesize flag=flag;
+@synthesize counter=counter;
 @end

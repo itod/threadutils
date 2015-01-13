@@ -11,6 +11,7 @@
 @interface TDBaseTestCase : XCTestCase {
     XCTestExpectation *done;
     BOOL flag;
+    NSInteger counter;
 }
 
 - (void)performAtomic:(void(^)(void))block;
@@ -20,4 +21,5 @@
 
 @property (retain) XCTestExpectation *done;
 @property (assign) BOOL flag;
+@property (assign) NSInteger counter;
 @end

@@ -16,6 +16,7 @@
 - (void)increment;
 
 - (BOOL)available;
+- (void)wait;
 - (void)signal;
 
 - (BOOL)isValidDate:(NSDate *)limit;
@@ -56,6 +57,8 @@
 #pragma mark Public
 
 - (BOOL)attempt {
+    [[self retain] autorelease];
+    
     [self lock];
     
     BOOL success = [self available];
@@ -72,6 +75,7 @@
 
 - (BOOL)attemptBeforeDate:(NSDate *)limit {
     NSParameterAssert([self isValidDate:limit]);
+    [[self retain] autorelease];
     
     [self lock];
     
@@ -92,6 +96,7 @@
 
 
 - (void)acquire {
+    [[self retain] autorelease];
     [self lock];
     
     while (![self available]) {
@@ -104,6 +109,7 @@
 
 
 - (void)relinquish {
+    [[self retain] autorelease];
     [self lock];
     [self increment];
 
