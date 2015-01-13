@@ -165,6 +165,6 @@ When your application is ready for all waiting threads to proceed with execution
 
     [trig fire]; // unblocks all threads waiting on this trigger
 
-All threads that were waiting on this trigger now unblock and proceed simultaneously.
+All threads that were waiting on this trigger will unblock and proceed simultaneously.
 
 Note that the  `-await` and `-fire` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
