@@ -34,7 +34,7 @@
     
     self.chan = [TDSynchronousChannel synchronousChannel];
     
-    TDAtomicInBackgroundNow(^{
+    TDAtomicOnBackgroundThread(^{
         TDFalse(flag);
         self.flag = YES;
         TDEqualObjects(FOOBAR, [chan take]);
@@ -59,7 +59,7 @@
     
     self.chan = [TDSynchronousChannel synchronousChannel];
     
-    TDAtomicInBackground(0.5, ^{
+    TDAtomicOnBackgroundThreadAfterDelay(0.5, ^{
         TDFalse(flag);
         self.flag = YES;
         TDEqualObjects(FOOBAR, [chan take]);
