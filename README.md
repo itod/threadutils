@@ -39,9 +39,54 @@ To relinquish a semaphore's permit owned by the current thread:
 
     [sem relinquish]; // always returns immediately
 
+##Bounded Buffer
+
+Bounded buffers allow you to pass a given number of buffered objects across one or more threads in FIFO order. Additionally, bounded buffers ensure that a "giver" thread will block when attempting to "give" to the buffer while full, and a "taker" thread will block while attempting to "take" from the buffer while empty.
+
+####Create
+
+Create a bounded buffer with the desired buffer size:
+
+    TDBoundedBuffer *buff = [TDBoundedBuffer boundedBufferWithSize:4];
+
+####Give
+
+The "giver" thread should call `-put:`, which will either:
+
+* Return immediately if the buffer currently contains 3 or fewer items.
+
+OR
+
+* if the buffer contains 4 items, the current "giver" thread will block until an item is extracted by another thread.
+
+Example:
+
+    // on "giver" thread
+    
+    id obj = // …find an object to be given
+    
+    [buff put:obj]; // blocks while buffer is full, otherwise returns immediately.
+
+####Take
+The "taker" thread should call `-take`, which will either:
+
+* Extract and return an item immediately if the buffer currently contains 1 or more items.
+
+OR
+
+* if the buffer is empty, the current "taker" thread will block until an item is inserted by another thread.
+
+Example:
+
+    // on "taker" thread
+    
+    id obj = [buff take]; // blocks while buffer is empty, otherwise returns an item immediately
+
+Note that the  `-put:` and `-take` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
+
 ##Synchronous Channel
 
-Synchronous channels allow two threads to rendezvous while one thread passes an object to the other. If the "giver" thread arrives at the rendezvous point first, the giver thread will block until the "taker" thread arrives, and has taken the object being given. Alternatively, if the "taker" thread arrives at the rendezvous first, it blocks until the "giver" thread has arrived and given an object to be taken.
+A synchronous channel is like a bounded buffer with a capacity of `0`. Synchronous channels allow two threads to rendezvous while one thread passes an object to the other. If the "giver" thread arrives at the rendezvous point first, the giver thread will block until the "taker" thread arrives, and has taken the object being given. Alternatively, if the "taker" thread arrives at the rendezvous first, it blocks until the "giver" thread has arrived and given an object to be taken.
 
 So if you have a thread which cannot continue execution until it is guaranteed to have successfully passed an object to another thread, a synchronous channel can help.
 
