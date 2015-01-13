@@ -11,7 +11,7 @@
 
 @interface TDInterpreterSync : NSObject
 
-+ (instancetype)interpreter;
++ (instancetype)interpreterSync;
 
 - (id)awaitPause;
 - (void)pauseWithInfo:(id)info;

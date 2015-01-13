@@ -15,7 +15,7 @@
 
 @implementation TDInterpreterSync
 
-+ (instancetype)interpreter {
++ (instancetype)interpreterSync {
     return [[[self alloc] init] autorelease];
 }
 
