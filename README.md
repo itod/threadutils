@@ -1,6 +1,12 @@
 Some Cocoa Thread Utilities
 ===========
 
+[Semaphore](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
+[Bounded Buffer](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
+[Synchronous Channel](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
+[Threshold](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
+[Trigger](https://github.com/itod/threadutils#some-cocoa-thread-utilities)
+
 ##Semaphore
 
 Semaphores allow you to vend a desired number of permits accross multiple threads in a thread-safe manner. 
