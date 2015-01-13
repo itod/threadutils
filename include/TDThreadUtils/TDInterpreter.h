@@ -1,6 +1,6 @@
 //
 //  TDInterpreter.h
-//  Thread Utils
+//  TDThreadUtils
 //
 //
 //  Created by Todd Ditchendorf on 5/19/14.
