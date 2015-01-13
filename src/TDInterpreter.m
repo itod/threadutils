@@ -6,12 +6,11 @@
 //
 //
 
-#import "TDInterpreter.h"
+#import <TDThreadUtils/TDInterpreter.h>
 #import <TDThreadUtils/TDSynchronousChannel.h>
 
 @interface TDInterpreter ()
-@property (retain) TDSynchronousChannel *pauseChannel;
-@property (retain) TDSynchronousChannel *resumeChannel;
+@property (retain) TDSynchronousChannel *channel;
 @end
 
 @implementation TDInterpreter
@@ -24,41 +23,39 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.pauseChannel = [TDSynchronousChannel synchronousChannel];
-        self.resumeChannel = [TDSynchronousChannel synchronousChannel];
+        self.channel = [TDSynchronousChannel synchronousChannel];
     }
     return self;
 }
 
 
 - (void)dealloc {
-    self.pauseChannel = nil;
-    self.resumeChannel = nil;
+    self.channel = nil;
     [super dealloc];
 }
 
 
 - (id)awaitPause {
-    NSAssert(_pauseChannel, @"");
-    return [_pauseChannel take];
+    NSAssert(_channel, @"");
+    return [_channel take];
 }
 
 
 - (void)pauseWithInfo:(id)info {
-    NSAssert(_pauseChannel, @"");
-    [_pauseChannel put:info];
+    NSAssert(_channel, @"");
+    [_channel put:info];
 }
 
 
 - (id)awaitResume {
-    NSAssert(_resumeChannel, @"");
-    return [_resumeChannel take];
+    NSAssert(_channel, @"");
+    return [_channel take];
 }
 
 
 - (void)resumeWithInfo:(id)info {
-    NSAssert(_resumeChannel, @"");
-    [_resumeChannel put:info];
+    NSAssert(_channel, @"");
+    [_channel put:info];
 }
 
 @end
