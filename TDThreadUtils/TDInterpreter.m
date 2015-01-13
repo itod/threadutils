@@ -1,5 +1,5 @@
 //
-//  TDSync.m
+//  TDInterpreter.m
 //  Thread Utils
 //
 //  Created by Todd Ditchendorf on 5/19/14.
@@ -16,7 +16,7 @@
 
 @implementation TDInterpreter
 
-+ (instancetype)sync {
++ (instancetype)interpreter {
     return [[[self alloc] init] autorelease];
 }
 

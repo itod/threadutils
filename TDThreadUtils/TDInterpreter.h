@@ -1,5 +1,5 @@
 //
-//  TDSync.h
+//  TDInterpreter.h
 //  Thread Utils
 //
 //
@@ -11,7 +11,7 @@
 
 @interface TDInterpreter : NSObject
 
-+ (instancetype)sync;
++ (instancetype)interpreter;
 
 - (id)awaitPause;
 - (void)pauseWithInfo:(id)info;
