@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Todd Ditchendorf. All rights reserved.
 //
 
-#import <TDThreadUtils/TDSync.h>
+#import <Foundation/Foundation.h>
 
 @interface TDTrigger : NSObject
 

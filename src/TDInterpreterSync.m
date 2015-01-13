@@ -1,19 +1,19 @@
 //
-//  TDInterpreter.m
+//  TDInterpreterSync.m
 //  TDThreadUtils
 //
 //  Created by Todd Ditchendorf on 5/19/14.
 //
 //
 
-#import <TDThreadUtils/TDInterpreter.h>
+#import <TDThreadUtils/TDInterpreterSync.h>
 #import <TDThreadUtils/TDSynchronousChannel.h>
 
-@interface TDInterpreter ()
+@interface TDInterpreterSync ()
 @property (retain) TDSynchronousChannel *channel;
 @end
 
-@implementation TDInterpreter
+@implementation TDInterpreterSync
 
 + (instancetype)interpreter {
     return [[[self alloc] init] autorelease];

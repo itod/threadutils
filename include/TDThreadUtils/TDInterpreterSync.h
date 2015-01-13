@@ -1,5 +1,5 @@
 //
-//  TDInterpreter.h
+//  TDInterpreterSync.h
 //  TDThreadUtils
 //
 //
@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TDInterpreter : NSObject
+@interface TDInterpreterSync : NSObject
 
 + (instancetype)interpreter;
 

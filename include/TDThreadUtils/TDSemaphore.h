@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Todd Ditchendorf. All rights reserved.
 //
 
-#import <TDThreadUtils/TDSync.h>
+#import <Foundation/Foundation.h>
 
-@interface TDSemaphore : NSObject <TDSync>
+@interface TDSemaphore : NSObject
 
 + (instancetype)semaphoreWithValue:(NSInteger)value;
 - (instancetype)initWithValue:(NSInteger)value;
