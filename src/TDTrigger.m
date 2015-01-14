@@ -16,7 +16,7 @@
 - (BOOL)fired;
 - (void)wait;
 
-@property (assign) BOOL flag;
+@property (assign) BOOL fired;
 @property (retain) NSCondition *monitor;
 @end
 
@@ -30,7 +30,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.flag = NO;
+        self.fired = NO;
         self.monitor = [[[NSCondition alloc] init] autorelease];
     }
     return self;
@@ -50,7 +50,7 @@
     [[self retain] autorelease];
     [self lock];
     
-    while (![self fired]) {
+    while (!self.fired) {
         [self wait];
     }
     
@@ -62,19 +62,11 @@
     [[self retain] autorelease];
     [self lock];
     
-    self.flag = YES;
+    self.fired = YES;
     
     [self broadcast];
     
     [self unlock];
-}
-
-
-#pragma mark -
-#pragma mark Private Business
-
-- (BOOL)fired {
-    return _flag;
 }
 
 
