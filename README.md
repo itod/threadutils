@@ -47,6 +47,8 @@ To relinquish a semaphore's permit owned by the current thread:
 
     [sem relinquish]; // always returns immediately
 
+---
+
 ##Bounded Buffer
 
 Bounded buffers allow you to pass a given number of buffered objects across one or more threads in FIFO order. Additionally, bounded buffers ensure that a "giver" thread will block when attempting to "give" to the buffer while full, and a "taker" thread will block while attempting to "take" from the buffer while empty.
@@ -73,7 +75,7 @@ Example:
     
     id obj = // …find an object to be given
     
-    [buff put:obj]; // blocks while buffer is full, otherwise returns immediately.
+    [buff put:obj]; // blocks while buffer is full, otherwise returns immediately after "putting".
 
 ####Take
 The "taker" thread should call `-take`, which will either:
@@ -91,6 +93,8 @@ Example:
     id obj = [buff take]; // blocks while buffer is empty, otherwise returns an item immediately
 
 Note that the  `-put:` and `-take` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
+
+---
 
 ##Synchronous Channel
 
@@ -125,6 +129,8 @@ Note that the order in which these two threads "arrive" at the rendezvous (that 
 
 Note that the  `-put:` and `-take` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
 
+---
+
 ##Threshold
 
 A threshold is a way to block multiple threads until a threshold is met.
@@ -148,6 +154,8 @@ On any thread which should block until the threshold limit is reached, call `-aw
 In this example, when `-await` is called for the fourth time (on the fourth thread), the three waiting threads, and the current fourth thread will all unblock and continue execution "simultaneously" (note the precise meaning of "simultaneously" is dependent on the number of cores on your device's processor and the thread scheduling behavior of your operating system).
 
 Note that the  `-await` method uses signal broadcasting techniques (specifically, `NSConditionLock`). It **DOES NOT** involve any polling or busy waiting. 
+
+---
 
 ##Trigger
 
