@@ -63,7 +63,7 @@ Create a bounded buffer with the desired buffer size:
 
 The *giver* thread should call `-put:`, which will either:
 
-* return immediately if the buffer currently contains 3 or fewer items.
+* insert the given item and return immediately if the buffer currently contains 3 or fewer items.
 
 OR
 
