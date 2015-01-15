@@ -135,9 +135,9 @@ Note that the  `-put:` and `-take` methods use signal broadcasting techniques (s
 
 A threshold is a way to block multiple threads until a threshold is met.
 
-A threshold object will block any thread that calls its `-await` method until a given number of threads have have done so. At that point, the threshold is met, and all waiting threads will be unblocked and allowed to continue.
+A threshold object will block any thread that calls its `-await` method until a given number of threads have have done so. At that point, the threshold is met, and all waiting threads will be unblocked and allowed to continue simultaneously.
 
-A threshold is useful for designs which call for a specific number of independent actors or tasks (represented as threads) with no centralized mediator or controller. Using a threshold, these threads can be created and blocked until the exact moment when the desired number are waiting. Then, they all continue simultaneously.
+A threshold is useful for designs which call for a specific number of independent actors or tasks (represented as threads) with no centralized mediator or controller. Using a threshold, these threads can be created and blocked until the exact moment when the desired number have been initialized and are waiting. Then, they all continue simultaneously.
 
 ####Create
 
