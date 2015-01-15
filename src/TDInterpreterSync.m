@@ -7,10 +7,11 @@
 //
 
 #import <TDThreadUtils/TDInterpreterSync.h>
-#import <TDThreadUtils/TDSynchronousChannel.h>
+#import <TDThreadUtils/TDBoundedBuffer.h>
 
 @interface TDInterpreterSync ()
-@property (retain) TDSynchronousChannel *channel;
+@property (retain) TDBoundedBuffer *pauseChannel;
+@property (retain) TDBoundedBuffer *resumeChannel;
 @end
 
 @implementation TDInterpreterSync
@@ -23,39 +24,41 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.channel = [TDSynchronousChannel synchronousChannel];
+        self.pauseChannel = [TDBoundedBuffer boundedBufferWithSize:1];
+        self.resumeChannel = [TDBoundedBuffer boundedBufferWithSize:1];
     }
     return self;
 }
 
 
 - (void)dealloc {
-    self.channel = nil;
+    self.pauseChannel = nil;
+    self.resumeChannel = nil;
     [super dealloc];
 }
 
 
 - (id)awaitPause {
-    NSAssert(_channel, @"");
-    return [_channel take];
+    NSAssert(_pauseChannel, @"");
+    return [_pauseChannel take];
 }
 
 
 - (void)pauseWithInfo:(id)info {
-    NSAssert(_channel, @"");
-    [_channel put:info];
+    NSAssert(_pauseChannel, @"");
+    [_pauseChannel put:info];
 }
 
 
 - (id)awaitResume {
-    NSAssert(_channel, @"");
-    return [_channel take];
+    NSAssert(_resumeChannel, @"");
+    return [_resumeChannel take];
 }
 
 
 - (void)resumeWithInfo:(id)info {
-    NSAssert(_channel, @"");
-    [_channel put:info];
+    NSAssert(_resumeChannel, @"");
+    [_resumeChannel put:info];
 }
 
 @end

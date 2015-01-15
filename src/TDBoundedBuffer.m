@@ -59,7 +59,7 @@
     
     id obj = nil;
     @synchronized(self) {
-        obj = _array[_takeIndex];
+        obj = [[_array[_takeIndex] retain] autorelease];
         [_array removeObjectAtIndex:_takeIndex];
         self.takeIndex = (_takeIndex + 1) % _size;
     }
@@ -81,7 +81,7 @@
 @implementation TDBoundedBuffer
 
 + (instancetype)boundedBufferWithSize:(NSUInteger)size {
-    return [[[self alloc] initWithSize:size] autorelease];
+    return [[(TDBoundedBuffer *)[self alloc] initWithSize:size] autorelease];
 }
 
 
