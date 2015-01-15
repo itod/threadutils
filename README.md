@@ -171,7 +171,7 @@ Triggers are very similar to thresholds, but are approriate for designs that cal
 
 On any thread you wish to block, call `-await`:
 
-    [trig await]; // blocks until *fire* signal sent by controller
+    [trig await]; // blocks until "fire" signal sent by controller
 
 This will block the current thread until the *fire* signal is sent by some other controlling thread.
 
