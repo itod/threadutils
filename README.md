@@ -19,7 +19,9 @@ For example, you may have a pool of a limited number of resources you'd like to 
 
 Create a semaphore with 7 available permits:
 
-    TDSemaphore *sem = [TDSemaphore semaphoreWithValue:7];
+```objc
+TDSemaphore *sem = [TDSemaphore semaphoreWithValue:7];
+```
 
 ####Acquire
 
@@ -27,17 +29,23 @@ There are three different ways to acquire a permit on the current thread. Use on
 
 1. Blocks current thread (possibly forever) until one of the semaphore's permits is acquired:
 
-        [sem acquire];
+```objc
+[sem acquire];
+```
 
 1. Tries to acquire one of semaphore's permits without blocking the current thread. Always returns immediately with a success indicator:
 
-        BOOL success = [sem attempt];
+```objc
+BOOL success = [sem attempt];
+```
 
 1. Tries to acquire one of semaphore's permits for up to 10 seconds while blocking the current thread. Always returns within roughly 10 seconds with a success indicator:
 
-        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:10.0];
-        
-        BOOL success = [sem attemptBeforeDate:date];
+```objc
+NSDate *date = [NSDate dateWithTimeIntervalSinceNow:10.0];
+
+BOOL success = [sem attemptBeforeDate:date];
+```
 
 Note that all of the above acquisition methods use signal broadcasting techniques (specifically, `NSConditionLock`). **NONE** involve any polling or busy waiting. 
 
@@ -45,7 +53,9 @@ Note that all of the above acquisition methods use signal broadcasting technique
 
 To relinquish a semaphore's permit owned by the current thread:
 
-    [sem relinquish]; // always returns immediately
+```objc
+[sem relinquish]; // always returns immediately
+```
 
 ---
 
@@ -57,7 +67,9 @@ Bounded buffers allow you to pass a given number of buffered objects across one 
 
 Create a bounded buffer with the desired buffer size:
 
-    TDBoundedBuffer *buff = [TDBoundedBuffer boundedBufferWithSize:4];
+```objc
+TDBoundedBuffer *buff = [TDBoundedBuffer boundedBufferWithSize:4];
+```
 
 ####Give
 
@@ -71,11 +83,13 @@ OR
 
 Example:
 
-    // on "giver" thread
-    
-    id obj = // …find an object to be given
-    
-    [buff put:obj]; // blocks while buffer is full, otherwise returns immediately after "putting".
+```objc
+// on "giver" thread
+
+id obj = // …find an object to be given
+
+[buff put:obj]; // blocks while buffer is full, otherwise returns immediately after "putting".
+```
 
 ####Take
 The *taker* thread should call `-take`, which will either:
@@ -88,9 +102,11 @@ OR
 
 Example:
 
-    // on "taker" thread
-    
-    id obj = [buff take]; // blocks while buffer is empty, otherwise returns an item immediately
+```objc
+// on "taker" thread
+
+id obj = [buff take]; // blocks while buffer is empty, otherwise returns an item immediately
+```
 
 Note that the  `-put:` and `-take` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
 
@@ -106,24 +122,30 @@ So if you have a thread which cannot continue execution until it is guaranteed t
 
 Create a synchronous channel:
 
-    TDSynchronousChannel *chan = [TDSynchronousChannel synchronousChannel];
+```objc
+TDSynchronousChannel *chan = [TDSynchronousChannel synchronousChannel];
+```
 
 ####Give
 
 The *giver* thread should call `-put:`, which will block until another thread has successfully taken the object:
 
-    // on "giver" thread
-    
-    id obj = // …find an object to be given
-    
-    [chan put:obj]; // blocks until `obj` taken by another thread
+```objc
+// on "giver" thread
+
+id obj = // …find an object to be given
+
+[chan put:obj]; // blocks until `obj` taken by another thread
+```
 
 ####Take
 The *taker* thread should call `-take`, which will block until another thread has given an object to be taken:
 
-    // on "taker" thread
-    
-    id obj = [chan take]; // blocks until another thread "gives"    
+```objc
+// on "taker" thread
+
+id obj = [chan take]; // blocks until another thread "gives"    
+```
 
 Note that the order in which these two threads "arrive" at the rendezvous (that is, the order they call `-put:` or `-take`) does not matter. Indeed, across threads it can be difficult to define execution "order" at all. Neither thread will continue beyond the rendezvous point until the object has been successfully taken.
 
@@ -143,13 +165,17 @@ A threshold is useful for designs which call for a specific number of independen
 
 Usage is simple. Create a threshold with the desired limit:
 
-    TDThreshold *th = [TDThreshold thresholdWithValue:4];
+```objc
+TDThreshold *th = [TDThreshold thresholdWithValue:4];
+```
 
 ####Await
 
 On any thread which should block until the threshold limit is reached, call `-await`.
 
-    [th await]; // blocks until threshold limit is reached
+```objc
+[th await]; // blocks until threshold limit is reached
+```
 
 In this example, when `-await` is called for the fourth time (on the fourth thread), the three waiting threads, and the current fourth thread will all unblock and continue execution "simultaneously" (note the precise meaning of "simultaneously" is dependent on the number of cores on your device's processor and the thread scheduling behavior of your operating system).
 
@@ -165,13 +191,17 @@ Triggers are very similar to thresholds, but are approriate for designs that cal
 
 ####Create
 
-    TDTrigger *trig = [TDTrigger trigger];
+```objc
+TDTrigger *trig = [TDTrigger trigger];
+```
 
 ####Await
 
 On any thread you wish to block, call `-await`:
 
-    [trig await]; // blocks until "fire" signal sent by controller
+```objc
+[trig await]; // blocks until "fire" signal sent by controller
+```
 
 This will block the current thread until the *fire* signal is sent by some other controlling thread.
 
@@ -179,7 +209,9 @@ This will block the current thread until the *fire* signal is sent by some other
 
 When your application is ready for all waiting threads to proceed with execution, *fire* the trigger on an unblocked controlling thread:
 
-    [trig fire]; // unblocks all threads waiting on this trigger
+```objc
+[trig fire]; // unblocks all threads waiting on this trigger
+```
 
 All threads that were waiting on this trigger will unblock and proceed simultaneously.
 
