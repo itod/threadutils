@@ -90,15 +90,16 @@
 
 
 - (BOOL)doReturn:(id)obj {
+    NSParameterAssert(obj);
     BOOL result = YES;
     
     @synchronized(self) {
         NSAssert(_busy, @"");
         if ([_busy containsObject:obj]) {
-            [_busy removeObject:obj];
-            
             NSAssert(_available, @"");
             [_available addObject:obj];
+            
+            [_busy removeObject:obj];
         } else {
             result = NO;
             NSAssert(0, @"");
