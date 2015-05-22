@@ -169,7 +169,7 @@ for (NSUInteger i = 0; i < numItems; ++i)
 TDPool *pool = [TDPool poolWithItems:items];
 ```
 
-####Check-out
+####Check Out
 
 Any thread may attempt to *check out* an object from the pool by calling `-takeItem:`. This method will block the current thread until a resource item is available:
 
@@ -178,7 +178,7 @@ id item = [pool takeItem]; // blocks until item is available
 use(item); // use item
 ```
 
-####Check-in
+####Check In
 
 Any item checked out of a pool should later be checked back in. The item need not be checked back in on the same thread.
 
