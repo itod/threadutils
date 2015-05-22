@@ -8,14 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NSArray *(^TDPoolInitializationBlock)(NSUInteger size);
+
 @interface TDPool : NSObject
 
-+ (instancetype)poolWithSize:(NSUInteger)size;
-- (instancetype)initWithSize:(NSUInteger)size;
++ (instancetype)poolWithSize:(NSUInteger)size initializationBlock:(TDPoolInitializationBlock)block;
+- (instancetype)initWithSize:(NSUInteger)size initializationBlock:(TDPoolInitializationBlock)block;
 
 - (id)takeItem;
 - (void)returnItem:(id)obj;
-
-- (void)initializeItems:(NSUInteger)size; // subclasses should override to populate pool
 
 @end

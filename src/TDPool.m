@@ -10,26 +10,30 @@
 #import <TDThreadUtils/TDSemaphore.h>
 
 @interface TDPool ()
-@property (nonatomic, retain) TDSemaphore *permits;
-@property (nonatomic, retain) NSMutableArray *available;
-@property (nonatomic, retain) NSMutableSet *busy; // `busy` collection is used only to ensure that returned objs were in fact previously taken from this pool.
+@property (retain) TDSemaphore *permits;
+@property (retain) NSMutableArray *available;
+@property (retain) NSMutableSet *busy; // `busy` collection is used only to ensure that returned objs were in fact previously taken from this pool.
 @end
 
 @implementation TDPool
 
-+ (instancetype)poolWithSize:(NSUInteger)size {
-    return [[(TDPool *)[self alloc] initWithSize:size] autorelease];
++ (instancetype)poolWithSize:(NSUInteger)size initializationBlock:(TDPoolInitializationBlock)block {
+    return [[(TDPool *)[self alloc] initWithSize:size initializationBlock:block] autorelease];
 }
 
 
-- (instancetype)initWithSize:(NSUInteger)size {
+- (instancetype)initWithSize:(NSUInteger)size initializationBlock:(TDPoolInitializationBlock)block {
     NSParameterAssert(NSNotFound != size);
     NSParameterAssert(size > 0);
+    NSParameterAssert(block);
     self = [super init];
     if (self) {
         self.permits = [TDSemaphore semaphoreWithValue:size];
         self.available = [NSMutableArray arrayWithCapacity:size];
         self.busy = [NSMutableSet setWithCapacity:size];
+        
+        NSArray *items = block(size);
+        [_available addObjectsFromArray:items];
     }
     return self;
 }
@@ -63,11 +67,6 @@
         NSAssert(_permits, @"");
         [_permits relinquish];
     }
-}
-
-
-- (void)initializeItems:(NSUInteger)size {
-    NSAssert2(0, @"%s is an abstract method and must be implemented in %@", __PRETTY_FUNCTION__, [self class]);
 }
 
 

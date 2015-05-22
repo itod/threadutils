@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D34700C41B0ED4DE0099D78F /* TDPool.m in Sources */ = {isa = PBXBuildFile; fileRef = D34700C21B0ED4DE0099D78F /* TDPool.m */; };
 		D34700C61B0ED4EA0099D78F /* TDPool.h in Headers */ = {isa = PBXBuildFile; fileRef = D34700C51B0ED4EA0099D78F /* TDPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D34700C91B0EDBF60099D78F /* TDPoolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D34700C71B0ED9CC0099D78F /* TDPoolTests.m */; };
 		D3AF43AE1A658078005C309E /* TDBoundedBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AF43A61A658078005C309E /* TDBoundedBuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3AF43AF1A658078005C309E /* TDChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AF43A71A658078005C309E /* TDChannel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D3AF43B01A658078005C309E /* TDInterpreterSync.h in Headers */ = {isa = PBXBuildFile; fileRef = D3AF43A81A658078005C309E /* TDInterpreterSync.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		D34700C21B0ED4DE0099D78F /* TDPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDPool.m; path = src/TDPool.m; sourceTree = SOURCE_ROOT; };
 		D34700C51B0ED4EA0099D78F /* TDPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDPool.h; path = include/TDThreadUtils/TDPool.h; sourceTree = SOURCE_ROOT; };
+		D34700C71B0ED9CC0099D78F /* TDPoolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDPoolTests.m; path = tests/TDPoolTests.m; sourceTree = SOURCE_ROOT; };
 		D3AF43A61A658078005C309E /* TDBoundedBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDBoundedBuffer.h; path = include/TDThreadUtils/TDBoundedBuffer.h; sourceTree = SOURCE_ROOT; };
 		D3AF43A71A658078005C309E /* TDChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDChannel.h; path = include/TDThreadUtils/TDChannel.h; sourceTree = SOURCE_ROOT; };
 		D3AF43A81A658078005C309E /* TDInterpreterSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDInterpreterSync.h; path = include/TDThreadUtils/TDInterpreterSync.h; sourceTree = SOURCE_ROOT; };
@@ -158,6 +160,7 @@
 				D3AF43C41A65811F005C309E /* TDSynchronousChannelTests.m */,
 				D3AF43E81A659BEA005C309E /* TDTriggerTests.m */,
 				D3AF43C71A65811F005C309E /* TDThresholdTests.m */,
+				D34700C71B0ED9CC0099D78F /* TDPoolTests.m */,
 				D3C0C7511A641528004C8B9A /* Supporting Files */,
 			);
 			path = TDThreadUtilsTests;
@@ -307,6 +310,7 @@
 				D3AF43D41A658166005C309E /* TDSynchronousChannelTests.m in Sources */,
 				D3AF43D11A658166005C309E /* TDBaseTestCase.m in Sources */,
 				D3AF43E91A659BEA005C309E /* TDTriggerTests.m in Sources */,
+				D34700C91B0EDBF60099D78F /* TDPoolTests.m in Sources */,
 				D3AF43D01A658166005C309E /* TDTest.m in Sources */,
 				D3AF43D31A658166005C309E /* TDBoundedBufferTests.m in Sources */,
 			);
