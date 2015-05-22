@@ -4,6 +4,7 @@ Some Cocoa Concurrency Utilities
 * [Semaphore](https://github.com/itod/threadutils#semaphore)
 * [Bounded Buffer](https://github.com/itod/threadutils#bounded-buffer)
 * [Synchronous Channel](https://github.com/itod/threadutils#synchronous-channel)
+* [Pool](https://github.com/itod/threadutils#pool)
 * [Threshold](https://github.com/itod/threadutils#threshold)
 * [Trigger](https://github.com/itod/threadutils#trigger)
 
@@ -137,6 +138,7 @@ id obj = // …find an object to be given
 ```
 
 ####Take
+
 The *taker* thread should call `-take`, which will block until another thread has given an object to be taken:
 
 ```objc
@@ -148,6 +150,53 @@ id obj = [chan take]; // blocks until another thread "gives"
 Note that the order in which these two threads "arrive" at the rendezvous (that is, the order they call `-put:` or `-take`) does not matter. Indeed, across threads it can be difficult to define execution "order" at all. Neither thread will continue beyond the rendezvous point until the object has been successfully taken.
 
 Note that the  `-put:` and `-take` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
+
+---
+
+##Pool
+
+A pool keeps a limited collection of resource items that clients can check out and later check back in. Pools rely on a private semaphore for their counting, but provide a higher-level API for vending a limited number of resource objects across threads.
+
+####Create
+
+Create a pool by providing it an array of resource items to manage:
+
+```objc
+NSUInteger numItems = … // size of pool
+NSArray *items = [NSMutableArray arrayWithCapacity:numItems];
+for (NSUInteger i = 0; i < numItems; ++i)
+    [items addObject:[[[MyResource alloc] init] autorelease]];
+TDPool *pool = [TDPool poolWithItems:items];
+```
+
+####Check-out
+
+Any thread may attempt to *check-out* an object from the pool by calling `-takeItem:`. This method will block the current thread until a resource item is available:
+
+```objc
+id item = [pool takeItem]; // blocks until item is available
+… // use item
+```
+
+####Check-in
+
+Any item checked out of a pool should later be checked back in. The item need not be checked back in on the same thread.
+
+```objc
+[pool returnItem:item];
+```
+
+If any other threads were blocked while waiting to check out a resource item, one of those threads will be unblocked and returned this item.
+
+####Safety
+
+For the sake of safety, it may be best to wrap the check-out and check-in inside of a try/finally block:
+
+```objc
+id item = [pool takeItem];
+@try { use(item); }
+@finally { [pool returnItem:item]; }
+```
 
 ---
 
