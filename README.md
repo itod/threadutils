@@ -182,11 +182,11 @@ id item = [pool takeItem]; // blocks until item is available
 
 ####Check In
 
-Any item checked out of a pool should later be *checked back in* by passing it to `-returnItem:`. The item need not be checked back in on the same thread.
+Any item checked out of a pool should later be *checked back in* by passing it to `-returnItem:`. This method will always return immediately. The item need not be checked back in on the same thread.
 
 ```objc
 … // finish using item
-[pool returnItem:item];
+[pool returnItem:item]; // returns immediately
 ```
 
 If any other threads were blocked while waiting to check out a resource item, one of those threads will be unblocked and returned this item.
