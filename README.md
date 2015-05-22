@@ -175,7 +175,7 @@ Any thread may attempt to *check out* an object from the pool by calling `-takeI
 
 ```objc
 id item = [pool takeItem]; // blocks until item is available
-use(item); // use item
+… // use item
 ```
 
 ####Check In
