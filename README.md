@@ -155,7 +155,7 @@ Note that the  `-put:` and `-take` methods use signal broadcasting techniques (s
 
 ##Pool
 
-A pool maintains a limited collection of resource items that clients can check out and later check back in. Pools rely on a private semaphore for their counting, but provide a higher-level API for vending a limited number of resource objects across threads in a thread-safe manner.
+A pool maintains a limited collection of resource items that clients can check out and later check back in. Pools rely on a private semaphore for their counting, but provide a higher-level API for vending a limited number of resource objects across multiple threads in a thread-safe manner.
 
 This pool implementation ensures one additional integrity constraint: only objects checked out a from a given pool may be checked back into that same pool.
 
