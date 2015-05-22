@@ -171,7 +171,7 @@ TDPool *pool = [TDPool poolWithItems:items];
 
 ####Check-out
 
-Any thread may attempt to *check-out* an object from the pool by calling `-takeItem:`. This method will block the current thread until a resource item is available:
+Any thread may attempt to *check out* an object from the pool by calling `-takeItem:`. This method will block the current thread until a resource item is available:
 
 ```objc
 id item = [pool takeItem]; // blocks until item is available
@@ -190,7 +190,7 @@ If any other threads were blocked while waiting to check out a resource item, on
 
 ####Safety
 
-For the sake of safety, it may be best to wrap the check-out and check-in inside of a try/finally block:
+For the sake of safety, it may be best to wrap the check out and check in inside of a try/finally block:
 
 ```objc
 id item = [pool takeItem];
