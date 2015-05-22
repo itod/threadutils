@@ -155,11 +155,11 @@ Note that the  `-put:` and `-take` methods use signal broadcasting techniques (s
 
 ##Pool
 
-A pool keeps a limited collection of resource items that clients can check out and later check back in. Pools rely on a private semaphore for their counting, but provide a higher-level API for vending a limited number of resource objects across threads.
+A pool maintains a limited collection of resource items that clients can check out and later check back in. Pools rely on a private semaphore for their counting, but provide a higher-level API for vending a limited number of resource objects across threads.
 
 ####Create
 
-Create a pool by providing it an array of resource items to manage:
+Create a pool by providing it an array of resource items to maintain:
 
 ```objc
 NSUInteger numItems = … // size of pool
