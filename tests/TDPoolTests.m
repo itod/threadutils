@@ -26,10 +26,8 @@
 
 - (void)test1Item1Thread {
     
-    self.pool = [TDPool poolWithSize:1 initializationBlock:^NSArray *(NSUInteger size) {
-        id obj1 = @"one";
-        return @[obj1];
-    }];
+    id obj1 = @"one";
+    self.pool = [TDPool poolWithItems:@[obj1]];
 
     id obj = [pool takeItem];
     TDEqualObjects(@"one", obj);

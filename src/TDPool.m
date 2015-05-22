@@ -17,23 +17,22 @@
 
 @implementation TDPool
 
-+ (instancetype)poolWithSize:(NSUInteger)size initializationBlock:(TDPoolInitializationBlock)block {
-    return [[(TDPool *)[self alloc] initWithSize:size initializationBlock:block] autorelease];
++ (instancetype)poolWithItems:(NSArray *)items {
+    return [[(TDPool *)[self alloc] initWithItems:items] autorelease];
 }
 
 
-- (instancetype)initWithSize:(NSUInteger)size initializationBlock:(TDPoolInitializationBlock)block {
-    NSParameterAssert(NSNotFound != size);
-    NSParameterAssert(size > 0);
-    NSParameterAssert(block);
+- (instancetype)initWithItems:(NSArray *)items {
+    NSParameterAssert(items);
     self = [super init];
     if (self) {
+        NSUInteger size = [items count];
+        NSAssert(NSNotFound != size, @"");
+        NSAssert(size > 0, @"");
+
         self.permits = [TDSemaphore semaphoreWithValue:size];
-        self.available = [NSMutableArray arrayWithCapacity:size];
+        self.available = [NSMutableArray arrayWithArray:items];
         self.busy = [NSMutableSet setWithCapacity:size];
-        
-        NSArray *items = block(size);
-        [_available addObjectsFromArray:items];
     }
     return self;
 }

@@ -8,12 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NSArray *(^TDPoolInitializationBlock)(NSUInteger size);
-
 @interface TDPool : NSObject
 
-+ (instancetype)poolWithSize:(NSUInteger)size initializationBlock:(TDPoolInitializationBlock)block;
-- (instancetype)initWithSize:(NSUInteger)size initializationBlock:(TDPoolInitializationBlock)block;
++ (instancetype)poolWithItems:(NSArray *)items;
+- (instancetype)initWithItems:(NSArray *)items;
 
 - (id)takeItem;
 - (void)returnItem:(id)obj;
