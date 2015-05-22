@@ -61,6 +61,33 @@
     }];
 }
 
+
+- (void)test2Items1ThreadSwap {
+    
+    id obj1 = @"one";
+    id obj2 = @"two";
+    self.pool = [TDPool poolWithItems:@[obj1, obj2]];
+    
+    id took1 = [pool takeItem];
+    TDEqualObjects(@"two", took1);
+    
+    id took2 = [pool takeItem];
+    TDEqualObjects(@"one", took2);
+    
+    [pool returnItem:took2];
+    
+    id took3 = [pool takeItem];
+    TDEqualObjects(@"one", took3);
+
+    [pool returnItem:took1];
+    [pool returnItem:took3];
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
+        TDNil(err);
+    }];
+}
+
 //- (void)test1Permit2Threads {
 //    
 //    self.th = [TDThreshold thresholdWithValue:1];
