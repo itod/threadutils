@@ -177,6 +177,7 @@ Any thread may attempt to *check out* an object from the pool by calling `-takeI
 
 ```objc
 id item = [pool takeItem]; // blocks until item is available
+
 … // use item
 ```
 
@@ -186,6 +187,7 @@ Any item checked out of a pool should later be *checked back in* by passing it t
 
 ```objc
 … // finish using item
+
 [pool returnItem:item]; // returns immediately
 ```
 
@@ -193,7 +195,7 @@ If any other threads were blocked while waiting to check out a resource item, on
 
 ####Safety
 
-For the sake of safety, it may be best to wrap the check out and check in inside of a try/finally block:
+For the sake of safety, it may be best to wrap the item usage and check in inside of a try/finally block:
 
 ```objc
 id item = [pool takeItem];
