@@ -16,6 +16,6 @@
 - (id)takeItem;
 - (void)returnItem:(id)obj;
 
-- (void)initializeItems; // subclasses should override
+- (void)initializeItems:(NSUInteger)size; // subclasses should override to populate pool
 
 @end
