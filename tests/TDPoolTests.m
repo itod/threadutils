@@ -149,58 +149,5 @@
     }];
 }
 
-//- (void)test3Permits3Threads {
-//    
-//    self.th = [TDThreshold thresholdWithValue:3];
-//    
-//    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
-//        self.counter++;
-//        [th await];
-//    });
-//    
-//    TDPerformOnBackgroundThreadAfterDelay(0.2, ^{
-//        self.counter++;
-//        [th await];
-//    });
-//    
-//    self.counter++;
-//    [th await];
-//    [done fulfill];
-//    
-//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
-//        TDNil(err);
-//        TDEquals(3, counter);
-//    }];
-//}
-//
-//- (void)test4Permits4Threads {
-//    
-//    self.th = [TDThreshold thresholdWithValue:4];
-//    
-//    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
-//        self.counter++;
-//        [th await];
-//    });
-//    
-//    TDPerformOnBackgroundThreadAfterDelay(0.2, ^{
-//        self.counter++;
-//        [th await];
-//    });
-//    
-//    TDPerformOnBackgroundThreadAfterDelay(0.3, ^{
-//        self.counter++;
-//        [th await];
-//    });
-//    
-//    self.counter++;
-//    [th await];
-//    [done fulfill];
-//    
-//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
-//        TDNil(err);
-//        TDEquals(4, counter);
-//    }];
-//}
-
 @synthesize pool=pool;
 @end
