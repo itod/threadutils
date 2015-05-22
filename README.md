@@ -33,13 +33,13 @@ There are three different ways to acquire a permit on the current thread. Use on
 [sem acquire];
 ```
 
-1. Tries to acquire one of semaphore's permits without blocking the current thread. Always returns immediately with a success indicator:
+2. Tries to acquire one of semaphore's permits without blocking the current thread. Always returns immediately with a success indicator:
 
 ```objc
 BOOL success = [sem attempt];
 ```
 
-1. Tries to acquire one of semaphore's permits for up to 10 seconds while blocking the current thread. Always returns within roughly 10 seconds with a success indicator:
+3. Tries to acquire one of semaphore's permits for up to 10 seconds while blocking the current thread. Always returns within roughly 10 seconds with a success indicator:
 
 ```objc
 NSDate *date = [NSDate dateWithTimeIntervalSinceNow:10.0];
