@@ -18,7 +18,7 @@
 @implementation TDPool
 
 + (instancetype)poolWithItems:(NSArray *)items {
-    return [[(TDPool *)[self alloc] initWithItems:items] autorelease];
+    return [[[self alloc] initWithItems:items] autorelease];
 }
 
 
