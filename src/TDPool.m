@@ -10,9 +10,9 @@
 #import <TDThreadUtils/TDSemaphore.h>
 
 @interface TDPool ()
-@property (nonatomic, retain) TDSemaphore *available;
-@property (nonatomic, retain) NSMutableArray *items;
-@property (nonatomic, retain) NSMutableSet *busy; // busy property is used only to ensure that returned objs were in fact previously taken from this pool.
+@property (nonatomic, retain) TDSemaphore *permits;
+@property (nonatomic, retain) NSMutableArray *available;
+@property (nonatomic, retain) NSMutableSet *busy; // `busy` collection is used only to ensure that returned objs were in fact previously taken from this pool.
 @end
 
 @implementation TDPool
@@ -27,8 +27,8 @@
     NSParameterAssert(size > 0);
     self = [super init];
     if (self) {
-        self.available = [TDSemaphore semaphoreWithValue:size];
-        self.items = [NSMutableArray arrayWithCapacity:size];
+        self.permits = [TDSemaphore semaphoreWithValue:size];
+        self.available = [NSMutableArray arrayWithCapacity:size];
         self.busy = [NSMutableSet setWithCapacity:size];
     }
     return self;
@@ -36,8 +36,8 @@
 
 
 - (void)dealloc {
+    self.permits = nil;
     self.available = nil;
-    self.items = nil;
     self.busy = nil;
     [super dealloc];
 }
@@ -47,8 +47,8 @@
 #pragma mark Public
 
 - (id)takeItem {
-    NSAssert(_available, @"");
-    [_available acquire];
+    NSAssert(_permits, @"");
+    [_permits acquire];
     
     id obj = [self doTake];
     NSAssert(obj, @"");
@@ -60,8 +60,8 @@
     NSParameterAssert(obj);
     
     if ([self doReturn:obj]) {
-        NSAssert(_available, @"");
-        [_available relinquish];
+        NSAssert(_permits, @"");
+        [_permits relinquish];
     }
 }
 
@@ -78,9 +78,9 @@
     id obj = nil;
     
     @synchronized(self) {
-        NSAssert([_items count], @"");
-        obj = [[[_items lastObject] retain] autorelease];
-        [_items removeLastObject];
+        NSAssert([_available count], @"");
+        obj = [[[_available lastObject] retain] autorelease];
+        [_available removeLastObject];
         
         NSAssert(_busy, @"");
         NSAssert(![_busy containsObject:obj], @"");
@@ -97,8 +97,8 @@
     @synchronized(self) {
         NSAssert(_busy, @"");
         if ([_busy containsObject:obj]) {
-            NSAssert(_items, @"");
-            [_items addObject:obj];
+            NSAssert(_available, @"");
+            [_available addObject:obj];
         } else {
             result = NO;
             NSAssert(0, @"");
