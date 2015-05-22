@@ -180,7 +180,7 @@ id item = [pool takeItem]; // blocks until item is available
 
 ####Check In
 
-Any item checked out of a pool should later be checked back in. The item need not be checked back in on the same thread.
+Any item checked out of a pool should later be *checked back in* by passing it to `-returnItem:`. The item need not be checked back in on the same thread.
 
 ```objc
 … // finish using item
