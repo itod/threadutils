@@ -104,25 +104,40 @@
 //    }];
 //}
 //
-//- (void)test2Permits2Threads {
-//    
-//    self.th = [TDThreshold thresholdWithValue:2];
-//    
-//    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
-//        self.counter++;
-//        [th await];
-//    });
-//    
-//    self.counter++;
-//    [th await];
-//    [done fulfill];
-//    
-//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
-//        TDNil(err);
-//        TDEquals(2, counter);
-//    }];
-//}
-//
+- (void)test2Items2Threads {
+    
+    id obj1 = @"one";
+    id obj2 = @"two";
+    self.pool = [TDPool poolWithItems:@[obj1, obj2]];
+    self.threshold = [TDThreshold thresholdWithValue:2];
+
+    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
+        id obj = [pool takeItem];
+        TDEqualObjects(@"one", obj);
+        [pool returnItem:obj];
+        self.counter++;
+        [self.threshold await];
+    });
+    
+    id obj = [pool takeItem];
+    TDEqualObjects(@"two", obj);
+    self.counter++;
+    [self.threshold await];
+    [pool returnItem:obj];
+
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
+        TDNil(err);
+        TDEquals(2, counter);
+        
+        id took1 = [pool takeItem];
+        TDEqualObjects(@"two", took1);
+        id took2 = [pool takeItem];
+        TDEqualObjects(@"one", took2);
+    }];
+}
+
 //- (void)test3Permits3Threads {
 //    
 //    self.th = [TDThreshold thresholdWithValue:3];
