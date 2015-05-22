@@ -28,11 +28,32 @@
     
     id obj1 = @"one";
     self.pool = [TDPool poolWithItems:@[obj1]];
-
+    
     id obj = [pool takeItem];
     TDEqualObjects(@"one", obj);
     
     [pool returnItem:obj];
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
+        TDNil(err);
+    }];
+}
+
+- (void)test2Items1Thread {
+    
+    id obj1 = @"one";
+    id obj2 = @"two";
+    self.pool = [TDPool poolWithItems:@[obj1, obj2]];
+    
+    id took1 = [pool takeItem];
+    TDEqualObjects(@"two", took1);
+    
+    id took2 = [pool takeItem];
+    TDEqualObjects(@"one", took2);
+    
+    [pool returnItem:took1];
+    [pool returnItem:took2];
     [done fulfill];
     
     [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
