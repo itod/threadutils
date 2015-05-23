@@ -167,7 +167,7 @@ Create a pool by providing it an array of resource items to maintain:
 NSUInteger numItems = … // size of pool
 NSArray *items = [NSMutableArray arrayWithCapacity:numItems];
 for (NSUInteger i = 0; i < numItems; ++i)
-    [items addObject:[[[MyResource alloc] init] autorelease]];
+    [items addObject:[MyResource new]];
 TDPool *pool = [TDPool poolWithItems:items];
 ```
 
