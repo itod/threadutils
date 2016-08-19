@@ -182,6 +182,8 @@ id given = // …find an object to be swapped
 id taken = [ex exchange:given]; // blocks until `given` taken by another thread
 ```
 
+Note that the  `-exchange:` method uses signal broadcasting techniques (specifically, `NSConditionLock`). It **DOES NOT** involve any polling or busy waiting. 
+
 ---
 
 ##Pool
