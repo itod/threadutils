@@ -47,7 +47,7 @@
     BOOL flag;
     @synchronized (self) {
         flag = self.flag;
-        self.flag = !self.flag;
+        self.flag = !flag;
     }
     
     id outObj = nil;
