@@ -49,27 +49,27 @@
     }];
 }
 
-//- (void)test1Permit2ThreadsDelay {
-//    
-//    self.exchanger = [TDExchanger exchanger];
-//    
-//    TDAtomicOnBackgroundThreadAfterDelay(0.5, ^{
-//        TDFalse(flag);
-//        self.flag = YES;
-//        TDEqualObjects(FOOBAR, [exchanger take]);
-//    });
-//    
-//    TDFalse(flag);
-//    [exchanger put:FOOBAR];
-//    TDTrue(flag);
-//    
-//    [done fulfill];
-//    
-//    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
-//        TDNil(err);
-//        TDTrue(flag);
-//    }];
-//}
+- (void)test1Permit2ThreadsDelay {
+    
+    self.exchanger = [TDExchanger exchanger];
+    
+    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+        TDFalse(flag);
+        self.flag = YES;
+        TDEqualObjects(FOO, [exchanger exchange:BAR]);
+    });
+    
+    TDFalse(flag);
+    TDEqualObjects(BAR, [exchanger exchange:FOO]);
+    TDTrue(flag);
+    
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
+        TDNil(err);
+        TDTrue(flag);
+    }];
+}
 
 @synthesize exchanger=exchanger;
 @end
