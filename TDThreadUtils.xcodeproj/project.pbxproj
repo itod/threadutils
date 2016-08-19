@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D33849E91D67752100087F7D /* TDExchanger.h in Headers */ = {isa = PBXBuildFile; fileRef = D33849E81D67752100087F7D /* TDExchanger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D33849EB1D67752D00087F7D /* TDExchanger.m in Sources */ = {isa = PBXBuildFile; fileRef = D33849EA1D67752D00087F7D /* TDExchanger.m */; };
+		D33849ED1D67786800087F7D /* TDExchangerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D33849EC1D67786800087F7D /* TDExchangerTests.m */; };
 		D34700C41B0ED4DE0099D78F /* TDPool.m in Sources */ = {isa = PBXBuildFile; fileRef = D34700C21B0ED4DE0099D78F /* TDPool.m */; };
 		D34700C61B0ED4EA0099D78F /* TDPool.h in Headers */ = {isa = PBXBuildFile; fileRef = D34700C51B0ED4EA0099D78F /* TDPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D34700C91B0EDBF60099D78F /* TDPoolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D34700C71B0ED9CC0099D78F /* TDPoolTests.m */; };
@@ -47,6 +50,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D33849E81D67752100087F7D /* TDExchanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDExchanger.h; path = include/TDThreadUtils/TDExchanger.h; sourceTree = SOURCE_ROOT; };
+		D33849EA1D67752D00087F7D /* TDExchanger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDExchanger.m; path = src/TDExchanger.m; sourceTree = SOURCE_ROOT; };
+		D33849EC1D67786800087F7D /* TDExchangerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDExchangerTests.m; path = tests/TDExchangerTests.m; sourceTree = SOURCE_ROOT; };
 		D34700C21B0ED4DE0099D78F /* TDPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDPool.m; path = src/TDPool.m; sourceTree = SOURCE_ROOT; };
 		D34700C51B0ED4EA0099D78F /* TDPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDPool.h; path = include/TDThreadUtils/TDPool.h; sourceTree = SOURCE_ROOT; };
 		D34700C71B0ED9CC0099D78F /* TDPoolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDPoolTests.m; path = tests/TDPoolTests.m; sourceTree = SOURCE_ROOT; };
@@ -127,6 +133,8 @@
 				D3AF43B61A65809A005C309E /* TDBoundedBuffer.m */,
 				D3AF43AB1A658078005C309E /* TDSynchronousChannel.h */,
 				D3AF43B91A65809A005C309E /* TDSynchronousChannel.m */,
+				D33849E81D67752100087F7D /* TDExchanger.h */,
+				D33849EA1D67752D00087F7D /* TDExchanger.m */,
 				D3AF43E61A659B01005C309E /* TDTrigger.h */,
 				D3AF43E41A659AFE005C309E /* TDTrigger.m */,
 				D3AF43AD1A658078005C309E /* TDThreshold.h */,
@@ -158,6 +166,7 @@
 				D3AF43C31A65811F005C309E /* TDSemaphoreTests.m */,
 				D3AF43C21A65811F005C309E /* TDBoundedBufferTests.m */,
 				D3AF43C41A65811F005C309E /* TDSynchronousChannelTests.m */,
+				D33849EC1D67786800087F7D /* TDExchangerTests.m */,
 				D3AF43E81A659BEA005C309E /* TDTriggerTests.m */,
 				D3AF43C71A65811F005C309E /* TDThresholdTests.m */,
 				D34700C71B0ED9CC0099D78F /* TDPoolTests.m */,
@@ -190,6 +199,7 @@
 				D3AF43B51A658078005C309E /* TDThreshold.h in Headers */,
 				D3AF43AE1A658078005C309E /* TDBoundedBuffer.h in Headers */,
 				D3AF43C81A65811F005C309E /* TDBaseTestCase.h in Headers */,
+				D33849E91D67752100087F7D /* TDExchanger.h in Headers */,
 				D3AF43AF1A658078005C309E /* TDChannel.h in Headers */,
 				D3AF43E71A659B01005C309E /* TDTrigger.h in Headers */,
 			);
@@ -293,6 +303,7 @@
 			files = (
 				D3AF43BE1A65809A005C309E /* TDSynchronousChannel.m in Sources */,
 				D3AF43BB1A65809A005C309E /* TDBoundedBuffer.m in Sources */,
+				D33849EB1D67752D00087F7D /* TDExchanger.m in Sources */,
 				D3AF43BD1A65809A005C309E /* TDSemaphore.m in Sources */,
 				D34700C41B0ED4DE0099D78F /* TDPool.m in Sources */,
 				D3AF43BC1A65809A005C309E /* TDInterpreterSync.m in Sources */,
@@ -313,6 +324,7 @@
 				D34700C91B0EDBF60099D78F /* TDPoolTests.m in Sources */,
 				D3AF43D01A658166005C309E /* TDTest.m in Sources */,
 				D3AF43D31A658166005C309E /* TDBoundedBufferTests.m in Sources */,
+				D33849ED1D67786800087F7D /* TDExchangerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
