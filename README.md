@@ -4,6 +4,7 @@ Some Cocoa Concurrency Utilities
 * [Semaphore](https://github.com/itod/threadutils#semaphore)
 * [Bounded Buffer](https://github.com/itod/threadutils#bounded-buffer)
 * [Synchronous Channel](https://github.com/itod/threadutils#synchronous-channel)
+* [Exchanger](https://github.com/itod/threadutils#exchanger)
 * [Pool](https://github.com/itod/threadutils#pool)
 * [Threshold](https://github.com/itod/threadutils#threshold)
 * [Trigger](https://github.com/itod/threadutils#trigger)
@@ -115,7 +116,7 @@ Note that the  `-put:` and `-take` methods use signal broadcasting techniques (s
 
 A synchronous channel is like a bounded buffer with a capacity of `0`. Synchronous channels allow two threads to rendezvous while one thread passes an object to the other. If the *giver* thread arrives at the rendezvous point first, the giver thread will block until the *taker* thread arrives, and has taken the object being given. Alternatively, if the *taker* thread arrives at the rendezvous first, it blocks until the *giver* thread has arrived and given an object to be taken.
 
-So if you have a thread which cannot continue execution until it is guaranteed to have successfully passed an object to another thread, a synchronous channel can help.
+So if you have a thread which cannot continue execution until it is guaranteed to have successfully *passed an object* to another thread, a synchronous channel can help.
 
 ####Create
 
@@ -150,6 +151,35 @@ id obj = [chan take]; // blocks until another thread "gives"
 Note that the order in which these two threads "arrive" at the rendezvous (that is, the order they call `-put:` or `-take`) does not matter. Indeed, across threads it can be difficult to define execution "order" at all. Neither thread will continue beyond the rendezvous point until the object has been successfully taken.
 
 Note that the  `-put:` and `-take` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
+
+---
+
+##Exchanger
+
+An exchanger is a lot like a synchronous channel, except that instead of passing a single object from one thread to another (like relay racers passing a baton), an exchanger allows two threads to swap two objects (like a hostage taker swapping a hostage for ransom). Exchangers allow two threads to rendezvous while swapping two objects in a single operation. Of course, neither thread can continue until the swap is complete.
+
+One thread arrives at the rendezvous point first, "gives" its object, and blocks until a second thread arrives to "give" its own object. The first thread is blocked until both threads have arrived and successfully given their respective objects. The objects are swapped, each thread receives its "taken" object and continues execution.
+
+So if you have two threads which cannot continue execution until they are guaranteed to have successfully *swapped objects*, an exchanger can help.
+
+####Create
+
+Create an exchanger:
+
+```objc
+TDExchanger *ex = [TDExchanger exchanger];
+```
+
+####Swap
+
+Each thread should call `-exchange:`, which will block until another thread has also arrived and successfully swapped the given objects:
+
+```objc
+// the code is the same on both threads
+
+id given = // …find an object to be swapped
+
+id taken = [ex exchange:given]; // blocks until `given` taken by another thread
 
 ---
 
