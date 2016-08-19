@@ -31,7 +31,7 @@
     
     self.exchanger = [TDExchanger exchanger];
     
-    TDPerformOnBackgroundThread(^{
+    TDAtomicOnBackgroundThread(^{
         TDFalse(flag);
         self.flag = YES;
         TDEqualObjects(FOO, [exchanger exchange:BAR]);
@@ -53,7 +53,7 @@
     
     self.exchanger = [TDExchanger exchanger];
     
-    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+    TDAtomicOnBackgroundThreadAfterDelay(0.5, ^{
         TDFalse(flag);
         self.flag = YES;
         TDEqualObjects(FOO, [exchanger exchange:BAR]);
