@@ -158,7 +158,7 @@ Note that the  `-put:` and `-take` methods use signal broadcasting techniques (s
 
 An exchanger is a lot like a synchronous channel, except that instead of passing a single object from one thread to another (like relay racers passing a baton), an exchanger allows two threads to swap two objects (like a hostage taker swapping a hostage for ransom). Exchangers allow two threads to rendezvous while swapping two objects in a single operation. Neither thread can continue execution until the swap is complete.
 
-One thread arrives at the rendezvous point first, "gives" its object, and blocks until a second thread arrives to "give" its own object. The first thread is blocked until both threads have arrived and successfully given their respective objects. The objects are swapped, each thread receives its "taken" object and continues execution.
+One thread arrives at the rendezvous point first, gives its "offer" object, and blocks until a second thread arrives to give its own "offer". The first thread is blocked until both threads have arrived and successfully given their respective objects. The objects are swapped, each thread receives its "reward" object and continues execution.
 
 So if you have two threads which cannot continue execution until they are guaranteed to have successfully *swapped objects*, an exchanger can help.
 
@@ -177,9 +177,9 @@ Each thread should call `-exchange:`, which will block until another thread has 
 ```objc
 // the code is the same on both threads
 
-id given = // …find an object to be swapped
+id offer = // …find an object to be swapped
 
-id taken = [ex exchange:given]; // blocks until `given` taken by another thread
+id reward = [ex exchange:offer]; // blocks until `offer` taken by another thread
 ```
 
 Note that the  `-exchange:` method uses signal broadcasting techniques (specifically, `NSConditionLock`). It **DOES NOT** involve any polling or busy waiting. 
