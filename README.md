@@ -180,6 +180,7 @@ Each thread should call `-exchange:`, which will block until another thread has 
 id given = // …find an object to be swapped
 
 id taken = [ex exchange:given]; // blocks until `given` taken by another thread
+```
 
 ---
 
