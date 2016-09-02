@@ -156,7 +156,7 @@ Note that the  `-put:` and `-take` methods use signal broadcasting techniques (s
 
 ##Exchanger
 
-An exchanger is a lot like a synchronous channel, except that instead of passing a single object from one thread to another (like relay racers passing a baton), an exchanger allows two threads to swap two objects (like a hostage taker swapping a hostage for ransom). Exchangers allow two threads to rendezvous while swapping two objects in a single operation. Neither thread can continue execution until the swap is complete.
+An exchanger is a lot like a synchronous channel, except that instead of passing a single object from one thread to another (like relay racers passing a baton), an exchanger allows two threads to rendezvous and swap two objects (like a hostage taker swapping a hostage for ransom).
 
 One thread arrives at the rendezvous point first, gives its "offer" object, and blocks until a second thread arrives to give its own "offer". The objects are swapped, each thread receives its "reward" object and continues execution.
 
