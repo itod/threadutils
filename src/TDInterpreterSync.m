@@ -7,11 +7,11 @@
 //
 
 #import <TDThreadUtils/TDInterpreterSync.h>
-#import <TDThreadUtils/TDBoundedBuffer.h>
+#import <TDThreadUtils/TDSynchronousChannel.h>
 
 @interface TDInterpreterSync ()
-@property (retain) TDBoundedBuffer *pauseChannel;
-@property (retain) TDBoundedBuffer *resumeChannel;
+@property (retain) TDSynchronousChannel *pauseChannel;
+@property (retain) TDSynchronousChannel *resumeChannel;
 @end
 
 @implementation TDInterpreterSync
@@ -24,8 +24,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.pauseChannel = [TDBoundedBuffer boundedBufferWithSize:1];
-        self.resumeChannel = [TDBoundedBuffer boundedBufferWithSize:1];
+        self.pauseChannel = [TDSynchronousChannel synchronousChannel];
+        self.resumeChannel = [TDSynchronousChannel synchronousChannel];
     }
     return self;
 }
