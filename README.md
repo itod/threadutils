@@ -11,13 +11,13 @@ Some Cocoa Concurrency Utilities
 
 ----
 
-##Semaphore
+## Semaphore
 
 Semaphores allow you to vend a desired number of permits accross multiple threads in a thread-safe manner. 
 
 For example, you may have a pool of a limited number of resources you'd like to vend accross multiple threads. A semaphore can help you do this.
 
-####Create
+#### Create
 
 Create a semaphore with 7 available permits:
 
@@ -25,7 +25,7 @@ Create a semaphore with 7 available permits:
 TDSemaphore *sem = [TDSemaphore semaphoreWithValue:7];
 ```
 
-####Acquire
+#### Acquire
 
 There are three different ways to acquire a permit on the current thread. Use one of the following according to your needs:
 
@@ -49,7 +49,7 @@ There are three different ways to acquire a permit on the current thread. Use on
 
 Note that all of the above acquisition methods use signal broadcasting techniques (specifically, `NSConditionLock`). **NONE** involve any polling or busy waiting. 
 
-####Relinquish
+#### Relinquish
 
 To relinquish a semaphore's permit owned by the current thread:
 
@@ -59,11 +59,11 @@ To relinquish a semaphore's permit owned by the current thread:
 
 ---
 
-##Bounded Buffer
+## Bounded Buffer
 
 Bounded buffers allow you to pass a given number of buffered objects across one or more threads in FIFO order. Additionally, bounded buffers ensure that a *giver* thread will block when attempting to *give* to the buffer while full, and a *taker* thread will block while attempting to *take* from the buffer while empty.
 
-####Create
+#### Create
 
 Create a bounded buffer with the desired buffer size:
 
@@ -71,7 +71,7 @@ Create a bounded buffer with the desired buffer size:
 TDBoundedBuffer *buff = [TDBoundedBuffer boundedBufferWithSize:4];
 ```
 
-####Give
+#### Give
 
 The *giver* thread should call `-put:`, which will either:
 
@@ -91,7 +91,7 @@ id obj = // …find an object to be given
 [buff put:obj]; // blocks while buffer is full, otherwise returns immediately after "putting".
 ```
 
-####Take
+#### Take
 The *taker* thread should call `-take`, which will either:
 
 * extract and return an item immediately if the buffer currently contains 1 or more items.
@@ -112,13 +112,13 @@ Note that the  `-put:` and `-take` methods use signal broadcasting techniques (s
 
 ---
 
-##Synchronous Channel
+## Synchronous Channel
 
 A synchronous channel is like a bounded buffer with a capacity of `0`. Synchronous channels allow two threads to rendezvous while one thread passes an object to the other. If the *giver* thread arrives at the rendezvous point first, the giver thread will block until the *taker* thread arrives, and has taken the object being given. Alternatively, if the *taker* thread arrives at the rendezvous first, it blocks until the *giver* thread has arrived and given an object to be taken.
 
 So if you have a thread which cannot continue execution until it is guaranteed to have successfully *passed an object* to another thread, a synchronous channel can help.
 
-####Create
+#### Create
 
 Create a synchronous channel:
 
@@ -126,7 +126,7 @@ Create a synchronous channel:
 TDSynchronousChannel *chan = [TDSynchronousChannel synchronousChannel];
 ```
 
-####Give
+#### Give
 
 The *giver* thread should call `-put:`, which will block until another thread has successfully taken the object:
 
@@ -138,7 +138,7 @@ id obj = // …find an object to be given
 [chan put:obj]; // blocks until `obj` taken by another thread
 ```
 
-####Take
+#### Take
 
 The *taker* thread should call `-take`, which will block until another thread has given an object to be taken:
 
@@ -154,7 +154,7 @@ Note that the  `-put:` and `-take` methods use signal broadcasting techniques (s
 
 ---
 
-##Exchanger
+## Exchanger
 
 An exchanger is a lot like a synchronous channel, except that instead of passing a single object from one thread to another (like relay racers passing a baton), an exchanger allows two threads to rendezvous and swap two objects (like a hostage taker swapping a hostage for ransom).
 
@@ -162,7 +162,7 @@ One thread arrives at the rendezvous point first, gives its "offer" object, and 
 
 So if you have two threads which cannot continue execution until they are guaranteed to have successfully *swapped objects*, an exchanger can help.
 
-####Create
+#### Create
 
 Create an exchanger:
 
@@ -170,7 +170,7 @@ Create an exchanger:
 TDExchanger *ex = [TDExchanger exchanger];
 ```
 
-####Swap
+#### Swap
 
 Each thread should call `-exchange:`, which will block until another thread has also arrived and successfully swapped the given objects:
 
@@ -186,13 +186,13 @@ Note that the  `-exchange:` method uses signal broadcasting techniques (specific
 
 ---
 
-##Pool
+## Pool
 
 A pool maintains a limited collection of resource items that clients can check out and later check back in. Pools rely on a private semaphore for their counting, but provide a higher-level API for vending a limited number of resource objects across multiple threads in a thread-safe manner.
 
 This pool implementation ensures one additional integrity constraint: only objects checked out a from a given pool may be checked back into that same pool.
 
-####Create
+#### Create
 
 Create a pool by providing it an array of resource items to maintain:
 
@@ -206,7 +206,7 @@ for (NSUInteger i = 0; i < numItems; ++i)
 TDPool *pool = [TDPool poolWithItems:items];
 ```
 
-####Check Out
+#### Check Out
 
 Any thread may attempt to *check out* an object from the pool by calling `-takeItem:`. This method will block the current thread until a resource item is available:
 
@@ -216,7 +216,7 @@ id item = [pool takeItem]; // blocks until item is available
 … // use item
 ```
 
-####Check In
+#### Check In
 
 Any item checked out of a pool should later be *checked back in* by passing it to `-returnItem:`. This method will always return immediately. The item need not be checked back in on the same thread.
 
@@ -228,7 +228,7 @@ Any item checked out of a pool should later be *checked back in* by passing it t
 
 If any other threads were blocked while waiting to check out a resource item, one of those threads will be unblocked and returned this item.
 
-####Safety
+#### Safety
 
 For the sake of safety, it may be best to wrap the item usage and check in inside of a try/finally block:
 
@@ -240,7 +240,7 @@ id item = [pool takeItem];
 
 ---
 
-##Threshold
+## Threshold
 
 A threshold is a way to block multiple threads until a threshold is met.
 
@@ -248,7 +248,7 @@ A threshold object will block any thread that calls its `-await` method until a 
 
 A threshold is useful for designs which call for a specific number of independent actors or tasks (represented as threads) with no centralized mediator or controller. Using a threshold, these threads can be created and blocked until the exact moment when the desired number have been initialized and are waiting. Then, they all continue simultaneously.
 
-####Create
+#### Create
 
 Usage is simple. Create a threshold with the desired limit:
 
@@ -256,7 +256,7 @@ Usage is simple. Create a threshold with the desired limit:
 TDThreshold *th = [TDThreshold thresholdWithValue:4];
 ```
 
-####Await
+#### Await
 
 On any thread which should block until the threshold limit is reached, call `-await`.
 
@@ -270,19 +270,19 @@ Note that the  `-await` method uses signal broadcasting techniques (specifically
 
 ---
 
-##Trigger
+## Trigger
 
 A trigger is a way to block multiple threads until a *fire* signal is explicitly sent by a controller thread.
 
 Triggers are very similar to thresholds, but are approriate for designs that call for a controller or mediator to unblock all waiting threads in response to a specific condition explicitly coded by the programmer.
 
-####Create
+#### Create
 
 ```objc
 TDTrigger *trig = [TDTrigger trigger];
 ```
 
-####Await
+#### Await
 
 On any thread you wish to block, call `-await`:
 
@@ -292,7 +292,7 @@ On any thread you wish to block, call `-await`:
 
 This will block the current thread until the *fire* signal is sent by some other controlling thread.
 
-####Fire
+#### Fire
 
 When your application is ready for all waiting threads to proceed with execution, *fire* the trigger on an unblocked controlling thread:
 
