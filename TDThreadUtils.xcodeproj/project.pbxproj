@@ -80,9 +80,9 @@
 		D3AF43E61A659B01005C309E /* TDTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDTrigger.h; path = include/TDThreadUtils/TDTrigger.h; sourceTree = SOURCE_ROOT; };
 		D3AF43E81A659BEA005C309E /* TDTriggerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDTriggerTests.m; path = tests/TDTriggerTests.m; sourceTree = SOURCE_ROOT; };
 		D3C0C7411A641526004C8B9A /* TDThreadUtils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TDThreadUtils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3C0C7451A641527004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../src/Info.plist; sourceTree = "<group>"; };
+		D3C0C7451A641527004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = src/Info.plist; sourceTree = "<group>"; };
 		D3C0C74C1A641527004C8B9A /* TDThreadUtilsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TDThreadUtilsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D3C0C7521A641528004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../tests/Info.plist; sourceTree = "<group>"; };
+		D3C0C7521A641528004C8B9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = tests/Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
