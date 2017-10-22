@@ -100,7 +100,7 @@
     NSAssert(_putLock, @"");
     @synchronized(_putLock) {
         NSAssert(_last, @"");
-        @synchronized(_last) { // _last & _head can sometimes be the same node. so, we must lock _last too. Cannot result in deadlock due to resource ordering
+        @synchronized(_last) { // _last & _head can sometimes be the same node. so, we must lock _last too. Cannot result in deadlock with -poll due to resource ordering
             _last.next = node;
             self.last = node;
         }

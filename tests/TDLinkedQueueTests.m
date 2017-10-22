@@ -132,34 +132,37 @@
 //
 //    id obj1 = @"one";
 //    id obj2 = @"two";
-//    self.pool = [TDPool poolWithItems:@[obj1, obj2]];
+//    self.queue = [TDLinkedQueue queue];
+//    [queue put:obj1];
+//    [queue put:obj2];
+//
 //    self.threshold = [TDThreshold thresholdWithValue:3];
 //
 //    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
-//        id obj = [pool takeItem];
-//        TDEqualObjects(@"one", obj);
+//        id obj = [queue poll];
+//        TDEqualObjects(@"two", obj);
 //        TDEquals(1, counter);
 //        self.counter++;
 //        sleep(2);
-//        [pool returnItem:obj];
+//        [queue put:obj];
 //        [self.threshold await];
 //    });
 //
 //    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
 //        TDEquals(2, counter);
-//        id obj = [pool takeItem];
-//        TDEqualObjects(@"one", obj);
+//        id obj = [queue poll];
+//        TDEqualObjects(@"two", obj);
 //        self.counter++;
 //        [self.threshold await];
-//        [pool returnItem:obj];
+//        [queue put:obj];
 //    });
 //
-//    id obj = [pool takeItem];
-//    TDEqualObjects(@"two", obj);
+//    id obj = [queue poll];
+//    TDEqualObjects(@"one", obj);
 //    TDEquals(0, counter);
 //    self.counter++;
 //    [self.threshold await];
-//    [pool returnItem:obj];
+//    [queue put:obj];
 //
 //    [done fulfill];
 //
@@ -167,9 +170,9 @@
 //        TDNil(err);
 //        TDEquals(3, counter);
 //
-//        id took1 = [pool takeItem];
+//        id took1 = [queue poll];
 //        TDEqualObjects(@"two", took1);
-//        id took2 = [pool takeItem];
+//        id took2 = [queue poll];
 //        TDEqualObjects(@"one", took2);
 //    }];
 //}
