@@ -6,7 +6,7 @@
 //  Copyright © 2017 Todd Ditchendorf. All rights reserved.
 //
 
-#import "TDLinkedQueue.h"
+#import <TDThreadUtils/TDLinkedQueue.h>
 
 @interface LQNode : NSObject
 @property (nonatomic, retain) id object;
