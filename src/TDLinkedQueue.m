@@ -41,6 +41,11 @@
 
 @implementation TDLinkedQueue
 
++ (instancetype)linkedQueue {
+    return [[[self alloc] init] autorelease];
+}
+
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -132,8 +137,8 @@
 
 - (id)takeBeforeDate:(NSDate *)limit {
     NSParameterAssert([self isValidDate:limit]);
-    [[self retain] autorelease];
     
+    [[self retain] autorelease];
     [self lock];
     
     while ([self isValidDate:limit] && ![self available]) {

@@ -59,6 +59,58 @@ To relinquish a semaphore's permit owned by the current thread:
 
 ---
 
+## Linked Queue
+
+Linked Queues allow you to pass an unbounded number of buffered objects across one or more threads in FIFO order. Additionally, linked queues ensure that a *giver* thread will return quickly when *putting* an object in the queue (enqueueing), and you can choose whether or not you'd like a a *taker* thread to block while attempting to *take* from the queue (dequeueing).
+
+#### Create
+
+Since Linked Queues are unbounded, no size decision must be made at creation time, so creation is simple:
+
+```objc
+TDLinkedQueue *q = [TDLinkedQueue linkedQueue];
+```
+
+#### Give
+
+The *giver* thread should call `-put:`, which will insert (enqueue) the given item and return quickly.
+
+Example:
+
+```objc
+// on "giver" thread
+
+id obj = // …find an object to be given
+
+[q put:obj]; // returns immediately after "putting".
+```
+
+#### Take
+
+There are three different ways to take (dequeue) an object on the current thread. Objects are always returned in FIFO order. Use one of the following according to your needs:
+
+1. `-take` blocks current thread (possibly forever) until another thread has inserted an object in the queue. The result is never `nil`:
+
+    ```objc
+    id obj = [q take]; // obj is never nil
+    ```
+1. `-poll` tries to take an object from the queue without blocking the current thread. Always returns immediately, but the result may be `nil`:
+
+    ```objc
+    id obj = [q poll]; // obj may be nil
+    ```
+1. `-takeBeforeDate:` tries to take an object from the queue for up to 10 seconds while blocking the current thread. Always returns within roughly 10 seconds, but the result may be `nil`:
+
+    ```objc
+    NSDate *date = [NSDate dateWithTimeIntervalSinceNow:10.0];
+
+    id obj = [q takeBeforeDate:date]; // obj may be nil
+    ```
+    
+Note that the  `-put:` and `-take` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting.
+
+---
+
 ## Bounded Buffer
 
 Bounded buffers allow you to pass a given number of buffered objects across one or more threads in FIFO order. Additionally, bounded buffers ensure that a *giver* thread will block when attempting to *give* to the buffer while full, and a *taker* thread will block while attempting to *take* from the buffer while empty.
@@ -92,6 +144,7 @@ id obj = // …find an object to be given
 ```
 
 #### Take
+
 The *taker* thread should call `-take`, which will either:
 
 * extract and return an item immediately if the buffer currently contains 1 or more items.

@@ -10,6 +10,8 @@
 
 @interface TDLinkedQueue : NSObject <TDChannel>
 
++ (instancetype)linkedQueue;
+
 - (void)put:(id)obj; // returns immediately without blocking. capacity is unbounded
 
 - (id)poll; // returns immediately without blocking. may be nil
