@@ -62,59 +62,37 @@
     }];
 }
 
-//- (void)test2Items1ThreadSwap {
-//
-//    id obj1 = @"one";
-//    id obj2 = @"two";
-//    self.pool = [TDPool poolWithItems:@[obj1, obj2]];
-//
-//    id took1 = [pool takeItem];
-//    TDEqualObjects(@"two", took1);
-//
-//    id took2 = [pool takeItem];
-//    TDEqualObjects(@"one", took2);
-//
-//    [pool returnItem:took2];
-//
-//    id took3 = [pool takeItem];
-//    TDEqualObjects(@"one", took3);
-//
-//    [pool returnItem:took1];
-//    [pool returnItem:took3];
-//    [done fulfill];
-//
-//    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
-//        TDNil(err);
-//    }];
-//}
-//
-//- (void)test1Item2Threads {
-//
-//    id obj1 = @"one";
-//    id obj2 = @"two";
-//    self.pool = [TDPool poolWithItems:@[obj1, obj2]];
-//    self.threshold = [TDThreshold thresholdWithValue:1];
-//
-//    TDPerformOnBackgroundThread(^{
-//        id obj = [pool takeItem];
-//        TDEqualObjects(@"two", obj);
-//        [pool returnItem:obj];
-//        self.counter++;
-//        [self.threshold await];
-//        [done fulfill];
-//    });
-//
-//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
-//        TDNil(err);
-//        TDEquals(1, counter);
-//
-//        id took1 = [pool takeItem];
-//        TDEqualObjects(@"two", took1);
-//        id took2 = [pool takeItem];
-//        TDEqualObjects(@"one", took2);
-//    }];
-//}
-//
+- (void)test1Item2ThreadsSwap {
+
+    id obj1 = @"one";
+    id obj2 = @"two";
+    self.queue = [TDLinkedQueue queue];
+
+    [queue put:obj1];
+    [queue put:obj2];
+    
+    self.threshold = [TDThreshold thresholdWithValue:1];
+
+    TDPerformOnBackgroundThread(^{
+        id obj = [queue poll];
+        TDEqualObjects(@"one", obj);
+        [queue put:obj];
+        self.counter++;
+        [self.threshold await];
+        [done fulfill];
+    });
+
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
+        TDNil(err);
+        TDEquals(1, counter);
+
+        id took1 = [queue poll];
+        TDEqualObjects(@"two", took1);
+        id took2 = [queue poll];
+        TDEqualObjects(@"one", took2);
+    }];
+}
+
 //- (void)test2Items2Threads {
 //
 //    id obj1 = @"one";

@@ -66,6 +66,21 @@
 }
 
 
+- (NSString *)description {
+    NSMutableString *buf = [NSMutableString string];
+    
+    NSAssert(_head, @"");
+    LQNode *node = _head.next;
+    
+    while (node) {
+        [buf appendFormat:@"%@%@", node.object, node.next ? @"->" : @""];
+        node = node.next;
+    }
+    
+    return [NSString stringWithFormat:@"<%@ %p %@>", [self class], self, buf];
+}
+
+
 - (void)put:(id)obj {
     NSParameterAssert(obj);
     
