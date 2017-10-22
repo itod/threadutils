@@ -78,8 +78,6 @@ The *giver* thread should call `-put:`, which will insert (enqueue) the given it
 Example:
 
 ```objc
-// on "giver" thread
-
 id obj = // …find an object to be given
 
 [q put:obj]; // returns immediately after "putting".
