@@ -27,7 +27,7 @@
 - (void)test1Item1Thread {
     
     id obj1 = @"one";
-    self.queue = [TDLinkedQueue queue];
+    self.queue = [[[TDLinkedQueue alloc] init] autorelease];
     
     [queue put:obj1];
     id obj = [queue take];
@@ -44,7 +44,7 @@
 
     id obj1 = @"one";
     id obj2 = @"two";
-    self.queue = [TDLinkedQueue queue];
+    self.queue = [[[TDLinkedQueue alloc] init] autorelease];
     [queue put:obj1];
     [queue put:obj2];
     
@@ -65,7 +65,7 @@
 
     id obj1 = @"one";
     id obj2 = @"two";
-    self.queue = [TDLinkedQueue queue];
+    self.queue = [[[TDLinkedQueue alloc] init] autorelease];
     [queue put:obj1];
     [queue put:obj2];
     
@@ -95,7 +95,7 @@
 
     id obj1 = @"one";
     id obj2 = @"two";
-    self.queue = [TDLinkedQueue queue];
+    self.queue = [[[TDLinkedQueue alloc] init] autorelease];
     [queue put:obj1];
     [queue put:obj2];
 
@@ -132,7 +132,7 @@
 
     id obj1 = @"one";
     id obj2 = @"two";
-    self.queue = [TDLinkedQueue queue];
+    self.queue = [[[TDLinkedQueue alloc] init] autorelease];
     [queue put:obj1];
     [queue put:obj2];
 

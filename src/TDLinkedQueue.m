@@ -15,12 +15,6 @@
 
 @implementation LQNode
 
-- (instancetype)init {
-    self = [self initWithObject:nil];
-    return self;
-}
-
-
 - (instancetype)initWithObject:(id)obj {
     self = [super init];
     if (self) {
@@ -46,11 +40,6 @@
 @end
 
 @implementation TDLinkedQueue
-
-+ (instancetype)queue {
-    return [[[self alloc] init] autorelease];
-}
-
 
 - (instancetype)init {
     self = [super init];
