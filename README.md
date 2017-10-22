@@ -75,8 +75,6 @@ TDLinkedQueue *q = [TDLinkedQueue linkedQueue];
 
 The *giver* thread should call `-put:`, which will insert (enqueue) the given item and return quickly.
 
-Example:
-
 ```objc
 id obj = // …find an object to be given
 
@@ -87,7 +85,7 @@ id obj = // …find an object to be given
 
 There are three different ways to take (dequeue) an object on the current thread. Objects are always returned in FIFO order. Use one of the following according to your needs:
 
-1. `-take` blocks current thread (possibly forever) until another thread has inserted an object in the queue. The result is never `nil`:
+1. `-take` blocks the current thread (possibly forever) until another thread has inserted an object in the queue. The result is never `nil`:
 
     ```objc
     id obj = [q take]; // obj is never nil
@@ -131,8 +129,6 @@ OR
 
 * if the buffer contains 4 items, the current *giver* thread will block until an item is extracted by another thread.
 
-Example:
-
 ```objc
 // on "giver" thread
 
@@ -150,8 +146,6 @@ The *taker* thread should call `-take`, which will either:
 OR
 
 * if the buffer is empty, the current *taker* thread will block until an item is inserted by another thread.
-
-Example:
 
 ```objc
 // on "taker" thread
