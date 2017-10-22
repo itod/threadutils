@@ -2,6 +2,7 @@ Some Cocoa Concurrency Utilities
 ===========
 
 * [Semaphore](https://github.com/itod/threadutils#semaphore)
+* [Linked Queue](https://github.com/itod/threadutils#linked-queue)
 * [Bounded Buffer](https://github.com/itod/threadutils#bounded-buffer)
 * [Synchronous Channel](https://github.com/itod/threadutils#synchronous-channel)
 * [Exchanger](https://github.com/itod/threadutils#exchanger)
