@@ -23,5 +23,6 @@ FOUNDATION_EXPORT const unsigned char TDThreadUtilsVersionString[];
 #import <TDThreadUtils/TDSynchronousChannel.h>
 #import <TDThreadUtils/TDExchanger.h>
 #import <TDThreadUtils/TDPool.h>
+#import <TDThreadUtils/TDLinkedQueue.h>
 
 #import <TDThreadUtils/TDInterpreterSync.h>
