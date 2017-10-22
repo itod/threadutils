@@ -6,14 +6,14 @@
 //  Copyright © 2017 Todd Ditchendorf. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <TDThreadUtils/TDChannel.h>
 
-@interface TDLinkedQueue : NSObject
+@interface TDLinkedQueue : NSObject <TDChannel>
 
-- (void)put:(id)obj; // returns immediately without blocking. capacity is unbounded.
+- (void)put:(id)obj; // returns immediately without blocking. capacity is unbounded
 
 - (id)poll; // returns immediately without blocking. may be nil
-- (id)take; // blocks while waiting for object to become available.
-- (id)takeBeforeDate:(NSDate *)date;
+- (id)take; // blocks while waiting for object to become available
+- (id)takeBeforeDate:(NSDate *)date; // blocks while waiting for object to become available until date
 
 @end

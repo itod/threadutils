@@ -59,16 +59,19 @@
 }
 
 
-// -description is not thread safe!
 - (NSString *)description {
     NSMutableString *buf = [NSMutableString string];
     
+    [self lock];
+
     LQNode *node = _head;
-    
+
     while (node) {
         [buf appendFormat:@"%@%@", node.object, node.next ? @"->" : @""];
         node = node.next;
     }
+    
+    [self unlock];
     
     return [NSString stringWithFormat:@"<%@ %p %@>", [self class], self, buf];
 }
@@ -167,6 +170,7 @@
 }
 
 
+// PRE: Lock is held
 - (BOOL)available {
     NSAssert((_head && _last) || (!_head && !_last), @"");
     return nil != _head;

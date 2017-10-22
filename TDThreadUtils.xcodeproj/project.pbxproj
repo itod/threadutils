@@ -137,6 +137,8 @@
 				D3AF43A71A658078005C309E /* TDChannel.h */,
 				D3AF43A61A658078005C309E /* TDBoundedBuffer.h */,
 				D3AF43B61A65809A005C309E /* TDBoundedBuffer.m */,
+				D38693521F9C2E2800928048 /* TDLinkedQueue.h */,
+				D386934D1F9C2D2400928048 /* TDLinkedQueue.m */,
 				D3AF43AB1A658078005C309E /* TDSynchronousChannel.h */,
 				D3AF43B91A65809A005C309E /* TDSynchronousChannel.m */,
 				D33849E81D67752100087F7D /* TDExchanger.h */,
@@ -149,8 +151,6 @@
 				D34700C21B0ED4DE0099D78F /* TDPool.m */,
 				D3AF43A81A658078005C309E /* TDInterpreterSync.h */,
 				D3AF43B71A65809A005C309E /* TDInterpreterSync.m */,
-				D38693521F9C2E2800928048 /* TDLinkedQueue.h */,
-				D386934D1F9C2D2400928048 /* TDLinkedQueue.m */,
 				D3C0C7441A641527004C8B9A /* Supporting Files */,
 			);
 			name = TDThreadUtils;
