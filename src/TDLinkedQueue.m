@@ -93,33 +93,27 @@
     [[self retain] autorelease];
     [self lock];
     
-    if (!_last) {
-        NSAssert(!_head, @"");
-        self.head = node;
-        self.last = node;
-
-        [self signal];
-    } else {
-        NSAssert(_head, @"");
+    if ([self available]) {
         _last.next = node;
         self.last = node;
+    } else {
+        self.head = node;
+        self.last = node;
     }
-    
+
+    [self signal];
     [self unlock];
 }
 
 
 - (id)poll {
-    id result = nil;
-    
     [[self retain] autorelease];
     [self lock];
     
-    if (_head) {
-        NSAssert(_last, @"");
-        NSAssert(_head.object, @"");
-        result = [[_head.object retain] autorelease];
-        self.head = [[[_head retain] autorelease] next];
+    id result = nil;
+
+    if ([self available]) {
+        result = [self doPoll];
     }
 
     [self unlock];
@@ -129,8 +123,6 @@
 
 
 - (id)take {
-    id result = nil;
-    
     [[self retain] autorelease];
     [self lock];
     
@@ -138,13 +130,28 @@
         [self wait];
     }
     
-    NSAssert(_last, @"");
-    NSAssert(_head, @"");
-    NSAssert(_head.object, @"");
-    result = [[_head.object retain] autorelease];
-    self.head = [[[_head retain] autorelease] next];
-    if (!_head) {
-        self.last = nil;
+    id result = [self doPoll];
+
+    [self unlock];
+    
+    return result;
+}
+
+
+- (id)takeBeforeDate:(NSDate *)limit {
+    NSParameterAssert([self isValidDate:limit]);
+    [[self retain] autorelease];
+    
+    [self lock];
+    
+    while ([self isValidDate:limit] && ![self available]) {
+        [self waitUntilDate:limit];
+    }
+    
+    id result = nil;
+    
+    if ([self available]) {
+        result = [self doPoll];
     }
     
     [self unlock];
@@ -153,18 +160,27 @@
 }
 
 
-- (id)takeBeforeDate:(NSDate *)date {
-    NSAssert(0, @"TODO");
-    return nil;
-}
-
-
 #pragma mark -
 #pragma mark Private Business
 
+// PRE: Lock is held
+- (id)doPoll {
+    NSAssert(_head, @"");
+    NSAssert(_last, @"");
+    NSAssert(_head.object, @"");
+    
+    id result = [[_head.object retain] autorelease];
+    self.head = [[[_head retain] autorelease] next];
+    if (!_head) {
+        self.last = nil;
+    }
+    return result;
+}
+
+
 - (BOOL)available {
     NSAssert((_head && _last) || (!_head && !_last), @"");
-    return nil != _last;
+    return nil != _head;
 }
 
 
