@@ -13,7 +13,7 @@
 - (void)put:(id)obj; // returns immediately without blocking. capacity is unbounded
 
 - (id)poll; // returns immediately without blocking. may be nil
-- (id)take; // blocks while waiting for object to become available
-- (id)takeBeforeDate:(NSDate *)date; // blocks while waiting for object to become available until date
+- (id)take; // blocks indefinitely while waiting for object to become available.
+- (id)takeBeforeDate:(NSDate *)date; // blocks until date while waiting for object to become available.
 
 @end
