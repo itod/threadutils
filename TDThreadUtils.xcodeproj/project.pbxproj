@@ -145,7 +145,7 @@
 				D3AF43B71A65809A005C309E /* TDInterpreterSync.m */,
 				D3C0C7441A641527004C8B9A /* Supporting Files */,
 			);
-			path = TDThreadUtils;
+			name = TDThreadUtils;
 			sourceTree = "<group>";
 		};
 		D3C0C7441A641527004C8B9A /* Supporting Files */ = {
@@ -172,7 +172,7 @@
 				D34700C71B0ED9CC0099D78F /* TDPoolTests.m */,
 				D3C0C7511A641528004C8B9A /* Supporting Files */,
 			);
-			path = TDThreadUtilsTests;
+			name = TDThreadUtilsTests;
 			sourceTree = "<group>";
 		};
 		D3C0C7511A641528004C8B9A /* Supporting Files */ = {
