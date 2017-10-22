@@ -42,8 +42,7 @@
 @property (nonatomic, retain) LQNode *head;
 @property (nonatomic, retain) LQNode *last;
 
-@property (nonatomic, retain) NSObject *putLock;
-@property (nonatomic, retain) NSObject *pollLock;
+@property (retain) NSCondition *monitor;
 @end
 
 @implementation TDLinkedQueue
@@ -56,11 +55,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.head = [[[LQNode alloc] init] autorelease];
-        self.last = _head;
-        
-        self.putLock = [[[NSObject alloc] init] autorelease];
-        self.pollLock = [[[NSObject alloc] init] autorelease];
+        self.monitor = [[[NSCondition alloc] init] autorelease];
     }
     return self;
 }
@@ -70,8 +65,7 @@
     self.head = nil;
     self.last = nil;
     
-    self.putLock = nil;
-    self.pollLock = nil;
+    self.monitor = nil;
     [super dealloc];
 }
 
@@ -80,8 +74,7 @@
 - (NSString *)description {
     NSMutableString *buf = [NSMutableString string];
     
-    NSAssert(_head, @"");
-    LQNode *node = _head.next;
+    LQNode *node = _head;
     
     while (node) {
         [buf appendFormat:@"%@%@", node.object, node.next ? @"->" : @""];
@@ -96,36 +89,122 @@
     NSParameterAssert(obj);
 
     LQNode *node = [[[LQNode alloc] initWithObject:obj] autorelease];
+    
+    [[self retain] autorelease];
+    [self lock];
+    
+    if (!_last) {
+        NSAssert(!_head, @"");
+        self.head = node;
+        self.last = node;
 
-    NSAssert(_putLock, @"");
-    @synchronized(_putLock) {
-        NSAssert(_last, @"");
-        @synchronized(_last) { // _last & _head can sometimes be the same node. so, we must lock _last too. Cannot result in deadlock with -poll due to resource ordering
-            _last.next = node;
-            self.last = node;
-        }
+        [self signal];
+    } else {
+        NSAssert(_head, @"");
+        _last.next = node;
+        self.last = node;
     }
+    
+    [self unlock];
 }
 
 
 - (id)poll {
     id result = nil;
     
-    NSAssert(_pollLock, @"");
-    @synchronized(_pollLock) {
-        NSAssert(_head, @"");
-        @synchronized(_head) {
-            // get the "real" first node. (_head is always a dummy node – an optimization so we can have separate put/poll locks)
-            LQNode *first = [[_head.next retain] autorelease];
-            if (first) {
-                result = [[first.object retain] autorelease];
-                first.object = nil; // forget old object
-                self.head = first; // become new head
-            }
-        }
+    [[self retain] autorelease];
+    [self lock];
+    
+    if (_head) {
+        NSAssert(_last, @"");
+        NSAssert(_head.object, @"");
+        result = [[_head.object retain] autorelease];
+        self.head = [[[_head retain] autorelease] next];
     }
+
+    [self unlock];
     
     return result;
 }
 
+
+- (id)take {
+    id result = nil;
+    
+    [[self retain] autorelease];
+    [self lock];
+    
+    while (![self available]) {
+        [self wait];
+    }
+    
+    NSAssert(_last, @"");
+    NSAssert(_head, @"");
+    NSAssert(_head.object, @"");
+    result = [[_head.object retain] autorelease];
+    self.head = [[[_head retain] autorelease] next];
+    if (!_head) {
+        self.last = nil;
+    }
+    
+    [self unlock];
+    
+    return result;
+}
+
+
+- (id)takeBeforeDate:(NSDate *)date {
+    NSAssert(0, @"TODO");
+    return nil;
+}
+
+
+#pragma mark -
+#pragma mark Private Business
+
+- (BOOL)available {
+    NSAssert((_head && _last) || (!_head && !_last), @"");
+    return nil != _last;
+}
+
+
+#pragma mark -
+#pragma mark Private Convenience
+
+- (void)lock {
+    NSAssert(_monitor, @"");
+    [_monitor lock];
+}
+
+
+- (void)unlock {
+    NSAssert(_monitor, @"");
+    [_monitor unlock];
+}
+
+
+- (void)wait {
+    NSAssert(_monitor, @"");
+    [_monitor wait];
+}
+
+
+- (void)waitUntilDate:(NSDate *)date {
+    NSAssert(_monitor, @"");
+    [_monitor waitUntilDate:date];
+}
+
+
+- (void)signal {
+    NSAssert(_monitor, @"");
+    [_monitor signal];
+}
+
+
+- (BOOL)isValidDate:(NSDate *)limit {
+    NSParameterAssert(limit);
+    return [limit timeIntervalSinceNow] > 0.0;
+}
+
 @end
+
