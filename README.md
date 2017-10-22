@@ -91,12 +91,12 @@ There are three different ways to take (dequeue) an object on the current thread
     ```objc
     id obj = [q take]; // obj is never nil
     ```
-1. `-poll` tries to take an object from the queue without blocking the current thread. Always returns immediately, but the result may be `nil`:
+1. `-poll` tries to take an object from the queue without blocking the current thread. Always returns immediately, but the result will be `nil` if the queue is empty:
 
     ```objc
     id obj = [q poll]; // obj may be nil
     ```
-1. `-takeBeforeDate:` tries to take an object from the queue for up to 10 seconds while blocking the current thread. Always returns within roughly 10 seconds, but the result may be `nil`:
+1. `-takeBeforeDate:` tries to take an object from the queue for up to 10 seconds while blocking the current thread. Always returns within roughly 10 seconds, but the result may be `nil` if no object is available for dequeueing during that time:
 
     ```objc
     NSDate *date = [NSDate dateWithTimeIntervalSinceNow:10.0];
