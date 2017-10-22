@@ -9,8 +9,8 @@
 #import "TDLinkedQueue.h"
 
 @interface LQNode : NSObject
-@property (retain) id object;
-@property (retain) LQNode *next;
+@property (nonatomic, retain) id object;
+@property (nonatomic, retain) LQNode *next;
 @end
 
 @implementation LQNode
