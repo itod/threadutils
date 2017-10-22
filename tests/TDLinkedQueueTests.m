@@ -40,28 +40,28 @@
     }];
 }
 
-//- (void)test2Items1Thread {
-//
-//    id obj1 = @"one";
-//    id obj2 = @"two";
-//    self.pool = [TDPool poolWithItems:@[obj1, obj2]];
-//
-//    id took1 = [pool takeItem];
-//    TDEqualObjects(@"two", took1);
-//
-//    id took2 = [pool takeItem];
-//    TDEqualObjects(@"one", took2);
-//
-//    [pool returnItem:took1];
-//    [pool returnItem:took2];
-//    [done fulfill];
-//
-//    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
-//        TDNil(err);
-//    }];
-//}
-//
-//
+- (void)test2Items1Thread {
+
+    id obj1 = @"one";
+    id obj2 = @"two";
+    self.queue = [TDLinkedQueue queue];
+    
+    [queue put:obj1];
+    [queue put:obj2];
+    
+    id poll1 = [queue poll];
+    TDEqualObjects(@"one", poll1);
+    
+    id poll2 = [queue poll];
+    TDEqualObjects(@"two", poll2);
+    
+    [done fulfill];
+
+    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
+        TDNil(err);
+    }];
+}
+
 //- (void)test2Items1ThreadSwap {
 //
 //    id obj1 = @"one";
