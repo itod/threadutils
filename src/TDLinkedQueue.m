@@ -32,14 +32,18 @@
 
 - (void)dealloc {
     self.object = nil;
+    self.next = nil;
     [super dealloc];
 }
 
 @end
 
 @interface TDLinkedQueue ()
-@property (retain) LQNode *head;
-@property (retain) LQNode *last;
+@property (nonatomic, retain) LQNode *head;
+@property (nonatomic, retain) LQNode *last;
+
+@property (nonatomic, retain) NSObject *putLock;
+@property (nonatomic, retain) NSObject *pollLock;
 @end
 
 @implementation TDLinkedQueue
@@ -54,6 +58,9 @@
     if (self) {
         self.head = [[[LQNode alloc] init] autorelease];
         self.last = _head;
+        
+        self.putLock = [[[NSObject alloc] init] autorelease];
+        self.pollLock = [[[NSObject alloc] init] autorelease];
     }
     return self;
 }
@@ -62,10 +69,14 @@
 - (void)dealloc {
     self.head = nil;
     self.last = nil;
+    
+    self.putLock = nil;
+    self.pollLock = nil;
     [super dealloc];
 }
 
 
+// -description is not thread safe!
 - (NSString *)description {
     NSMutableString *buf = [NSMutableString string];
     
@@ -83,24 +94,32 @@
 
 - (void)put:(id)obj {
     NSParameterAssert(obj);
-    
-    LQNode *node = [[[LQNode alloc] initWithObject:obj] autorelease];
-    
-    NSAssert(_last, @"");
-    _last.next = node;
-    self.last = node;
+
+    NSAssert(_putLock, @"");
+    @synchronized(_putLock) {
+        LQNode *node = [[[LQNode alloc] initWithObject:obj] autorelease];
+        
+        NSAssert(_last, @"");
+        _last.next = node;
+        self.last = node;
+    }
 }
 
 
 - (id)poll {
     id obj = nil;
     
-    NSAssert(_head.next, @"");
-    LQNode *node = [[_head.next retain] autorelease];
-    _head.next = node.next;
-    
-    obj = [[node.object retain] autorelease];
-    node.object = nil;
+    NSAssert(_pollLock, @"");
+    @synchronized(_pollLock) {
+        NSAssert(_head.next, @"");
+        
+        // get the "real" first node. (_head is always a dummy node – an optimization so we can have separate put/poll locks)
+        LQNode *node = [[_head.next retain] autorelease];
+        _head.next = node.next;
+        
+        obj = [[node.object retain] autorelease];
+        node.object = nil;
+    }
     
     return obj;
 }
