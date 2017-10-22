@@ -95,33 +95,37 @@
 - (void)put:(id)obj {
     NSParameterAssert(obj);
 
+    LQNode *node = [[[LQNode alloc] initWithObject:obj] autorelease];
+
     NSAssert(_putLock, @"");
     @synchronized(_putLock) {
-        LQNode *node = [[[LQNode alloc] initWithObject:obj] autorelease];
-        
         NSAssert(_last, @"");
-        _last.next = node;
-        self.last = node;
+        @synchronized(_last) { // _last & _head can sometimes be the same node. so, we must lock _last too. Cannot result in deadlock due to resource ordering
+            _last.next = node;
+            self.last = node;
+        }
     }
 }
 
 
 - (id)poll {
-    id obj = nil;
+    id result = nil;
     
     NSAssert(_pollLock, @"");
     @synchronized(_pollLock) {
-        NSAssert(_head.next, @"");
-        
-        // get the "real" first node. (_head is always a dummy node – an optimization so we can have separate put/poll locks)
-        LQNode *node = [[_head.next retain] autorelease];
-        _head.next = node.next;
-        
-        obj = [[node.object retain] autorelease];
-        node.object = nil;
+        NSAssert(_head, @"");
+        @synchronized(_head) {
+            // get the "real" first node. (_head is always a dummy node – an optimization so we can have separate put/poll locks)
+            LQNode *first = [[_head.next retain] autorelease];
+            if (first) {
+                result = [[first.object retain] autorelease];
+                first.object = nil; // forget old object
+                self.head = first; // become new head
+            }
+        }
     }
     
-    return obj;
+    return result;
 }
 
 @end
