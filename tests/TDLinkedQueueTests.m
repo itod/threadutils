@@ -128,54 +128,54 @@
     }];
 }
 
-//- (void)test2Items3Threads {
-//
-//    id obj1 = @"one";
-//    id obj2 = @"two";
-//    self.queue = [TDLinkedQueue queue];
-//    [queue put:obj1];
-//    [queue put:obj2];
-//
-//    self.threshold = [TDThreshold thresholdWithValue:3];
-//
-//    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
-//        id obj = [queue take];
-//        TDEqualObjects(@"two", obj);
-//        TDEquals(1, counter);
-//        self.counter++;
-//        sleep(2);
-//        [queue put:obj];
-//        [self.threshold await];
-//    });
-//
-//    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
-//        TDEquals(2, counter);
-//        id obj = [queue take];
-//        TDEqualObjects(@"two", obj);
-//        self.counter++;
-//        [self.threshold await];
-//        [queue put:obj];
-//    });
-//
-//    id obj = [queue take];
-//    TDEqualObjects(@"one", obj);
-//    TDEquals(0, counter);
-//    self.counter++;
-//    [self.threshold await];
-//    [queue put:obj];
-//
-//    [done fulfill];
-//
-//    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
-//        TDNil(err);
-//        TDEquals(3, counter);
-//
-//        id took1 = [queue take];
-//        TDEqualObjects(@"two", took1);
-//        id took2 = [queue take];
-//        TDEqualObjects(@"one", took2);
-//    }];
-//}
+- (void)test2Items3Threads {
+
+    id obj1 = @"one";
+    id obj2 = @"two";
+    self.queue = [TDLinkedQueue queue];
+    [queue put:obj1];
+    [queue put:obj2];
+
+    self.threshold = [TDThreshold thresholdWithValue:3];
+
+    TDPerformOnBackgroundThreadAfterDelay(0.1, ^{
+        id obj = [queue take];
+        TDEqualObjects(@"two", obj);
+        TDEquals(1, counter);
+        self.counter++;
+        sleep(2);
+        [queue put:obj];
+        [self.threshold await];
+    });
+
+    TDPerformOnBackgroundThreadAfterDelay(0.5, ^{
+        TDEquals(2, counter);
+        id obj = [queue take];
+        TDEqualObjects(@"two", obj);
+        self.counter++;
+        [self.threshold await];
+        [queue put:obj];
+    });
+
+    id obj = [queue take];
+    TDEqualObjects(@"one", obj);
+    TDEquals(0, counter);
+    self.counter++;
+    [self.threshold await];
+    [queue put:obj];
+
+    [done fulfill];
+
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *err) {
+        TDNil(err);
+        TDEquals(3, counter);
+
+        id took1 = [queue take];
+        TDEqualObjects(@"two", took1);
+        id took2 = [queue take];
+        TDEqualObjects(@"one", took2);
+    }];
+}
 
 @synthesize queue=queue;
 @end
