@@ -159,10 +159,9 @@
 #pragma mark -
 #pragma mark Private Business
 
-// PRE: Lock is held
+// PRE: Lock is held, available is true
 - (id)doPoll {
-    NSAssert(_head, @"");
-    NSAssert(_last, @"");
+    NSAssert([self available], @"");
     NSAssert(_head.object, @"");
     
     id result = [[_head.object retain] autorelease];
