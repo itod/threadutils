@@ -9,18 +9,6 @@
 #import <TDThreadUtils/TDSemaphore.h>
 
 @interface TDSemaphore ()
-- (void)lock;
-- (void)unlock;
-
-- (void)decrement;
-- (void)increment;
-
-- (BOOL)available;
-- (void)wait;
-- (void)signal;
-
-- (BOOL)isValidDate:(NSDate *)limit;
-
 @property (assign) NSInteger value;
 @property (retain) NSCondition *monitor;
 @end
