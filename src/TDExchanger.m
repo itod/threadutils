@@ -12,7 +12,7 @@
 @interface TDExchanger ()
 @property (retain) TDSynchronousChannel *channelA;
 @property (retain) TDSynchronousChannel *channelB;
-@property (assign) BOOL flag;
+@property (nonatomic, assign) BOOL flag;
 @end
 
 @implementation TDExchanger
@@ -45,7 +45,7 @@
     NSAssert(_channelB, @"");
     
     BOOL flag;
-    @synchronized (self) {
+    @synchronized(_channelA) {
         flag = self.flag;
         self.flag = !flag;
     }
