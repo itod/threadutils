@@ -75,7 +75,7 @@
 - (id)doTake {
     id obj = nil;
     
-    @synchronized(self) {
+    @synchronized(_permits) {
         NSAssert([_available count], @"");
         obj = [[[_available lastObject] retain] autorelease];
         [_available removeLastObject];
@@ -93,7 +93,7 @@
     NSParameterAssert(obj);
     BOOL result = YES;
     
-    @synchronized(self) {
+    @synchronized(_permits) {
         NSAssert(_busy, @"");
         if ([_busy containsObject:obj]) {
             NSAssert(_available, @"");

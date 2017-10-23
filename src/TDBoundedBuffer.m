@@ -44,7 +44,7 @@
     NSParameterAssert(obj);
     NSAssert(_array, @"");
     
-    @synchronized(self) {
+    @synchronized(_array) {
         _array[_putIndex] = obj;
         self.putIndex = (_putIndex + 1) % _size;
     }
@@ -58,7 +58,7 @@
     NSAssert(_array, @"");
     
     id obj = nil;
-    @synchronized(self) {
+    @synchronized(_array) {
         obj = [[_array[_takeIndex] retain] autorelease];
         [_array removeObjectAtIndex:_takeIndex];
         self.takeIndex = (_takeIndex + 1) % _size;
