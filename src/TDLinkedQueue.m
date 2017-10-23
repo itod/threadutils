@@ -87,7 +87,6 @@
 
     LQNode *node = [[[LQNode alloc] initWithObject:obj] autorelease];
     
-    [[self retain] autorelease];
     [self lock];
     
     if ([self available]) {
