@@ -52,7 +52,6 @@
     [_putPermit acquire];
     NSAssert(!_item, @"");
     self.item = obj;
-    NSAssert(_item, @"");
     [_takePermit relinquish];
     
     [_taken acquire]; // wait for someone to take it
