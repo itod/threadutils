@@ -13,6 +13,8 @@
 		D34700C41B0ED4DE0099D78F /* TDPool.m in Sources */ = {isa = PBXBuildFile; fileRef = D34700C21B0ED4DE0099D78F /* TDPool.m */; };
 		D34700C61B0ED4EA0099D78F /* TDPool.h in Headers */ = {isa = PBXBuildFile; fileRef = D34700C51B0ED4EA0099D78F /* TDPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D34700C91B0EDBF60099D78F /* TDPoolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D34700C71B0ED9CC0099D78F /* TDPoolTests.m */; };
+		D36CB44720ED3F060029669D /* TDGamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D36CB44520ED3F060029669D /* TDGamePlayer.m */; };
+		D36CB44920ED3F180029669D /* TDGamePlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D36CB44820ED3F170029669D /* TDGamePlayer.h */; };
 		D386934F1F9C2D2400928048 /* TDLinkedQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D386934D1F9C2D2400928048 /* TDLinkedQueue.m */; };
 		D38693511F9C2DFF00928048 /* TDLinkedQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D38693501F9C2D5F00928048 /* TDLinkedQueueTests.m */; };
 		D38693531F9C2E3200928048 /* TDLinkedQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = D38693521F9C2E2800928048 /* TDLinkedQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,6 +61,8 @@
 		D34700C21B0ED4DE0099D78F /* TDPool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDPool.m; path = src/TDPool.m; sourceTree = SOURCE_ROOT; };
 		D34700C51B0ED4EA0099D78F /* TDPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDPool.h; path = include/TDThreadUtils/TDPool.h; sourceTree = SOURCE_ROOT; };
 		D34700C71B0ED9CC0099D78F /* TDPoolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDPoolTests.m; path = tests/TDPoolTests.m; sourceTree = SOURCE_ROOT; };
+		D36CB44520ED3F060029669D /* TDGamePlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDGamePlayer.m; path = src/TDGamePlayer.m; sourceTree = "<group>"; };
+		D36CB44820ED3F170029669D /* TDGamePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDGamePlayer.h; path = include/TDThreadUtils/TDGamePlayer.h; sourceTree = "<group>"; };
 		D386934D1F9C2D2400928048 /* TDLinkedQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDLinkedQueue.m; path = src/TDLinkedQueue.m; sourceTree = "<group>"; };
 		D38693501F9C2D5F00928048 /* TDLinkedQueueTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDLinkedQueueTests.m; path = tests/TDLinkedQueueTests.m; sourceTree = "<group>"; };
 		D38693521F9C2E2800928048 /* TDLinkedQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDLinkedQueue.h; path = include/TDThreadUtils/TDLinkedQueue.h; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 				D34700C21B0ED4DE0099D78F /* TDPool.m */,
 				D3AF43A81A658078005C309E /* TDInterpreterSync.h */,
 				D3AF43B71A65809A005C309E /* TDInterpreterSync.m */,
+				D36CB44820ED3F170029669D /* TDGamePlayer.h */,
+				D36CB44520ED3F060029669D /* TDGamePlayer.m */,
 				D3C0C7441A641527004C8B9A /* Supporting Files */,
 			);
 			name = TDThreadUtils;
@@ -203,6 +209,7 @@
 				D3AF43B31A658078005C309E /* TDSynchronousChannel.h in Headers */,
 				D3AF43B41A658078005C309E /* TDThreadUtils.h in Headers */,
 				D3AF43B11A658078005C309E /* TDSemaphore.h in Headers */,
+				D36CB44920ED3F180029669D /* TDGamePlayer.h in Headers */,
 				D34700C61B0ED4EA0099D78F /* TDPool.h in Headers */,
 				D38693531F9C2E3200928048 /* TDLinkedQueue.h in Headers */,
 				D3AF43B01A658078005C309E /* TDInterpreterSync.h in Headers */,
@@ -311,6 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D36CB44720ED3F060029669D /* TDGamePlayer.m in Sources */,
 				D3AF43BE1A65809A005C309E /* TDSynchronousChannel.m in Sources */,
 				D3AF43BB1A65809A005C309E /* TDBoundedBuffer.m in Sources */,
 				D33849EB1D67752D00087F7D /* TDExchanger.m in Sources */,
