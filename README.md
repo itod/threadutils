@@ -357,7 +357,7 @@ Note that the  `-await` and `-fire` methods use signal broadcasting techniques (
 
 A game is a way to allow exactly two threads to take turns running exclusively with respect to one another.
 
-While thread A runs, thread B is awaiting its "turn" in a paused state. While running, thread A executes its "move", and then pauses while thread B takes its "turn". Then, after thread B has executed its own "move", it pauses and gives thread A another "turn". This exclusive turn-taking continues indefinitely until the user stops the game.
+While thread A takes its "turn", thread B is awaiting its "turn" in a paused state. After thread A completes its "move", it pauses while thread B takes its "turn". Then, after thread B has executed its own "move", it pauses and gives thread A another "turn". This exclusive turn-taking continues indefinitely until the user stops the game.
 
 Games are useful for implementing anything like a language interpreter with an interactive debugger. When such an interpreter is running, one of two threads (the code execution thread or the user debug command input thread) must be taking its turn running while the other thread is paused awaiting its turn.
 
