@@ -383,17 +383,17 @@ To begin the game, allow exactly one player to take its turn, and run each playe
 ```objc
 [p1 giveTurn];
 
-performOnBackgroundThread(^{
+performOnNewBackgroundThread(^{
     [p1 run];
 });
-performOnBackgroundThread(^{
+performOnNewBackgroundThread(^{
     [p2 run];
 });
 ```
 
 #### Stop
 
-Stopping a game is easy. Call each player's `-stop` method on any thread.
+Stopping a game is easy. Call each player's `-stop` method from any thread.
 
 ```objc
 [p1 stop];
