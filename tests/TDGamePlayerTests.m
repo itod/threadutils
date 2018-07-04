@@ -35,7 +35,7 @@
 @end
 
 @interface Incrementer : NSObject <TDGamePlayerDelegate>
-@property (retain) ThreadSafeCounter *counter;
+@property (retain) ThreadSafeCounter *tsc;
 @property (assign) BOOL wantsEven;
 @end
 
@@ -43,9 +43,9 @@
 
 - (void)executeMoveForGamePlayer:(TDGamePlayer *)p {
     TDAssert(![NSThread isMainThread]);
-    [self.counter increment];
+    [self.tsc increment];
     
-    NSUInteger c = [self.counter sample];
+    NSUInteger c = [self.tsc sample];
     
     BOOL isEven = (c % 2 == 0);
     BOOL wantsEven = self.wantsEven;
@@ -77,14 +77,14 @@
 }
 
 - (void)testGameWithCounter {
-    ThreadSafeCounter *counter = [[[ThreadSafeCounter alloc] init] autorelease];
+    ThreadSafeCounter *tsc = [[[ThreadSafeCounter alloc] init] autorelease];
     
     Incrementer *inc1 = [[[Incrementer alloc] init] autorelease];
-    inc1.counter = counter;
+    inc1.tsc = tsc;
     inc1.wantsEven = NO;
 
     Incrementer *inc2 = [[[Incrementer alloc] init] autorelease];
-    inc2.counter = counter;
+    inc2.tsc = tsc;
     inc2.wantsEven = YES;
 
     self.p1 = [[[TDGamePlayer alloc] initWithDelegate:inc1] autorelease];
@@ -112,7 +112,7 @@
     });
     
     [self waitForExpectationsWithTimeout:10.0 handler:^(NSError *err) {
-        NSUInteger c = [counter sample];
+        NSUInteger c = [tsc sample];
         NSLog(@"Turns taken : %@", @(c));
         NSLog(@"");
     }];
