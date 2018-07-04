@@ -378,7 +378,7 @@ p2.opponent = p1;
 
 #### Run
 
-To begin the game, allow exactly one player to take its turn, and run each player on a separate background thread of your choice. Each of your two player delegates will receive repeated calls to execute their "moves" on their own thread while the other player's thread is paused.
+To begin the game, allow exactly one player to take its turn, and run each player on a separate background thread of your choosing. Each of your two player delegates will receive repeated calls to execute their "moves" on their own thread while the other player's thread is paused.
 
 ```objc
 [p1 giveTurn];
