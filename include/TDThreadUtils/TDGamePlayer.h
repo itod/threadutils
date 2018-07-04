@@ -11,7 +11,7 @@
 @class TDGamePlayer;
 
 @protocol TDGamePlayerDelegate <NSObject>
-- (void)executeMoveForGamePlayer:(TDGamePlayer *)p;
+- (id)gamePlayer:(TDGamePlayer *)p executeMoveWithInput:(id)input;
 @end
 
 @interface TDGamePlayer : NSObject
@@ -21,7 +21,7 @@
 - (void)run; // call on a bg thread
 - (void)stop; // call on main thread
 
-- (void)giveTurn;
+- (void)giveFirstTurn:(id)input; // call on main thread before -run
 
 @property (assign, readonly) id <TDGamePlayerDelegate>delegate;
 @property (assign) TDGamePlayer *opponent;

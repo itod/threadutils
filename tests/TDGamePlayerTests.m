@@ -41,7 +41,7 @@
 
 @implementation Incrementer
 
-- (void)executeMoveForGamePlayer:(TDGamePlayer *)p {
+- (id)gamePlayer:(TDGamePlayer *)p executeMoveWithInput:(id)ignored {
     TDAssert(![NSThread isMainThread]);
     [self.tsc increment];
     
@@ -51,6 +51,30 @@
     BOOL wantsEven = self.wantsEven;
     
     TDAssert((isEven && wantsEven) || (!isEven && !wantsEven));
+    return nil;
+}
+
+@end
+
+@interface Incrementer2 : NSObject <TDGamePlayerDelegate>
+@property (retain) ThreadSafeCounter *tsc;
+@property (assign) BOOL wantsEven;
+@end
+
+@implementation Incrementer2
+
+- (id)gamePlayer:(TDGamePlayer *)p executeMoveWithInput:(ThreadSafeCounter *)tsc {
+    TDAssert(![NSThread isMainThread]);
+    TDAssert([tsc isKindOfClass:[ThreadSafeCounter class]]);
+    [tsc increment];
+    
+    NSUInteger c = [tsc sample];
+    
+    BOOL isEven = (c % 2 == 0);
+    BOOL wantsEven = self.wantsEven;
+    
+    TDAssert((isEven && wantsEven) || (!isEven && !wantsEven));
+    return tsc;
 }
 
 @end
@@ -76,7 +100,7 @@
     [super tearDown];
 }
 
-- (void)testGameWithCounter {
+- (void)testGameWithGlobalCounter {
     ThreadSafeCounter *tsc = [[[ThreadSafeCounter alloc] init] autorelease];
     
     Incrementer *inc1 = [[[Incrementer alloc] init] autorelease];
@@ -93,7 +117,7 @@
     p1.opponent = p2;
     p2.opponent = p1;
     
-    [p1 giveTurn];
+    [p1 giveFirstTurn:nil];
     
     TDPerformOnBackgroundThread(^{
         [p1 run];
@@ -102,6 +126,47 @@
         [p2 run];
     });
 
+    TDPerformOnMainThreadAfterDelay(2.0, ^{
+        [p1 stop];
+        [p2 stop];
+        
+        TDPerformOnMainThreadAfterDelay(0.0, ^{
+            [done fulfill];
+        });
+    });
+    
+    [self waitForExpectationsWithTimeout:10.0 handler:^(NSError *err) {
+        NSUInteger c = [tsc sample];
+        NSLog(@"Turns taken : %@", @(c));
+        NSLog(@"");
+    }];
+}
+
+
+- (void)testGameWithArgumentCounter {
+    ThreadSafeCounter *tsc = [[[ThreadSafeCounter alloc] init] autorelease];
+    
+    Incrementer2 *inc1 = [[[Incrementer2 alloc] init] autorelease];
+    inc1.wantsEven = NO;
+    
+    Incrementer2 *inc2 = [[[Incrementer2 alloc] init] autorelease];
+    inc2.wantsEven = YES;
+    
+    self.p1 = [[[TDGamePlayer alloc] initWithDelegate:inc1] autorelease];
+    self.p2 = [[[TDGamePlayer alloc] initWithDelegate:inc2] autorelease];
+    
+    p1.opponent = p2;
+    p2.opponent = p1;
+    
+    [p1 giveFirstTurn:tsc];
+    
+    TDPerformOnBackgroundThread(^{
+        [p1 run];
+    });
+    TDPerformOnBackgroundThread(^{
+        [p2 run];
+    });
+    
     TDPerformOnMainThreadAfterDelay(2.0, ^{
         [p1 stop];
         [p2 stop];

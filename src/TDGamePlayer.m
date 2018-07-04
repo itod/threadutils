@@ -12,6 +12,7 @@
 @property (assign, readwrite) id <TDGamePlayerDelegate>delegate;
 @property (assign) BOOL myTurn;
 @property (assign) BOOL stopped;
+@property (retain) id input;
 @property (retain) NSCondition *monitor;
 @end
 
@@ -39,6 +40,7 @@
 - (void)dealloc {
     self.delegate = nil;
     self.opponent = nil;
+    self.input = nil;
     self.monitor = nil;
     [super dealloc];
 }
@@ -92,6 +94,20 @@
 }
 
 
+- (void)giveFirstTurn:(id)input {
+    [self lock];
+    
+    self.input = input;
+    
+    [self unlock];
+    
+    [self giveTurn]; // open call
+}
+
+
+#pragma mark -
+#pragma mark Private
+
 - (void)giveTurn {
     [self lock];
     
@@ -101,9 +117,6 @@
     [self unlock];
 }
 
-
-#pragma mark -
-#pragma mark Private
 
 - (void)releaseTurn {
     TDGamePlayer *p = nil;
@@ -132,7 +145,10 @@
 
 - (void)move {
     NSAssert(self.delegate, @"");
-    [self.delegate executeMoveForGamePlayer:self];
+    
+    id input = self.input;
+    id output = [self.delegate gamePlayer:self executeMoveWithInput:input];
+    self.opponent.input = output;
 }
 
 
