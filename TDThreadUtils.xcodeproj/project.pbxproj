@@ -14,7 +14,8 @@
 		D34700C61B0ED4EA0099D78F /* TDPool.h in Headers */ = {isa = PBXBuildFile; fileRef = D34700C51B0ED4EA0099D78F /* TDPool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D34700C91B0EDBF60099D78F /* TDPoolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D34700C71B0ED9CC0099D78F /* TDPoolTests.m */; };
 		D36CB44720ED3F060029669D /* TDGamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D36CB44520ED3F060029669D /* TDGamePlayer.m */; };
-		D36CB44920ED3F180029669D /* TDGamePlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D36CB44820ED3F170029669D /* TDGamePlayer.h */; };
+		D36CB44920ED3F180029669D /* TDGamePlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D36CB44820ED3F170029669D /* TDGamePlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D36CB44B20ED48BB0029669D /* TDGamePlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D36CB44A20ED48BB0029669D /* TDGamePlayerTests.m */; };
 		D386934F1F9C2D2400928048 /* TDLinkedQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D386934D1F9C2D2400928048 /* TDLinkedQueue.m */; };
 		D38693511F9C2DFF00928048 /* TDLinkedQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D38693501F9C2D5F00928048 /* TDLinkedQueueTests.m */; };
 		D38693531F9C2E3200928048 /* TDLinkedQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = D38693521F9C2E2800928048 /* TDLinkedQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -63,6 +64,7 @@
 		D34700C71B0ED9CC0099D78F /* TDPoolTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDPoolTests.m; path = tests/TDPoolTests.m; sourceTree = SOURCE_ROOT; };
 		D36CB44520ED3F060029669D /* TDGamePlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDGamePlayer.m; path = src/TDGamePlayer.m; sourceTree = "<group>"; };
 		D36CB44820ED3F170029669D /* TDGamePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDGamePlayer.h; path = include/TDThreadUtils/TDGamePlayer.h; sourceTree = "<group>"; };
+		D36CB44A20ED48BB0029669D /* TDGamePlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDGamePlayerTests.m; path = tests/TDGamePlayerTests.m; sourceTree = "<group>"; };
 		D386934D1F9C2D2400928048 /* TDLinkedQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDLinkedQueue.m; path = src/TDLinkedQueue.m; sourceTree = "<group>"; };
 		D38693501F9C2D5F00928048 /* TDLinkedQueueTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDLinkedQueueTests.m; path = tests/TDLinkedQueueTests.m; sourceTree = "<group>"; };
 		D38693521F9C2E2800928048 /* TDLinkedQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDLinkedQueue.h; path = include/TDThreadUtils/TDLinkedQueue.h; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 				D3AF43E81A659BEA005C309E /* TDTriggerTests.m */,
 				D3AF43C71A65811F005C309E /* TDThresholdTests.m */,
 				D34700C71B0ED9CC0099D78F /* TDPoolTests.m */,
+				D36CB44A20ED48BB0029669D /* TDGamePlayerTests.m */,
 				D38693501F9C2D5F00928048 /* TDLinkedQueueTests.m */,
 				D3C0C7511A641528004C8B9A /* Supporting Files */,
 			);
@@ -344,6 +347,7 @@
 				D3AF43D01A658166005C309E /* TDTest.m in Sources */,
 				D3AF43D31A658166005C309E /* TDBoundedBufferTests.m in Sources */,
 				D38693511F9C2DFF00928048 /* TDLinkedQueueTests.m in Sources */,
+				D36CB44B20ED48BB0029669D /* TDGamePlayerTests.m in Sources */,
 				D33849ED1D67786800087F7D /* TDExchangerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

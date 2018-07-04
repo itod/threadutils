@@ -92,6 +92,16 @@
 }
 
 
+- (void)takeTurn {
+    [self lock];
+    
+    self.myTurn = YES;
+    [self signal];
+    
+    [self unlock];
+}
+
+
 #pragma mark -
 #pragma mark Private
 
@@ -106,16 +116,6 @@
     [self unlock];
     
     [p takeTurn]; // open call
-}
-
-
-- (void)takeTurn {
-    [self lock];
-
-    self.myTurn = YES;
-    [self signal];
-    
-    [self unlock];
 }
 
 
