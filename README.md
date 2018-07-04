@@ -391,3 +391,12 @@ performOnBackgroundThread(^{
 });
 ```
 
+#### Stop
+
+Stopping a game is easy. Call each player's `-stop` method on any thread.
+
+```objc
+[p1 stop];
+[p2 stop];
+```
+
