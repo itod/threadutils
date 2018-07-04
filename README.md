@@ -363,7 +363,7 @@ Games are useful for implementing anything like a language interpreter with an i
 
 #### Create
 
-To set up a game, create exactly two players, and set them as each other's opponent. Also, provide each player with a delegate which executes your "move" logic by adopting the `TDGamePlayerDelegate` protocol and implementing the `-executeMoveForPlayer:` method.
+To set up a game, create exactly two players, and set them as each other's opponent. Also, provide each player with a delegate which executes your "move" logic by adopting the `TDGamePlayerDelegate` protocol and implementing the `-executeMoveForPlayer:` method. This could be either a single delegate object, or two separate objects.
 
 ```objc
 id <TDGamePlayerDelegate> del = … // implements "move" logic for each player
