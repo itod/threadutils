@@ -367,7 +367,7 @@ To set up a game, create exactly two players, and set them as each other's oppon
 
 ```objc
 id del1 = … // implements "move" logic for player #1
-id del2 = … // implements "move" logic for player #1
+id del2 = … // implements "move" logic for player #2
 
 id p1 = [[TDGamePlayer alloc] initWithDelegate:del1];
 id p2 = [[TDGamePlayer alloc] initWithDelegate:del2];
