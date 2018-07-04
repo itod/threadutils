@@ -9,6 +9,7 @@ Some Cocoa Concurrency Utilities
 * [Pool](https://github.com/itod/threadutils#pool)
 * [Threshold](https://github.com/itod/threadutils#threshold)
 * [Trigger](https://github.com/itod/threadutils#trigger)
+* [Game](https://github.com/itod/threadutils#game)
 
 ----
 
@@ -352,7 +353,7 @@ Note that the  `-await` and `-fire` methods use signal broadcasting techniques (
 
 ---
 
-## GamePlayer
+## Game
 
 A game is a way to allow exactly two threads to take turns running exclusively with respect to one another.
 
@@ -377,10 +378,10 @@ To set up a game, create exactly two players, and set them as each other's oppon
 
 #### Run
 
-To begin the game, allow exactly one player to take its turn, and run each player on a separate background thread. Each of your two player delegates will receive repeated calls to execute their "moves" on their own thread while the other player's thread is paused.
+To begin the game, allow exactly one player to take its turn, and run each player on a separate background thread of your choice. Each of your two player delegates will receive repeated calls to execute their "moves" on their own thread while the other player's thread is paused.
 
 ```objc
-    [p1 takeTurn];
+    [p1 giveTurn];
     
     performOnBackgroundThread(^{
         [p1 run];

@@ -93,7 +93,7 @@
     p1.opponent = p2;
     p2.opponent = p1;
     
-    [p1 takeTurn];
+    [p1 giveTurn];
     
     TDPerformOnBackgroundThread(^{
         [p1 run];

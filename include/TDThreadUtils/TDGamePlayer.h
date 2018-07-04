@@ -21,7 +21,7 @@
 - (void)run; // call on a bg thread
 - (void)stop; // call on main thread
 
-- (void)takeTurn;
+- (void)giveTurn;
 
 @property (assign, readonly) id <TDGamePlayerDelegate>delegate;
 @property (assign) TDGamePlayer *opponent;

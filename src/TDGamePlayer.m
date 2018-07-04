@@ -92,7 +92,7 @@
 }
 
 
-- (void)takeTurn {
+- (void)giveTurn {
     [self lock];
     
     self.myTurn = YES;
@@ -115,7 +115,7 @@
     
     [self unlock];
     
-    [p takeTurn]; // open call
+    [p giveTurn]; // open call
 }
 
 
