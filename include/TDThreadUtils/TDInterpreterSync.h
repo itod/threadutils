@@ -13,9 +13,12 @@
 
 + (instancetype)interpreterSync;
 
-- (id)awaitPause;
+// called from interp execution thread
 - (void)pauseWithInfo:(id)info;
-
 - (id)awaitResume;
+
+// called from user command/control thread
 - (void)resumeWithInfo:(id)info;
+- (id)awaitPause;
+
 @end
