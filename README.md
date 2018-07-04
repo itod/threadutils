@@ -366,14 +366,14 @@ Games are useful for implementing anything like a language interpreter with an i
 To set up a game, create exactly two players, and set them as each other's opponent. Also, provide each player with a delegate which executes your "move" logic by adopting the `TDGamePlayerDelegate` protocol and implementing the `-executeMoveForPlayer:` method.
 
 ```objc
-    id del1 = …
-    id del2 = …
+id del1 = …
+id del2 = …
 
-    id p1 = [[TDGamePlayer alloc] initWithDelegate:del1];
-    id p2 = [[TDGamePlayer alloc] initWithDelegate:del2];
+id p1 = [[TDGamePlayer alloc] initWithDelegate:del1];
+id p2 = [[TDGamePlayer alloc] initWithDelegate:del2];
 
-    p1.opponent = p2;
-    p2.opponent = p1;
+p1.opponent = p2;
+p2.opponent = p1;
 ```
 
 #### Run
@@ -381,13 +381,13 @@ To set up a game, create exactly two players, and set them as each other's oppon
 To begin the game, allow exactly one player to take its turn, and run each player on a separate background thread of your choice. Each of your two player delegates will receive repeated calls to execute their "moves" on their own thread while the other player's thread is paused.
 
 ```objc
-    [p1 giveTurn];
-    
-    performOnBackgroundThread(^{
-        [p1 run];
-    });
-    performOnBackgroundThread(^{
-        [p2 run];
-    });
+[p1 giveTurn];
+
+performOnBackgroundThread(^{
+    [p1 run];
+});
+performOnBackgroundThread(^{
+    [p2 run];
+});
 ```
 
