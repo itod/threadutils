@@ -103,13 +103,15 @@
     });
 
     TDPerformOnMainThreadAfterDelay(2.0, ^{
-        [done fulfill];
-    });
-    
-    [self waitForExpectationsWithTimeout:10.0 handler:^(NSError *err) {
         [p1 stop];
         [p2 stop];
         
+        TDPerformOnMainThreadAfterDelay(0.0, ^{
+            [done fulfill];
+        });
+    });
+    
+    [self waitForExpectationsWithTimeout:10.0 handler:^(NSError *err) {
         NSUInteger c = [counter sample];
         NSLog(@"Turns taken : %@", @(c));
         NSLog(@"");
