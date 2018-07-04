@@ -42,6 +42,7 @@
 @implementation Incrementer
 
 - (void)executeMoveForGamePlayer:(TDGamePlayer *)p {
+    TDAssert(![NSThread isMainThread]);
     [self.counter increment];
     
     NSUInteger c = [self.counter sample];
@@ -75,7 +76,7 @@
     [super tearDown];
 }
 
-- (void)test1Item1Thread {
+- (void)testGameWithCounter {
     ThreadSafeCounter *counter = [[[ThreadSafeCounter alloc] init] autorelease];
     
     Incrementer *inc1 = [[[Incrementer alloc] init] autorelease];

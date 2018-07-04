@@ -349,3 +349,44 @@ When your application is ready for all waiting threads to proceed with execution
 All threads that were waiting on this trigger will unblock and proceed simultaneously.
 
 Note that the  `-await` and `-fire` methods use signal broadcasting techniques (specifically, `NSConditionLock`). They **DO NOT** involve any polling or busy waiting. 
+
+---
+
+## GamePlayer
+
+A game is a way to allow exactly two threads to take turns running exclusively with respect to one another.
+
+While thread A runs, thread B is awaiting its "turn" in a paused state. While running, thread A executes its "move", and then pauses while thread B takes its "turn". Then, after thread B has executed its own "move", it pauses and gives thread A another "turn". This exclusive turn-taking continues indefinitely until the user stops the game.
+
+Games are useful for implementing anything like a language interpreter with an interactive debugger. When such an interpreter is running, one of two threads (the code execution thread or the user debug command input thread) must be taking its turn running while the other thread is paused awaiting its turn.
+
+#### Create
+
+To set up a game, create exactly two players, and set them as each other's opponent. Also, provide each player with a delegate which executes your "move" logic by adopting the `TDGamePlayerDelegate` protocol and implementing the `-executeMoveForPlayer:` method.
+
+```objc
+    id del1 = …
+    id del2 = …
+
+    id p1 = [[TDGamePlayer alloc] initWithDelegate:del1];
+    id p2 = [[TDGamePlayer alloc] initWithDelegate:del2];
+
+    p1.opponent = p2;
+    p2.opponent = p1;
+```
+
+#### Run
+
+To begin the game, allow exactly one player to take its turn, and run each player on a separate background thread. Each of your two player delegates will receive repeated calls to execute their "moves" on their own thread while the other player's thread is paused.
+
+```objc
+    [p1 takeTurn];
+    
+    performOnBackgroundThread(^{
+        [p1 run];
+    });
+    performOnBackgroundThread(^{
+        [p2 run];
+    });
+```
+
