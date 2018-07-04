@@ -117,7 +117,7 @@
     p1.opponent = p2;
     p2.opponent = p1;
     
-    [p1 giveFirstTurn:nil];
+    [p1 giveFirstTurnWithInput:nil];
     
     TDPerformOnBackgroundThread(^{
         [p1 run];
@@ -158,7 +158,7 @@
     p1.opponent = p2;
     p2.opponent = p1;
     
-    [p1 giveFirstTurn:tsc];
+    [p1 giveFirstTurnWithInput:tsc];
     
     TDPerformOnBackgroundThread(^{
         [p1 run];

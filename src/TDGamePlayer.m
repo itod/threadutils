@@ -94,7 +94,7 @@
 }
 
 
-- (void)giveFirstTurn:(id)input {
+- (void)giveFirstTurnWithInput:(id)input {
     [self lock];
     
     self.input = input;
