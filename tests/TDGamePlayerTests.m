@@ -41,7 +41,7 @@
 
 @implementation Incrementer
 
-- (id)gamePlayer:(TDGamePlayer *)p executeMoveWithInput:(id)ignored {
+- (id)gamePlayer:(TDGamePlayer *)p doTurnWithInput:(id)ignored {
     TDAssert(![NSThread isMainThread]);
     [self.tsc increment];
     
@@ -63,7 +63,7 @@
 
 @implementation Incrementer2
 
-- (id)gamePlayer:(TDGamePlayer *)p executeMoveWithInput:(ThreadSafeCounter *)tsc {
+- (id)gamePlayer:(TDGamePlayer *)p doTurnWithInput:(ThreadSafeCounter *)tsc {
     TDAssert(![NSThread isMainThread]);
     TDAssert([tsc isKindOfClass:[ThreadSafeCounter class]]);
     [tsc increment];

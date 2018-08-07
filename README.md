@@ -357,13 +357,13 @@ Note that the  `-await` and `-fire` methods use signal broadcasting techniques (
 
 A game is a way to allow exactly two threads to take turns running exclusively with respect to one another.
 
-While thread A takes its "turn", thread B is awaiting its "turn" in a paused state. After thread A completes its "move", it pauses while thread B takes its "turn". Then, after thread B has executed its own "move", it pauses and gives thread A another "turn". This exclusive turn-taking continues indefinitely until the user stops the game.
+While thread A takes its "turn", thread B is awaiting its "turn" in a paused state. After thread A completes its "turn", it pauses while thread B takes its "turn". And so forth. This exclusive turn-taking continues indefinitely until the user stops the game.
 
 Games are useful for implementing anything like a language interpreter with an interactive debugger. When such an interpreter is running, one of two threads (the code execution thread or the user debug command input thread) must be taking its turn running while the other thread is paused awaiting its turn.
 
 #### Create
 
-To set up a game, create exactly two players, and set them as each other's opponent. Also, provide each player with a delegate which executes your "move" logic by adopting the `TDGamePlayerDelegate` protocol and implementing the `-gamePlayer:executeMoveWithInput:` method. This could be either a single delegate object, or two separate objects.
+To set up a game, create exactly two players, and set them as each other's opponent. Also, provide each player with a delegate which executes your "turn" logic by adopting the `TDGamePlayerDelegate` protocol and implementing the `-gamePlayer:executeMoveWithInput:` method. This could be either a single delegate object, or two separate objects.
 
 ```objc
 id <TDGamePlayerDelegate> del = … // implements "move" logic for each player

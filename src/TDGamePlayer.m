@@ -62,7 +62,7 @@
             if (done) {
                 break;
             } else {
-                [self move];
+                [self doTurn];
             }
         }
         @finally {
@@ -94,10 +94,10 @@
 }
 
 
-- (void)giveFirstTurnWithInput:(id)input {
+- (void)giveFirstTurnWithInput:(id)plist {
     [self lock];
     
-    self.input = input;
+    self.input = plist;
     
     [self unlock];
     
@@ -143,11 +143,14 @@
 }
 
 
-- (void)move {
+- (void)doTurn {
     NSAssert(self.delegate, @"");
     
     id input = self.input;
-    id output = [self.delegate gamePlayer:self executeMoveWithInput:input];
+    
+    // TODO round-trip serialize input plist here
+    
+    id output = [self.delegate gamePlayer:self doTurnWithInput:input];
     self.opponent.input = output;
 }
 
