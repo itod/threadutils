@@ -16,6 +16,6 @@
 - (void)put:(id)obj;
 - (id)take;
 
-- (void)put:(id)obj beforeDate:(NSDate *)date;
+- (BOOL)put:(id)obj beforeDate:(NSDate *)date;
 - (id)takeBeforeDate:(NSDate *)date;
 @end

@@ -132,15 +132,18 @@
 }
 
 
-- (void)put:(id)obj beforeDate:(NSDate *)date {
+- (BOOL)put:(id)obj beforeDate:(NSDate *)date {
     NSParameterAssert(obj);
     NSAssert(_buffer, @"");
     NSAssert(_putPermits, @"");
     NSAssert(_takePermits, @"");
     
-    [_putPermits attemptBeforeDate:date];
-    [_buffer insert:obj];
-    [_takePermits relinquish];
+    BOOL success = [_putPermits attemptBeforeDate:date];
+    if (success) {
+        [_buffer insert:obj];
+        [_takePermits relinquish];
+    }
+    return success;
 }
 
 
@@ -149,11 +152,13 @@
     NSAssert(_putPermits, @"");
     NSAssert(_takePermits, @"");
 
-    [_takePermits attemptBeforeDate:date];
-    id obj = [_buffer extract];
-    [_putPermits relinquish];
+    id obj = nil;
     
-    NSAssert(obj, @"");
+    if ([_takePermits attemptBeforeDate:date]) {
+        obj = [_buffer extract];
+        [_putPermits relinquish];
+        NSAssert(obj, @"");
+    }
     return obj;
 }
 
