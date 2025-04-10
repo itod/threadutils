@@ -14,13 +14,14 @@
 - (void)insert:(id)obj;
 - (id)extract;
 
-@property (retain) NSMutableArray *array;
 @property (assign) NSUInteger size;
 @property (assign) NSUInteger putIndex;
 @property (assign) NSUInteger takeIndex;
 @end
 
-@implementation TDBufferArray
+@implementation TDBufferArray {
+    id *_array;
+}
 
 - (instancetype)initWithSize:(NSUInteger)size {
     NSParameterAssert(NSNotFound != size);
@@ -28,14 +29,14 @@
     self = [super init];
     if (self) {
         self.size = size;
-        self.array = [NSMutableArray arrayWithCapacity:size];
+        _array = malloc(sizeof(id) * _size);
     }
     return self;
 }
 
 
 - (void)dealloc {
-    self.array = nil;
+    free(_array);
     [super dealloc];
 }
 
@@ -44,12 +45,11 @@
     NSParameterAssert(obj);
     NSAssert(_array, @"");
     
-    @synchronized(_array) {
+    @synchronized(self) {
         _array[_putIndex] = obj;
         self.putIndex = (_putIndex + 1) % _size;
     }
     
-    NSAssert([_array count] <= _size, @"");
     NSAssert(_putIndex < _size, @"");
 }
 
@@ -58,13 +58,12 @@
     NSAssert(_array, @"");
     
     id obj = nil;
-    @synchronized(_array) {
+    @synchronized(self) {
         obj = [[_array[_takeIndex] retain] autorelease];
-        [_array removeObjectAtIndex:_takeIndex];
+        _array[_takeIndex] = nil;
         self.takeIndex = (_takeIndex + 1) % _size;
     }
 
-    NSAssert([_array count] <= _size, @"");
     NSAssert(_takeIndex < _size, @"");
     return obj;
 }
@@ -113,7 +112,7 @@
     NSAssert(_takePermits, @"");
     
     [_putPermits acquire];
-    [_buffer insert:obj];
+    [_buffer insert:[obj retain]];
     [_takePermits relinquish];
 }
 
@@ -124,7 +123,7 @@
     NSAssert(_takePermits, @"");
     
     [_takePermits acquire];
-    id obj = [_buffer extract];
+    id obj = [[_buffer extract] autorelease];
     [_putPermits relinquish];
     
     NSAssert(obj, @"");

@@ -42,6 +42,22 @@
     }];
 }
 
+- (void)test2Size2Obj1Thread {
+    
+    self.buff = [TDBoundedBuffer boundedBufferWithSize:2];
+    [buff put:ONE];
+    [buff put:TWO];
+    TDEqualObjects(ONE, [buff take]);
+    [buff put:TWO];
+    TDEqualObjects(TWO, [buff take]);
+
+    [done fulfill];
+    
+    [self waitForExpectationsWithTimeout:0.0 handler:^(NSError *err) {
+        TDNil(err);
+    }];
+}
+
 - (void)test1Size1Obj2Threads {
     
     self.buff = [TDBoundedBuffer boundedBufferWithSize:1];
