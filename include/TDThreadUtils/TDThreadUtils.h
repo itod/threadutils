@@ -27,3 +27,7 @@ FOUNDATION_EXPORT const unsigned char TDThreadUtilsVersionString[];
 #import <TDThreadUtils/TDGamePlayer.h>
 
 #import <TDThreadUtils/TDInterpreterSync.h>
+
+#import <TDThreadUtils/TDPipeline.h>
+#import <TDThreadUtils/TDPipelineStage.h>
+#import <TDThreadUtils/TDRunnable.h>
