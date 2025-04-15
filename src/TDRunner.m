@@ -54,11 +54,11 @@
     
     for (;;) {
         id input = [_inputChannel take];
-
+        
         NSAssert(_runnable, @"");
         NSError *err = nil;
         id output = [_runnable runWithInput:input error:&err];
-
+        
         NSAssert(_outputChannel, @"");
         [_outputChannel put:output];
     }
@@ -71,6 +71,12 @@
 - (void)runnable:(id<TDRunnable>)r updateProgress:(double)d {
     NSAssert(_runnable == r, @"");
     self.progress = d;
+}
+
+
+- (void)runnable:(id<TDRunnable>)r updateLabelText:(NSString *)s {
+    NSAssert(_runnable == r, @"");
+    self.labelText = s;
 }
 
 @end

@@ -12,6 +12,7 @@
 
 @protocol TDRunnableDelegate <NSObject>
 - (void)runnable:(id <TDRunnable>)r updateProgress:(double)d;
+- (void)runnable:(id <TDRunnable>)r updateLabelText:(NSString *)s;
 @end
 
 @protocol TDRunnable <NSObject>
