@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @protocol TDChannel;
+@class TDPipeline;
+
+@protocol TDPipelineDelegate <NSObject>
+- (void)pipelineProgressUpdated:(TDPipeline *)p;
+@end
 
 @protocol TDLauncher <NSObject>
 - (void)launchWithOutputChannel:(id <TDChannel>)channel;
@@ -26,6 +31,8 @@
 @property (nonatomic, retain, readonly) id <TDLauncher>launcher;
 @property (nonatomic, retain, readonly) id <TDReceiver>receiver;
 @property (nonatomic, copy, readonly) NSArray *stages;
+
+@property (nonatomic, assign) id <TDPipelineDelegate>delegate;
 
 - (BOOL)runWithError:(NSError **)outErr;
 

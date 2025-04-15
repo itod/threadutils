@@ -17,4 +17,6 @@
 - (instancetype)initWithRunnable:(id <TDRunnable>)runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 
 - (void)run;
+
+@property (nonatomic, assign) CGFloat progress;
 @end

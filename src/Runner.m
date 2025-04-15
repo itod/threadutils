@@ -50,6 +50,8 @@
 - (void)run {
     NSAssert(_inputChannel, @"");
     
+    self.progress = 0.0;
+    
     for (;;) {
         id input = [_inputChannel take];
 
@@ -67,7 +69,8 @@
 #pragma mark TDRunnableDelegate
 
 - (void)runnable:(id<TDRunnable>)r updateProgress:(double)d {
-    
+    NSAssert(_runnable == r, @"");
+    self.progress = d;
 }
 
 @end
