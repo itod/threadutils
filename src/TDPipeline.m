@@ -12,24 +12,26 @@
 
 @interface TDPipelineStage ()
 - (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc;
-//@property (nonatomic, retain, readwrite) id <TDChannel>inputChannel;
-//@property (nonatomic, retain, readwrite) id <TDChannel>outputChannel;
 @end
 
 @interface TDPipeline ()
-@property (nonatomic, copy, readwrite) NSArray *stages;
+@property (nonatomic, retain, readwrite) id <TDLauncher>launcher;
+@property (nonatomic, retain, readwrite) id <TDReceiver>receiver;
+@property (nonatomic, copy, readwrite) NSArray <TDPipelineStage *>*stages;
 @end
 
 @implementation TDPipeline
 
-+ (TDPipeline *)pipleineWithStages:(NSArray *)stages {
-    return [[[self alloc] initWithStages:stages] autorelease];
++ (TDPipeline *)pipleineWithLauncher:(id <TDLauncher>)l receiver:(id <TDReceiver>)r stages:(NSArray *)stages {
+    return [[[self alloc] initWithLauncher:l receiver:r stages:stages] autorelease];
 }
 
 
-- (instancetype)initWithStages:(NSArray *)stages {
+- (instancetype)initWithLauncher:(id <TDLauncher>)l receiver:(id <TDReceiver>)r stages:(NSArray *)stages {
     self = [super init];
     if (self) {
+        self.launcher = l;
+        self.receiver = r;
         self.stages = stages;
     }
     return self;
@@ -37,6 +39,8 @@
 
 
 - (void)dealloc {
+    self.launcher = nil;
+    self.receiver = nil;
     self.stages = nil;
     [super dealloc];
 }
@@ -47,22 +51,32 @@
 
 - (BOOL)runWithError:(NSError **)outErr {
     BOOL success = YES;
-    
-    id <TDChannel>ic = nil;
-    id <TDChannel>oc = [[self newChannel] autorelease];
 
-    NSUInteger i = _stages.count;
+    id <TDChannel>ic = [[self newChannel] autorelease];
+    id <TDChannel>oc = nil;
+
+    NSAssert(_stages, @"");
     for (TDPipelineStage *stage in _stages) {
-        BOOL isLast = --i == 0;
+        oc = [[self newChannel] autorelease];
         
         [stage setUpWithInputChannel:ic outputChannel:oc];
         
         ic = oc;
-        oc = isLast ? nil : [[self newChannel] autorelease];
     }
     
-    
-    
+    oc = _stages.firstObject.inputChannel; // yes ic of first stage is the oc for launcher.
+    ic = _stages.lastObject.outputChannel; // yes oc of last stage is the ic for receiver.
+
+    [NSThread detachNewThreadWithBlock:^{
+        NSAssert(_launcher, @"");
+        [_launcher launchWithOutputChannel:oc];
+    }];
+
+    [NSThread detachNewThreadWithBlock:^{
+        NSAssert(_receiver, @"");
+        [_receiver receiveWithInputChannel:ic];
+    }];
+
     return success;
 }
 
@@ -71,7 +85,7 @@
 #pragma mark Private
 
 - (id <TDChannel>)newChannel {
-    return [[TDBoundedBuffer alloc] initWithSize:5];
+    return [[TDBoundedBuffer alloc] initWithSize:5]; // TODO how to configure this?
 }
 
 @end

@@ -49,14 +49,25 @@
 
 - (void)run {
     NSAssert(_inputChannel, @"");
-    id input = [_inputChannel take];
+    
+    for (;;) {
+        id input = [_inputChannel take];
 
-    NSAssert(_runnable, @"");
-    NSError *err = nil;
-    id output = [_runnable runWithInput:input error:&err];
+        NSAssert(_runnable, @"");
+        NSError *err = nil;
+        id output = [_runnable runWithInput:input error:&err];
 
-    NSAssert(_outputChannel, @"");
-    [_outputChannel put:output];
+        NSAssert(_outputChannel, @"");
+        [_outputChannel put:output];
+    }
+}
+
+
+#pragma mark -
+#pragma mark TDRunnableDelegate
+
+- (void)runnable:(id<TDRunnable>)r updateProgress:(double)d {
+    
 }
 
 @end

@@ -11,6 +11,7 @@
 #import "Runner.h"
 
 @interface TDPipelineStage ()
+@property (nonatomic, assign, readwrite) TDPipelineStageType type;
 @property (nonatomic, retain, readwrite) Class workerClass;
 @property (nonatomic, assign, readwrite) NSUInteger threadCount;
 
@@ -24,14 +25,15 @@
 
 @implementation TDPipelineStage
 
-+ (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls threadCount:(NSUInteger)c {
-    return [[[self alloc] initWithRunnableClass:cls threadCount:c] autorelease];
++ (TDPipelineStage *)pipelineStageWithType:(TDPipelineStageType)type runnableClass:(Class)cls threadCount:(NSUInteger)c {
+    return [[[self alloc] initWithType:type runnableClass:cls threadCount:c] autorelease];
 }
 
 
-- (instancetype)initWithRunnableClass:(Class)cls threadCount:(NSUInteger)c {
+- (instancetype)initWithType:(TDPipelineStageType)type runnableClass:(Class)cls threadCount:(NSUInteger)c {
     self = [super init];
     if (self) {
+        self.type = type;
         self.workerClass = cls;
         self.threadCount = c;
     }
@@ -53,6 +55,9 @@
 #pragma mark Private
 
 - (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc {
+    NSAssert(ic, @"");
+    NSAssert(oc, @"");
+
     self.inputChannel = ic;
     self.outputChannel = oc;
     
@@ -62,6 +67,8 @@
         id <TDRunnable>runnable = [[[_workerClass alloc] init] autorelease];
         
         Runner *runner = [Runner runnerWithRunnable:runnable inputChannel:ic outputChannel:oc number:i+1];
+        runnable.delegate = runner;
+        
         [runners addObject:runner];
         
         [NSThread detachNewThreadWithBlock:^{

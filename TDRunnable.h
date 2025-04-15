@@ -8,8 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol TDRunnable;
+
+@protocol TDRunnableDelegate <NSObject>
+- (void)runnable:(id <TDRunnable>)r updateProgress:(double)d;
+@end
+
 @protocol TDRunnable <NSObject>
 
 - (id)runWithInput:(id)input error:(NSError **)outErr;
+
+@property (nonatomic, retain) id <TDRunnableDelegate>delegate;
 
 @end
