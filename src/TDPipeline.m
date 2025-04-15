@@ -98,7 +98,7 @@
 - (void)pipelineStageProgressDidUpdate:(TDPipelineStage *)ps {
     NSAssert([_stages containsObject:ps], @"");
     if (_delegate) {
-        [NSThread performSelectorOnMainThread:@selector(pipelineProgressDidUpdate:) withObject:self waitUntilDone:NO];
+        [(id)_delegate performSelectorOnMainThread:@selector(pipelineProgressDidUpdate:) withObject:self waitUntilDone:NO];
     }
 }
 
