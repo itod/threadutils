@@ -18,11 +18,11 @@
 @end
 
 @protocol TDLauncher <NSObject>
-- (void)launchWithOutputChannel:(id <TDChannel>)channel;
+- (void)launchWithPipeline:(TDPipeline *)p outputChannel:(id <TDChannel>)channel;
 @end
 
 @protocol TDReceiver <NSObject>
-- (void)receiveWithInputChannel:(id <TDChannel>)channel;
+- (void)receiveWithPipeline:(TDPipeline *)p inputChannel:(id <TDChannel>)channel;
 @end
 
 @interface TDPipeline : NSObject <TDPipelineStageDelegate>
@@ -35,6 +35,9 @@
 @property (nonatomic, copy, readonly) NSArray *stages;
 
 @property (nonatomic, assign) id <TDPipelineDelegate>delegate;
+
+@property (nonatomic, assign) double launcherProgress;
+@property (nonatomic, assign) double receiverProgress;
 
 - (BOOL)runWithError:(NSError **)outErr;
 

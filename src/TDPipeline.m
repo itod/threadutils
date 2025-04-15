@@ -52,6 +52,9 @@
 
 - (BOOL)runWithError:(NSError **)outErr {
     BOOL success = YES;
+    
+    self.launcherProgress = 0.0;
+    self.receiverProgress = 0.0;
 
     id <TDChannel>ic = [[self newChannel] autorelease];
     id <TDChannel>oc = nil;
@@ -72,12 +75,12 @@
 
     [NSThread detachNewThreadWithBlock:^{
         NSAssert(_launcher, @"");
-        [_launcher launchWithOutputChannel:oc];
+        [_launcher launchWithPipeline:self outputChannel:oc];
     }];
 
     [NSThread detachNewThreadWithBlock:^{
         NSAssert(_receiver, @"");
-        [_receiver receiveWithInputChannel:ic];
+        [_receiver receiveWithPipeline:self inputChannel:ic];
     }];
 
     return success;
