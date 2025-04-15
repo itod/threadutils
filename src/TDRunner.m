@@ -40,6 +40,9 @@
     self.runnable = nil;
     self.inputChannel = nil;
     self.outputChannel = nil;
+    
+    self.titleText = nil;
+    self.infoText = nil;
     [super dealloc];
 }
 
@@ -74,9 +77,10 @@
 }
 
 
-- (void)runnable:(id<TDRunnable>)r updateLabelText:(NSString *)s {
+- (void)runnable:(id<TDRunnable>)r updateTitleText:(NSString *)title infoText:(NSString *)info {
     NSAssert(_runnable == r, @"");
-    self.labelText = s;
+    self.titleText = title;
+    self.infoText = info;
 }
 
 @end

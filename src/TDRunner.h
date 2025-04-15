@@ -19,5 +19,6 @@
 - (void)run;
 
 @property (nonatomic, assign) CGFloat progress;
-@property (nonatomic, copy) NSString *labelText;
+@property (nonatomic, copy) NSString *titleText;
+@property (nonatomic, copy) NSString *infoText;
 @end
