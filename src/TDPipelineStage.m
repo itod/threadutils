@@ -13,9 +13,9 @@
 @interface TDPipelineStage ()
 @property (nonatomic, assign, readwrite) TDPipelineStageType type;
 @property (nonatomic, retain, readwrite) Class workerClass;
-@property (nonatomic, assign, readwrite) NSUInteger threadCount;
 
-@property (nonatomic, copy) NSArray<TDRunner *> *runners;
+@property (nonatomic, assign, readwrite) NSUInteger runnerCount;
+@property (nonatomic, copy, readwrite) NSArray<TDRunner *> *runners;
 
 // Stage private API
 - (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc;
@@ -25,17 +25,17 @@
 
 @implementation TDPipelineStage
 
-+ (TDPipelineStage *)pipelineStageWithType:(TDPipelineStageType)type runnableClass:(Class)cls threadCount:(NSUInteger)c {
-    return [[[self alloc] initWithType:type runnableClass:cls threadCount:c] autorelease];
++ (TDPipelineStage *)pipelineStageWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c {
+    return [[[self alloc] initWithType:type runnableClass:cls runnerCount:c] autorelease];
 }
 
 
-- (instancetype)initWithType:(TDPipelineStageType)type runnableClass:(Class)cls threadCount:(NSUInteger)c {
+- (instancetype)initWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c {
     self = [super init];
     if (self) {
         self.type = type;
         self.workerClass = cls;
-        self.threadCount = c;
+        self.runnerCount = c;
     }
     return self;
 }
@@ -63,9 +63,9 @@
     self.inputChannel = ic;
     self.outputChannel = oc;
     
-    NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_threadCount];
+    NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
     
-    for (NSUInteger i = 0; i < _threadCount; ++i) {
+    for (NSUInteger i = 0; i < _runnerCount; ++i) {
         id <TDRunnable>runnable = [[[_workerClass alloc] init] autorelease];
         
         TDRunner *runner = [TDRunner runnerWithRunnable:runnable inputChannel:ic outputChannel:oc number:i+1];

@@ -9,7 +9,7 @@
 #import "TDBaseTestCase.h"
 
 @interface TDBaseTestCase ()
-@property (assign) NSUInteger threadCounter;
+@property (assign) NSUInteger runnerCounter;
 @end
 
 @implementation TDBaseTestCase
@@ -24,7 +24,7 @@
     [super setUp];
     [[NSThread currentThread] setName:@"MAIN"];
     
-    self.threadCounter = 0;
+    self.runnerCounter = 0;
 
     self.done = [self expectationWithDescription:@"done"];
     self.flag = NO;
@@ -73,7 +73,7 @@
 }
 
 - (void)nameCurrentBackgroundThread { // PRE: lock held
-    [[NSThread currentThread] setName:[NSString stringWithFormat:@"BG#%lu", ++self.threadCounter]];
+    [[NSThread currentThread] setName:[NSString stringWithFormat:@"BG#%lu", ++self.runnerCounter]];
 }
 
 @synthesize done=done;

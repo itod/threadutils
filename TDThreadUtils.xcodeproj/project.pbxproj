@@ -22,7 +22,7 @@
 		D37B0BD92DAD792400795C50 /* TDRunnable.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BD72DAD792400795C50 /* TDRunnable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D37B0BDA2DAD792400795C50 /* TDPipelineStage.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BD62DAD792400795C50 /* TDPipelineStage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D37B0BDD2DADC23300795C50 /* TDRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D37B0BDC2DADC23300795C50 /* TDRunner.m */; };
-		D37B0BDE2DADC23300795C50 /* TDRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BDB2DADC23300795C50 /* TDRunner.h */; };
+		D37B0BDE2DADC23300795C50 /* TDRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BDB2DADC23300795C50 /* TDRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D386934F1F9C2D2400928048 /* TDLinkedQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D386934D1F9C2D2400928048 /* TDLinkedQueue.m */; };
 		D38693511F9C2DFF00928048 /* TDLinkedQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D38693501F9C2D5F00928048 /* TDLinkedQueueTests.m */; };
 		D38693531F9C2E3200928048 /* TDLinkedQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = D38693521F9C2E2800928048 /* TDLinkedQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };

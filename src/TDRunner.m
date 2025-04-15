@@ -6,7 +6,7 @@
 //  Copyright © 2025 Todd Ditchendorf. All rights reserved.
 //
 
-#import "TDRunner.h"
+#import <TDThreadUtils/TDRunner.h>
 #import <TDThreadUtils/TDRunnable.h>
 #import <TDThreadUtils/TDChannel.h>
 

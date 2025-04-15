@@ -15,6 +15,7 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 
 @protocol TDChannel;
 @class TDPipelineStage;
+@class TDRunner;
 
 @protocol TDPipelineStageDelegate <NSObject>
 - (void)pipelineStageProgressDidUpdate:(TDPipelineStage *)ps;
@@ -22,12 +23,14 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 
 @interface TDPipelineStage : NSObject
 
-+ (TDPipelineStage *)pipelineStageWithType:(TDPipelineStageType)type runnableClass:(Class)cls threadCount:(NSUInteger)c;
-- (instancetype)initWithType:(TDPipelineStageType)type runnableClass:(Class)cls threadCount:(NSUInteger)c;
++ (TDPipelineStage *)pipelineStageWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c;
+- (instancetype)initWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c;
 
 @property (nonatomic, assign, readonly) TDPipelineStageType type;
 @property (nonatomic, retain, readonly) Class workerClass;
-@property (nonatomic, assign, readonly) NSUInteger threadCount;
+
+@property (nonatomic, assign, readonly) NSUInteger runnerCount;
+@property (nonatomic, copy, readonly) NSArray<TDRunner *> *runners;
 
 @property (nonatomic, retain, readonly) id <TDChannel>inputChannel;
 @property (nonatomic, retain, readonly) id <TDChannel>outputChannel;
