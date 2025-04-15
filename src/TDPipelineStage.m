@@ -8,13 +8,13 @@
 
 #import <TDThreadUtils/TDPipelineStage.h>
 #import <TDThreadUtils/TDRunnable.h>
-#import "TDWorker.h"
+#import "Runner.h"
 
 @interface TDPipelineStage ()
 @property (nonatomic, retain, readwrite) Class workerClass;
-@property (nonatomic, assign, readwrite) NSUInteger workerCount;
+@property (nonatomic, assign, readwrite) NSUInteger threadCount;
 
-@property (nonatomic, copy) NSArray<TDWorker *> *workers;
+@property (nonatomic, copy) NSArray<Runner *> *runners;
 
 // Stage private API
 - (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc;
@@ -24,16 +24,16 @@
 
 @implementation TDPipelineStage
 
-+ (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls workerCount:(NSUInteger)c {
-    return [[[self alloc] initWithRunnableClass:cls workerCount:c] autorelease];
++ (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls threadCount:(NSUInteger)c {
+    return [[[self alloc] initWithRunnableClass:cls threadCount:c] autorelease];
 }
 
 
-- (instancetype)initWithRunnableClass:(Class)cls workerCount:(NSUInteger)c {
+- (instancetype)initWithRunnableClass:(Class)cls threadCount:(NSUInteger)c {
     self = [super init];
     if (self) {
         self.workerClass = cls;
-        self.workerCount = c;
+        self.threadCount = c;
     }
     return self;
 }
@@ -44,7 +44,7 @@
     self.inputChannel = nil;
     self.outputChannel = nil;
     
-    self.workers = nil;
+    self.runners = nil;
     [super dealloc];
 }
 
@@ -56,16 +56,20 @@
     self.inputChannel = ic;
     self.outputChannel = oc;
     
-    NSMutableArray *workers = [NSMutableArray arrayWithCapacity:_workerCount];
+    NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_threadCount];
     
-    for (NSUInteger i = 0; i < _workerCount; ++i) {
+    for (NSUInteger i = 0; i < _threadCount; ++i) {
         id <TDRunnable>runnable = [[[_workerClass alloc] init] autorelease];
         
-        TDWorker *worker = [TDWorker workerWithRunnable:runnable inputChannel:ic outputChannel:oc];
-        [workers addObject:worker];
+        Runner *runner = [Runner runnerWithRunnable:runnable inputChannel:ic outputChannel:oc number:i+1];
+        [runners addObject:runner];
+        
+        [NSThread detachNewThreadWithBlock:^{
+            [runner run];
+        }];
     }
     
-    self.workers = workers;
+    self.runners = runners;
 }
 
 @end

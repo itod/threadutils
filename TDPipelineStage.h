@@ -12,11 +12,11 @@
 
 @interface TDPipelineStage : NSObject
 
-+ (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls workerCount:(NSUInteger)c;
-- (instancetype)initWithRunnableClass:(Class)cls workerCount:(NSUInteger)c;
++ (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls threadCount:(NSUInteger)c;
+- (instancetype)initWithRunnableClass:(Class)cls threadCount:(NSUInteger)c;
 
 @property (nonatomic, retain, readonly) Class workerClass;
-@property (nonatomic, assign, readonly) NSUInteger workerCount;
+@property (nonatomic, assign, readonly) NSUInteger threadCount;
 
 @property (nonatomic, retain, readonly) id <TDChannel>inputChannel;
 @property (nonatomic, retain, readonly) id <TDChannel>outputChannel;
