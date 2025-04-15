@@ -8,12 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol TDChannel;
-
 typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
     TDPipelineStageTypeDeterminate = 0,
     TDPipelineStageTypeIndeterminate = 1,
 };
+
+@protocol TDChannel;
+@class TDPipelineStage;
+
+@protocol TDPipelineStageDelegate <NSObject>
+- (void)pipelineStageProgressDidUpdate:(TDPipelineStage *)ps;
+@end
 
 @interface TDPipelineStage : NSObject
 
@@ -26,6 +31,8 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 
 @property (nonatomic, retain, readonly) id <TDChannel>inputChannel;
 @property (nonatomic, retain, readonly) id <TDChannel>outputChannel;
+
+@property (nonatomic, assign) id <TDPipelineStageDelegate>delegate;
 
 @end
 

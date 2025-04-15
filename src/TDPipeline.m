@@ -7,7 +7,6 @@
 //
 
 #import <TDThreadUtils/TDPipeline.h>
-#import <TDThreadUtils/TDPipelineStage.h>
 #import <TDThreadUtils/TDBoundedBuffer.h>
 
 @interface TDPipelineStage ()
@@ -42,6 +41,8 @@
     self.launcher = nil;
     self.receiver = nil;
     self.stages = nil;
+    
+    self.delegate = nil;
     [super dealloc];
 }
 
@@ -57,6 +58,8 @@
 
     NSAssert(_stages, @"");
     for (TDPipelineStage *stage in _stages) {
+        stage.delegate = self;
+        
         oc = [[self newChannel] autorelease];
         
         [stage setUpWithInputChannel:ic outputChannel:oc];
@@ -86,6 +89,17 @@
 
 - (id <TDChannel>)newChannel {
     return [[TDBoundedBuffer alloc] initWithSize:5]; // TODO how to configure this?
+}
+
+
+#pragma mark -
+#pragma mark TDPipelineStageDelegate
+
+- (void)pipelineStageProgressDidUpdate:(TDPipelineStage *)ps {
+    NSAssert([_stages containsObject:ps], @"");
+    if (_delegate) {
+        [NSThread performSelectorOnMainThread:@selector(pipelineProgressDidUpdate:) withObject:self waitUntilDone:NO];
+    }
 }
 
 @end

@@ -8,14 +8,14 @@
 
 #import <TDThreadUtils/TDPipelineStage.h>
 #import <TDThreadUtils/TDRunnable.h>
-#import "Runner.h"
+#import "TDRunner.h"
 
 @interface TDPipelineStage ()
 @property (nonatomic, assign, readwrite) TDPipelineStageType type;
 @property (nonatomic, retain, readwrite) Class workerClass;
 @property (nonatomic, assign, readwrite) NSUInteger threadCount;
 
-@property (nonatomic, copy) NSArray<Runner *> *runners;
+@property (nonatomic, copy) NSArray<TDRunner *> *runners;
 
 // Stage private API
 - (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc;
@@ -47,6 +47,8 @@
     self.outputChannel = nil;
     
     self.runners = nil;
+    
+    self.delegate = nil;
     [super dealloc];
 }
 
@@ -66,17 +68,29 @@
     for (NSUInteger i = 0; i < _threadCount; ++i) {
         id <TDRunnable>runnable = [[[_workerClass alloc] init] autorelease];
         
-        Runner *runner = [Runner runnerWithRunnable:runnable inputChannel:ic outputChannel:oc number:i+1];
+        TDRunner *runner = [TDRunner runnerWithRunnable:runnable inputChannel:ic outputChannel:oc number:i+1];
         runnable.delegate = runner;
         
+        [runner addObserver:self forKeyPath:@"progress" options:0 context:NULL];
         [runners addObject:runner];
-        
+    }
+    
+    self.runners = runners;
+    
+    for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
             [runner run];
         }];
     }
-    
-    self.runners = runners;
+}
+
+
+#pragma mark -
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)path ofObject:(id)obj change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)ctx {
+    NSAssert([_runners containsObject:obj], @"");
+    [_delegate pipelineStageProgressDidUpdate:self];
 }
 
 @end

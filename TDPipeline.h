@@ -7,12 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <TDThreadUtils/TDPipelineStage.h>
 
 @protocol TDChannel;
 @class TDPipeline;
 
 @protocol TDPipelineDelegate <NSObject>
-- (void)pipelineProgressUpdated:(TDPipeline *)p;
+// this will always be called on main thread
+- (void)pipelineProgressDidUpdate:(TDPipeline *)p;
 @end
 
 @protocol TDLauncher <NSObject>
@@ -23,7 +25,7 @@
 - (void)receiveWithInputChannel:(id <TDChannel>)channel;
 @end
 
-@interface TDPipeline : NSObject
+@interface TDPipeline : NSObject <TDPipelineStageDelegate>
 
 + (TDPipeline *)pipleineWithLauncher:(id <TDLauncher>)l receiver:(id <TDReceiver>)r stages:(NSArray *)stages;
 - (instancetype)initWithLauncher:(id <TDLauncher>)l receiver:(id <TDReceiver>)r stages:(NSArray *)stages;

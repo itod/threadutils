@@ -21,8 +21,8 @@
 		D37B0BD82DAD792400795C50 /* TDPipeline.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BD52DAD792400795C50 /* TDPipeline.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D37B0BD92DAD792400795C50 /* TDRunnable.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BD72DAD792400795C50 /* TDRunnable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D37B0BDA2DAD792400795C50 /* TDPipelineStage.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BD62DAD792400795C50 /* TDPipelineStage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D37B0BDD2DADC23300795C50 /* Runner.m in Sources */ = {isa = PBXBuildFile; fileRef = D37B0BDC2DADC23300795C50 /* Runner.m */; };
-		D37B0BDE2DADC23300795C50 /* Runner.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BDB2DADC23300795C50 /* Runner.h */; };
+		D37B0BDD2DADC23300795C50 /* TDRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D37B0BDC2DADC23300795C50 /* TDRunner.m */; };
+		D37B0BDE2DADC23300795C50 /* TDRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BDB2DADC23300795C50 /* TDRunner.h */; };
 		D386934F1F9C2D2400928048 /* TDLinkedQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D386934D1F9C2D2400928048 /* TDLinkedQueue.m */; };
 		D38693511F9C2DFF00928048 /* TDLinkedQueueTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D38693501F9C2D5F00928048 /* TDLinkedQueueTests.m */; };
 		D38693531F9C2E3200928048 /* TDLinkedQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = D38693521F9C2E2800928048 /* TDLinkedQueue.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -77,8 +77,8 @@
 		D37B0BD52DAD792400795C50 /* TDPipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDPipeline.h; sourceTree = "<group>"; };
 		D37B0BD62DAD792400795C50 /* TDPipelineStage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDPipelineStage.h; sourceTree = "<group>"; };
 		D37B0BD72DAD792400795C50 /* TDRunnable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDRunnable.h; sourceTree = "<group>"; };
-		D37B0BDB2DADC23300795C50 /* Runner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Runner.h; path = src/Runner.h; sourceTree = "<group>"; };
-		D37B0BDC2DADC23300795C50 /* Runner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = Runner.m; path = src/Runner.m; sourceTree = "<group>"; };
+		D37B0BDB2DADC23300795C50 /* TDRunner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDRunner.h; path = src/TDRunner.h; sourceTree = "<group>"; };
+		D37B0BDC2DADC23300795C50 /* TDRunner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDRunner.m; path = src/TDRunner.m; sourceTree = "<group>"; };
 		D386934D1F9C2D2400928048 /* TDLinkedQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDLinkedQueue.m; path = src/TDLinkedQueue.m; sourceTree = "<group>"; };
 		D38693501F9C2D5F00928048 /* TDLinkedQueueTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDLinkedQueueTests.m; path = tests/TDLinkedQueueTests.m; sourceTree = "<group>"; };
 		D38693521F9C2E2800928048 /* TDLinkedQueue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDLinkedQueue.h; path = include/TDThreadUtils/TDLinkedQueue.h; sourceTree = "<group>"; };
@@ -178,8 +178,8 @@
 				D37B0BCA2DAD78E600795C50 /* TDPipeline.m */,
 				D37B0BD62DAD792400795C50 /* TDPipelineStage.h */,
 				D37B0BCE2DAD78F900795C50 /* TDPipelineStage.m */,
-				D37B0BDB2DADC23300795C50 /* Runner.h */,
-				D37B0BDC2DADC23300795C50 /* Runner.m */,
+				D37B0BDB2DADC23300795C50 /* TDRunner.h */,
+				D37B0BDC2DADC23300795C50 /* TDRunner.m */,
 				D37B0BD72DAD792400795C50 /* TDRunnable.h */,
 			);
 			name = TDThreadUtils;
@@ -237,7 +237,7 @@
 				D3AF43B41A658078005C309E /* TDThreadUtils.h in Headers */,
 				D3AF43B11A658078005C309E /* TDSemaphore.h in Headers */,
 				D36CB45420ED64260029669D /* TDGamePlayer.h in Headers */,
-				D37B0BDE2DADC23300795C50 /* Runner.h in Headers */,
+				D37B0BDE2DADC23300795C50 /* TDRunner.h in Headers */,
 				D34700C61B0ED4EA0099D78F /* TDPool.h in Headers */,
 				D38693531F9C2E3200928048 /* TDLinkedQueue.h in Headers */,
 				D3AF43B01A658078005C309E /* TDInterpreterSync.h in Headers */,
@@ -349,7 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D36CB44720ED3F060029669D /* TDGamePlayer.m in Sources */,
-				D37B0BDD2DADC23300795C50 /* Runner.m in Sources */,
+				D37B0BDD2DADC23300795C50 /* TDRunner.m in Sources */,
 				D3AF43BE1A65809A005C309E /* TDSynchronousChannel.m in Sources */,
 				D3AF43BB1A65809A005C309E /* TDBoundedBuffer.m in Sources */,
 				D33849EB1D67752D00087F7D /* TDExchanger.m in Sources */,

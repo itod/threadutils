@@ -6,20 +6,20 @@
 //  Copyright © 2025 Todd Ditchendorf. All rights reserved.
 //
 
-#import "Runner.h"
+#import "TDRunner.h"
 #import <TDThreadUtils/TDRunnable.h>
 #import <TDThreadUtils/TDChannel.h>
 
-@interface Runner ()
+@interface TDRunner ()
 @property (nonatomic, retain) id <TDRunnable>runnable;
 @property (nonatomic, retain) id <TDChannel>inputChannel;
 @property (nonatomic, retain) id <TDChannel>outputChannel;
 @property (nonatomic, assign) NSUInteger number;
 @end
 
-@implementation Runner
+@implementation TDRunner
 
-+ (Runner *)runnerWithRunnable:(id <TDRunnable>)runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i {
++ (TDRunner *)runnerWithRunnable:(id <TDRunnable>)runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i {
     return [[[self alloc] initWithRunnable:runnable inputChannel:ic outputChannel:oc number:i] autorelease];
 }
 

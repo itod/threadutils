@@ -11,9 +11,9 @@
 
 @protocol TDChannel;
 
-@interface Runner : NSObject <TDRunnableDelegate>
+@interface TDRunner : NSObject <TDRunnableDelegate>
 
-+ (Runner *)runnerWithRunnable:(id <TDRunnable>)runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
++ (TDRunner *)runnerWithRunnable:(id <TDRunnable>)runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 - (instancetype)initWithRunnable:(id <TDRunnable>)runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 
 - (void)run;
