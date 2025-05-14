@@ -19,6 +19,6 @@
 
 - (id)runWithInput:(id)input error:(NSError **)outErr;
 
-@property (nonatomic, retain) id <TDRunnableDelegate>delegate;
+@property (nonatomic, assign) id <TDRunnableDelegate>delegate;
 
 @end
