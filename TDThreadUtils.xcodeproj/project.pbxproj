@@ -74,9 +74,9 @@
 		D36CB45320ED64260029669D /* TDGamePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDGamePlayer.h; path = include/TDThreadUtils/TDGamePlayer.h; sourceTree = "<group>"; };
 		D37B0BCA2DAD78E600795C50 /* TDPipeline.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDPipeline.m; path = src/TDPipeline.m; sourceTree = "<group>"; };
 		D37B0BCE2DAD78F900795C50 /* TDPipelineStage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDPipelineStage.m; path = src/TDPipelineStage.m; sourceTree = "<group>"; };
-		D37B0BD52DAD792400795C50 /* TDPipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDPipeline.h; sourceTree = "<group>"; };
-		D37B0BD62DAD792400795C50 /* TDPipelineStage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDPipelineStage.h; sourceTree = "<group>"; };
-		D37B0BD72DAD792400795C50 /* TDRunnable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDRunnable.h; sourceTree = "<group>"; };
+		D37B0BD52DAD792400795C50 /* TDPipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDPipeline.h; path = include/TDThreadUtils/TDPipeline.h; sourceTree = "<group>"; };
+		D37B0BD62DAD792400795C50 /* TDPipelineStage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDPipelineStage.h; path = include/TDThreadUtils/TDPipelineStage.h; sourceTree = "<group>"; };
+		D37B0BD72DAD792400795C50 /* TDRunnable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDRunnable.h; path = include/TDThreadUtils/TDRunnable.h; sourceTree = "<group>"; };
 		D37B0BDB2DADC23300795C50 /* TDRunner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDRunner.h; path = src/TDRunner.h; sourceTree = "<group>"; };
 		D37B0BDC2DADC23300795C50 /* TDRunner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDRunner.m; path = src/TDRunner.m; sourceTree = "<group>"; };
 		D386934D1F9C2D2400928048 /* TDLinkedQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDLinkedQueue.m; path = src/TDLinkedQueue.m; sourceTree = "<group>"; };

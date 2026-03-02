@@ -7,11 +7,38 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <TDThreadUtils/TDPipelineStage.h>
 
-NS_ASSUME_NONNULL_BEGIN
+@protocol TDChannel;
+@class TDPipeline;
 
-@interface TDPipeline : NSObject
-
+@protocol TDPipelineDelegate <NSObject>
+// this will always be called on main thread
+- (void)pipelineProgressDidUpdate:(TDPipeline *)p;
 @end
 
-NS_ASSUME_NONNULL_END
+@protocol TDLauncher <NSObject>
+- (void)launchWithPipeline:(TDPipeline *)p outputChannel:(id <TDChannel>)channel;
+@end
+
+@protocol TDReceiver <NSObject>
+- (void)receiveWithPipeline:(TDPipeline *)p inputChannel:(id <TDChannel>)channel;
+@end
+
+@interface TDPipeline : NSObject <TDPipelineStageDelegate>
+
++ (TDPipeline *)pipleineWithLauncher:(id <TDLauncher>)l receiver:(id <TDReceiver>)r stages:(NSArray *)stages;
+- (instancetype)initWithLauncher:(id <TDLauncher>)l receiver:(id <TDReceiver>)r stages:(NSArray *)stages;
+
+@property (nonatomic, retain, readonly) id <TDLauncher>launcher;
+@property (nonatomic, retain, readonly) id <TDReceiver>receiver;
+@property (nonatomic, copy, readonly) NSArray *stages;
+
+@property (nonatomic, assign) id <TDPipelineDelegate>delegate;
+
+@property (nonatomic, assign) double launcherProgress;
+@property (nonatomic, assign) double receiverProgress;
+
+- (BOOL)runWithError:(NSError **)outErr;
+
+@end
