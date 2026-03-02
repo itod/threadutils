@@ -1,5 +1,5 @@
 //
-//  TDWorker.h
+//  TDRunner.h
 //  TDThreadUtils
 //
 //  Created by Todd Ditchendorf on 4/14/25.
@@ -13,10 +13,12 @@
 
 @interface TDRunner : NSObject <TDRunnableDelegate>
 
-+ (TDRunner *)runnerWithRunnable:(id <TDRunnable>)runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
-- (instancetype)initWithRunnable:(id <TDRunnable>)runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
++ (TDRunner *)runnerWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
+- (instancetype)initWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 
 - (void)run;
+
+@property (nonatomic, retain) TDRunnable *runnable;
 
 @property (nonatomic, assign) CGFloat progress;
 @property (nonatomic, copy) NSString *titleText;

@@ -66,10 +66,9 @@
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
     
     for (NSUInteger i = 0; i < _runnerCount; ++i) {
-        id <TDRunnable>runnable = [[[_workerClass alloc] init] autorelease];
-        
-        TDRunner *runner = [TDRunner runnerWithRunnable:runnable inputChannel:ic outputChannel:oc number:i+1];
-        runnable.delegate = runner;
+        TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc number:i+1];
+        TDRunnable *runnable = [[[_workerClass alloc] initWithDelegate:runner] autorelease];
+        runner.runnable = runnable;
         
         [runner addObserver:self forKeyPath:@"progress" options:0 context:NULL];
         [runners addObject:runner];

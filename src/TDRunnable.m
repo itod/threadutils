@@ -1,5 +1,5 @@
 //
-//  TDRunner.m
+//  TDWorker.m
 //  TDThreadUtils
 //
 //  Created by Todd Ditchendorf on 4/14/25.
@@ -11,6 +11,7 @@
 #import <TDThreadUtils/TDChannel.h>
 
 @interface TDRunner ()
+@property (nonatomic, retain) id <TDRunnable>runnable;
 @property (nonatomic, retain) id <TDChannel>inputChannel;
 @property (nonatomic, retain) id <TDChannel>outputChannel;
 @property (nonatomic, assign) NSUInteger number;
@@ -18,14 +19,15 @@
 
 @implementation TDRunner
 
-+ (TDRunner *)runnerWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i {
-    return [[[self alloc] initWithInputChannel:ic outputChannel:oc number:i] autorelease];
++ (TDRunner *)runnerWithRunnable:(id <TDRunnable>)runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i {
+    return [[[self alloc] initWithRunnable:runnable inputChannel:ic outputChannel:oc number:i] autorelease];
 }
 
 
-- (instancetype)initWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i {
+- (instancetype)initWithRunnable:runnable inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i {
     self = [super init];
     if (self) {
+        self.runnable = runnable;
         self.inputChannel = ic;
         self.outputChannel = oc;
         self.number = i;
@@ -69,21 +71,16 @@
 #pragma mark -
 #pragma mark TDRunnableDelegate
 
-- (void)runnable:(TDRunnable *)r updateProgress:(double)d {
+- (void)runnable:(id<TDRunnable>)r updateProgress:(double)d {
     NSAssert(_runnable == r, @"");
     self.progress = d;
 }
 
 
-- (void)runnable:(TDRunnable *)r updateTitleText:(NSString *)title infoText:(NSString *)info {
+- (void)runnable:(id<TDRunnable>)r updateTitleText:(NSString *)title infoText:(NSString *)info {
     NSAssert(_runnable == r, @"");
     self.titleText = title;
     self.infoText = info;
-}
-
-
-- (void)runnable:(TDRunnable *)r sendToSink:(id)data {
-    // TODO
 }
 
 @end
