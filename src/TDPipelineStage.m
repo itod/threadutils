@@ -60,7 +60,9 @@
 
 - (void)await {
     NSAssert(_threshold, @"");
+    NSLog(@"%@", _threshold);
     [_threshold await]; // 3
+    NSLog(@"%@", self);
 }
 
 
@@ -76,27 +78,37 @@
     self.sinkChannel = sc;
 
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
+    NSUInteger thresholdCount = 0;
     
     for (NSUInteger i = 0; i < _runnerCount; ++i) {
         TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc sinkChannel:sc number:i+1];
         TDRunnable *runnable = [[[_workerClass alloc] initWithDelegate:runner] autorelease];
         runner.runnable = runnable;
         
+        ++thresholdCount;
+        if (runnable.wantsSink) {
+            ++thresholdCount;
+        }
+        
         [runner addObserver:self forKeyPath:@"progress" options:0 context:NULL];
         [runners addObject:runner];
     }
     
     self.runners = runners;
-    self.threshold = [TDThreshold thresholdWithValue:3];
+    self.threshold = [TDThreshold thresholdWithValue:thresholdCount + 1];
+    NSLog(@"%@", _threshold);
     
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
             [runner run];
             NSAssert(_threshold, @"");
+            NSLog(@"%@", _threshold);
             [_threshold await]; // 1
         }];
         [NSThread detachNewThreadWithBlock:^{
             [runner runSink];
+            NSAssert(_threshold, @"");
+            NSLog(@"%@", _threshold);
             [_threshold await]; // 2
         }];
     }

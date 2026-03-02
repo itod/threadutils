@@ -47,4 +47,9 @@
     return NO;
 }
 
+
+- (BOOL)wantsSink {
+    return NO;
+}
+
 @end

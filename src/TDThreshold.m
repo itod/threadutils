@@ -18,6 +18,7 @@
 - (BOOL)reached;
 - (void)wait;
 
+@property (assign) NSInteger initialValue;
 @property (assign) NSInteger value;
 @property (retain) NSCondition *monitor;
 @end
@@ -32,6 +33,7 @@
 - (instancetype)initWithValue:(NSInteger)value {
     self = [super init];
     if (self) {
+        self.initialValue = value;
         self.value = value;
         self.monitor = [[[NSCondition alloc] init] autorelease];
     }
@@ -42,6 +44,11 @@
 - (void)dealloc {
     self.monitor = nil;
     [super dealloc];
+}
+
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ %p (%ld of %ld)>", [self class], self, _initialValue - _value, _initialValue];
 }
 
 
