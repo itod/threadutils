@@ -81,20 +81,15 @@
         [_launcher launchWithPipeline:self outputChannel:oc];
     }];
     
-    TDTrigger *receiverTrigger = [TDTrigger trigger];
+    TDTrigger *receiverDone = [TDTrigger trigger];
 
     [NSThread detachNewThreadWithBlock:^{
         NSAssert(_receiver, @"");
         [_receiver receiveWithPipeline:self inputChannel:ic];
-        [receiverTrigger fire];
+        [receiverDone fire];
     }];
     
-    // wait until all stages are done
-    for (TDPipelineStage *stage in _stages) {
-        [stage await];
-    }
-    // also wait until receiver is done
-    [receiverTrigger await];
+    [receiverDone await];
     
     return success;
 }

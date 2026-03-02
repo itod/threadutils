@@ -70,10 +70,7 @@
 
 
 - (void)runSink {
-    if (!_runnable.wantsSink) {
-        return;
-    }
-    
+    NSAssert(_runnable.wantsSink, @"");
     NSAssert(_sinkChannel, @"");
     for (;;) {
         id input = [_sinkChannel take];
@@ -84,6 +81,12 @@
             if (err) NSLog(@"%@", err);
         }
     }
+}
+
+
+- (BOOL)wantsSink {
+    NSAssert(_runnable, @"");
+    return _runnable.wantsSink;
 }
 
 

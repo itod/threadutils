@@ -8,7 +8,6 @@
 
 #import <TDThreadUtils/TDPipelineStage.h>
 #import <TDThreadUtils/TDRunnable.h>
-#import <TDThreadUtils/TDThreshold.h>
 #import "TDRunner.h"
 
 @interface TDPipelineStage ()
@@ -17,8 +16,6 @@
 
 @property (nonatomic, assign, readwrite) NSUInteger runnerCount;
 @property (nonatomic, copy, readwrite) NSArray<TDRunner *> *runners;
-
-@property (atomic, retain) TDThreshold *threshold;
 
 // Stage private API
 - (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
@@ -49,20 +46,11 @@
     self.delegate = nil;
     self.workerClass = nil;
     self.runners = nil;
-    self.threshold = nil;
 
     self.inputChannel = nil;
     self.outputChannel = nil;
     self.sinkChannel = nil;
     [super dealloc];
-}
-
-
-- (void)await {
-    NSAssert(_threshold, @"");
-    NSLog(@"%@", _threshold);
-    [_threshold await]; // 3
-    NSLog(@"%@", self);
 }
 
 
@@ -78,39 +66,27 @@
     self.sinkChannel = sc;
 
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
-    NSUInteger thresholdCount = 0;
     
     for (NSUInteger i = 0; i < _runnerCount; ++i) {
         TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc sinkChannel:sc number:i+1];
         TDRunnable *runnable = [[[_workerClass alloc] initWithDelegate:runner] autorelease];
         runner.runnable = runnable;
         
-        ++thresholdCount;
-        if (runnable.wantsSink) {
-            ++thresholdCount;
-        }
-        
         [runner addObserver:self forKeyPath:@"progress" options:0 context:NULL];
         [runners addObject:runner];
     }
     
     self.runners = runners;
-    self.threshold = [TDThreshold thresholdWithValue:thresholdCount + 1];
-    NSLog(@"%@", _threshold);
     
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
             [runner run];
-            NSAssert(_threshold, @"");
-            NSLog(@"%@", _threshold);
-            [_threshold await]; // 1
         }];
-        [NSThread detachNewThreadWithBlock:^{
-            [runner runSink];
-            NSAssert(_threshold, @"");
-            NSLog(@"%@", _threshold);
-            [_threshold await]; // 2
-        }];
+        if (runner.wantsSink) {
+            [NSThread detachNewThreadWithBlock:^{
+                [runner runSink];
+            }];
+        }
     }
 }
 

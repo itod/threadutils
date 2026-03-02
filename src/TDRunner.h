@@ -18,6 +18,7 @@
 
 - (void)run;
 - (void)runSink;
+- (BOOL)wantsSink;
 
 @property (nonatomic, retain) TDRunnable *runnable;
 
