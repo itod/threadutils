@@ -26,6 +26,8 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 + (TDPipelineStage *)pipelineStageWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c;
 - (instancetype)initWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c;
 
+- (void)await;
+
 @property (nonatomic, assign, readonly) TDPipelineStageType type;
 @property (nonatomic, retain, readonly) Class workerClass;
 
@@ -34,6 +36,7 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 
 @property (nonatomic, retain, readonly) id <TDChannel>inputChannel;
 @property (nonatomic, retain, readonly) id <TDChannel>outputChannel;
+@property (nonatomic, retain, readonly) id <TDChannel>sinkChannel;
 
 @property (nonatomic, assign) id <TDPipelineStageDelegate>delegate;
 

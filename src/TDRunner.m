@@ -13,21 +13,23 @@
 @interface TDRunner ()
 @property (nonatomic, retain) id <TDChannel>inputChannel;
 @property (nonatomic, retain) id <TDChannel>outputChannel;
+@property (nonatomic, retain) id <TDChannel>sinkChannel;
 @property (nonatomic, assign) NSUInteger number;
 @end
 
 @implementation TDRunner
 
-+ (TDRunner *)runnerWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i {
-    return [[[self alloc] initWithInputChannel:ic outputChannel:oc number:i] autorelease];
++ (TDRunner *)runnerWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc number:(NSUInteger)i {
+    return [[[self alloc] initWithInputChannel:ic outputChannel:oc sinkChannel:sc number:i] autorelease];
 }
 
 
-- (instancetype)initWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i {
+- (instancetype)initWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc number:(NSUInteger)i {
     self = [super init];
     if (self) {
         self.inputChannel = ic;
         self.outputChannel = oc;
+        self.sinkChannel = sc;
         self.number = i;
     }
     return self;
@@ -38,7 +40,8 @@
     self.runnable = nil;
     self.inputChannel = nil;
     self.outputChannel = nil;
-    
+    self.sinkChannel = nil;
+
     self.titleText = nil;
     self.infoText = nil;
     [super dealloc];
@@ -66,6 +69,21 @@
 }
 
 
+- (void)runSink {
+    NSAssert(_sinkChannel, @"");
+    
+    for (;;) {
+        id input = [_sinkChannel take];
+        
+        NSAssert(_runnable, @"");
+        NSError *err = nil;
+        if (![_runnable sinkData:input error:&err]) {
+            if (err) NSLog(@"%@", err);
+        }
+    }
+}
+
+
 #pragma mark -
 #pragma mark TDRunnableDelegate
 
@@ -83,7 +101,8 @@
 
 
 - (void)runnable:(TDRunnable *)r sendToSink:(id)data {
-    // TODO
+    NSAssert(_sinkChannel, @"");
+    [_sinkChannel put:data];
 }
 
 @end

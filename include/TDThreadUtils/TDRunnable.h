@@ -24,8 +24,8 @@
 // main pipeline
 - (id)runWithInput:(id)input error:(NSError **)outErr;
 
-// parallel sink
-- (void)sinkData:(id)data error:(NSError **)outErr;
+// parallel sink. return YES for success
+- (BOOL)sinkData:(id)data error:(NSError **)outErr;
 
 @property (nonatomic, assign, readonly) id <TDRunnableDelegate>delegate;
 

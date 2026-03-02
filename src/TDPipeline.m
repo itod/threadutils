@@ -8,9 +8,10 @@
 
 #import <TDThreadUtils/TDPipeline.h>
 #import <TDThreadUtils/TDBoundedBuffer.h>
+#import <TDThreadUtils/TDTrigger.h>
 
 @interface TDPipelineStage ()
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc;
+- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
 @end
 
 @interface TDPipeline ()
@@ -58,14 +59,16 @@
 
     id <TDChannel>ic = [[self newChannel] autorelease];
     id <TDChannel>oc = nil;
+    id <TDChannel>sc = nil;
 
     NSAssert(_stages, @"");
     for (TDPipelineStage *stage in _stages) {
         stage.delegate = self;
         
         oc = [[self newChannel] autorelease];
-        
-        [stage setUpWithInputChannel:ic outputChannel:oc];
+        sc = [[self newChannel] autorelease];
+
+        [stage setUpWithInputChannel:ic outputChannel:oc sinkChannel:sc];
         
         ic = oc;
     }
@@ -77,12 +80,22 @@
         NSAssert(_launcher, @"");
         [_launcher launchWithPipeline:self outputChannel:oc];
     }];
+    
+    TDTrigger *receiverTrigger = [TDTrigger trigger];
 
     [NSThread detachNewThreadWithBlock:^{
         NSAssert(_receiver, @"");
         [_receiver receiveWithPipeline:self inputChannel:ic];
+        [receiverTrigger fire];
     }];
-
+    
+    // wait until all stages are done
+    for (TDPipelineStage *stage in _stages) {
+        [stage await];
+    }
+    // also wait until receiver is done
+    [receiverTrigger await];
+    
     return success;
 }
 
