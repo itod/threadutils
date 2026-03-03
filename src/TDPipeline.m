@@ -83,6 +83,18 @@
     NSUInteger count = [[countChannel take] unsignedIntegerValue];
     [countChannel put:@(count)];
 
+    NSAssert(_stages, @"");
+    for (TDPipelineStage *stage in _stages) {
+        stage.delegate = self;
+        
+        oc = [[self newChannel] autorelease];
+        sc = [stage.workerClass wantsSink] ? [[self newChannel] autorelease] : nil;
+
+        [stage setUpWithItemCount:count inputChannel:ic outputChannel:oc sinkChannel:sc];
+        
+        ic = oc;
+    }
+    
     TDTrigger *receiverDoneTrigger = [TDTrigger trigger];
 
     [NSThread detachNewThreadWithBlock:^{
@@ -102,18 +114,6 @@
         NSLog(@"RECEIVER DONE!!!");
         [receiverDoneTrigger fire];
     }];
-
-    NSAssert(_stages, @"");
-    for (TDPipelineStage *stage in _stages) {
-        stage.delegate = self;
-        
-        oc = [[self newChannel] autorelease];
-        sc = [stage.workerClass wantsSink] ? [[self newChannel] autorelease] : nil;
-
-        [stage setUpWithItemCount:count inputChannel:ic outputChannel:oc sinkChannel:sc];
-        
-        ic = oc;
-    }
     
     // wait until receiver is done
     [receiverDoneTrigger await];
@@ -126,8 +126,8 @@
 #pragma mark Private
 
 - (id <TDChannel>)newChannel {
-    //return [TDLinkedQueue linkedQueue];
-    return [[TDBoundedBuffer alloc] initWithSize:7]; // TODO how to configure this?
+    return [TDLinkedQueue linkedQueue];
+//    return [[TDBoundedBuffer alloc] initWithSize:5]; // TODO how to configure this?
 }
 
 
