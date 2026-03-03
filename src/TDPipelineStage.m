@@ -8,7 +8,6 @@
 
 #import <TDThreadUtils/TDPipelineStage.h>
 #import <TDThreadUtils/TDRunnable.h>
-#import <TDThreadUtils/TDThreshold.h>
 #import <TDThreadUtils/TDTrigger.h>
 #import "TDRunner.h"
 
@@ -20,7 +19,6 @@
 @property (nonatomic, copy, readwrite) NSArray<TDRunner *> *runners;
 
 @property (atomic, assign, readwrite) NSUInteger itemCount;
-@property (atomic, retain) TDThreshold *sinkDoneThreshold;
 
 // Stage private API
 - (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
@@ -51,19 +49,11 @@
     self.delegate = nil;
     self.workerClass = nil;
     self.runners = nil;
-    self.sinkDoneThreshold = nil;
 
     self.inputChannel = nil;
     self.outputChannel = nil;
     self.sinkChannel = nil;
     [super dealloc];
-}
-
-
-- (void)await {
-    NSAssert(_sinkDoneThreshold, @"");
-    NSLog(@"%@", _sinkDoneThreshold);
-    [_sinkDoneThreshold await];
 }
 
 
@@ -98,8 +88,6 @@
     if ([_workerClass wantsSink]) {
         sinkDoneTrigger = [TDTrigger trigger];
     }
-    //self.sinkDoneThreshold = [TDThreshold thresholdWithValue:thresholdCount];
-    //NSLog(@"%@", _sinkDoneThreshold);
     
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
