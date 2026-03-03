@@ -66,7 +66,6 @@
 
     [NSThread detachNewThreadWithBlock:^{
         NSAssert(_launcher, @"");
-        //[_launcher launchWithPipeline:self outputChannel:oc];
         
         NSArray *items = [_launcher launchWithPipeline:self];
         NSUInteger count = items.count;
@@ -95,27 +94,19 @@
         ic = oc;
     }
     
-//    oc = _stages.firstObject.inputChannel; // yes ic of first stage is the oc for launcher.
-//    ic = _stages.lastObject.outputChannel; // yes oc of last stage is the ic for receiver.
-    
     TDTrigger *receiverDoneTrigger = [TDTrigger trigger];
 
     [NSThread detachNewThreadWithBlock:^{
         NSAssert(_receiver, @"");
-        //[_receiver receiveWithPipeline:self inputChannel:ic];
         
         NSUInteger count = [[countChannel take] unsignedIntegerValue];
         
         NSUInteger i = 0;
-        for (;;) {
+        while (i < count) {
             id item = [oc take]; // yes oc of last stage is the ic for receiver.
             [_receiver receiveItem:item withPipeline:self];
             
             self.receiverProgress = (++i / count);
-            
-            if (i == count) {
-                break;
-            }
         }
         
         [_receiver doneWithPipeline:self];
