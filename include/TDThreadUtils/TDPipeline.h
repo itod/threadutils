@@ -24,6 +24,7 @@
 
 @protocol TDReceiver <NSObject>
 - (void)receiveItem:(id)item withPipeline:(TDPipeline *)p;
+- (void)doneWithPipeline:(TDPipeline *)p;
 //- (void)receiveItems:(NSArray *)items withPipeline:(TDPipeline *)p;
 //- (void)receiveWithPipeline:(TDPipeline *)p inputChannel:(id <TDChannel>)channel;
 @end

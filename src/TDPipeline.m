@@ -116,6 +116,8 @@
                 break;
             }
         }
+        
+        [_receiver doneWithPipeline:self];
         NSLog(@"RECEIVER DONE!!!");
         [receiverDoneTrigger fire];
     }];
