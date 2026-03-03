@@ -9,6 +9,7 @@
 #import <TDThreadUtils/TDPipeline.h>
 #import <TDThreadUtils/TDBoundedBuffer.h>
 #import <TDThreadUtils/TDTrigger.h>
+#import <TDThreadUtils/TDRunnable.h>
 
 @interface TDPipelineStage ()
 - (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
@@ -87,7 +88,7 @@
         stage.delegate = self;
         
         oc = [[self newChannel] autorelease];
-        sc = [[self newChannel] autorelease];
+        sc = [stage.workerClass wantsSink] ? [[self newChannel] autorelease] : nil;
 
         [stage setUpWithItemCount:count inputChannel:ic outputChannel:oc sinkChannel:sc];
         
@@ -122,11 +123,7 @@
         [receiverDoneTrigger fire];
     }];
 
-    // wait until all stages are done
-//    for (TDPipelineStage *stage in _stages) {
-//        [stage await];
-//    }
-    // also wait until receiver is done
+    // wait until receiver is done
     [receiverDoneTrigger await];
     
     return success;

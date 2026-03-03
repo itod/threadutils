@@ -84,10 +84,7 @@
     
     self.runners = runners;
     
-    TDTrigger *sinkDoneTrigger = nil;
-    if ([_workerClass wantsSink]) {
-        sinkDoneTrigger = [TDTrigger trigger];
-    }
+    TDTrigger *sinkDoneTrigger = [_workerClass wantsSink] ? [TDTrigger trigger] : nil;
     
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{

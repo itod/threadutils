@@ -18,7 +18,6 @@
 
 - (void)run;
 - (void)runSink:(NSUInteger)itemCount;
-//+ (BOOL)wantsSink;
 
 @property (nonatomic, retain) TDRunnable *runnable;
 

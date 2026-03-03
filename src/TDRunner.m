@@ -88,12 +88,6 @@
 }
 
 
-//+ (BOOL)wantsSink {
-//    NSAssert(_runnable, @"");
-//    return _runnable.wantsSink;
-//}
-
-
 #pragma mark -
 #pragma mark TDRunnableDelegate
 
