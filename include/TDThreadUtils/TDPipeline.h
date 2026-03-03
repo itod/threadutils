@@ -18,11 +18,14 @@
 @end
 
 @protocol TDLauncher <NSObject>
-- (void)launchWithPipeline:(TDPipeline *)p outputChannel:(id <TDChannel>)channel;
+- (NSArray *)launchWithPipeline:(TDPipeline *)p;
+//- (void)launchWithPipeline:(TDPipeline *)p outputChannel:(id <TDChannel>)channel;
 @end
 
 @protocol TDReceiver <NSObject>
-- (void)receiveWithPipeline:(TDPipeline *)p inputChannel:(id <TDChannel>)channel;
+- (void)receiveItem:(id)item withPipeline:(TDPipeline *)p;
+//- (void)receiveItems:(NSArray *)items withPipeline:(TDPipeline *)p;
+//- (void)receiveWithPipeline:(TDPipeline *)p inputChannel:(id <TDChannel>)channel;
 @end
 
 @interface TDPipeline : NSObject <TDPipelineStageDelegate>

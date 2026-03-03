@@ -8,6 +8,8 @@
 
 #import <TDThreadUtils/TDPipelineStage.h>
 #import <TDThreadUtils/TDRunnable.h>
+#import <TDThreadUtils/TDThreshold.h>
+#import <TDThreadUtils/TDTrigger.h>
 #import "TDRunner.h"
 
 @interface TDPipelineStage ()
@@ -17,8 +19,11 @@
 @property (nonatomic, assign, readwrite) NSUInteger runnerCount;
 @property (nonatomic, copy, readwrite) NSArray<TDRunner *> *runners;
 
+@property (atomic, assign, readwrite) NSUInteger itemCount;
+@property (atomic, retain) TDThreshold *sinkDoneThreshold;
+
 // Stage private API
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
+- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
 @property (nonatomic, retain, readwrite) id <TDChannel>inputChannel;
 @property (nonatomic, retain, readwrite) id <TDChannel>outputChannel;
 @property (nonatomic, retain, readwrite) id <TDChannel>sinkChannel;
@@ -46,6 +51,7 @@
     self.delegate = nil;
     self.workerClass = nil;
     self.runners = nil;
+    self.sinkDoneThreshold = nil;
 
     self.inputChannel = nil;
     self.outputChannel = nil;
@@ -54,18 +60,28 @@
 }
 
 
+- (void)await {
+    NSAssert(_sinkDoneThreshold, @"");
+    NSLog(@"%@", _sinkDoneThreshold);
+    [_sinkDoneThreshold await];
+}
+
+
 #pragma mark -
 #pragma mark Private
 
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc {
+- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc {
     NSAssert(ic, @"");
     NSAssert(oc, @"");
 
+    self.itemCount = c;
     self.inputChannel = ic;
     self.outputChannel = oc;
     self.sinkChannel = sc;
 
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
+    
+    //NSUInteger thresholdCount = 1; // 1 for -await above
     
     for (NSUInteger i = 0; i < _runnerCount; ++i) {
         TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc sinkChannel:sc number:i+1];
@@ -78,16 +94,26 @@
     
     self.runners = runners;
     
+    TDTrigger *sinkDoneTrigger = nil;
+    if ([_workerClass wantsSink]) {
+        sinkDoneTrigger = [TDTrigger trigger];
+    }
+    //self.sinkDoneThreshold = [TDThreshold thresholdWithValue:thresholdCount];
+    //NSLog(@"%@", _sinkDoneThreshold);
+    
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
             [runner run];
         }];
-        if (runner.wantsSink) {
+        if ([_workerClass wantsSink]) {
             [NSThread detachNewThreadWithBlock:^{
-                [runner runSink];
+                [runner runSink:_itemCount];
+                [sinkDoneTrigger fire];
             }];
         }
     }
+    
+    [sinkDoneTrigger await];
 }
 
 

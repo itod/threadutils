@@ -17,8 +17,8 @@
 - (instancetype)initWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc number:(NSUInteger)i;
 
 - (void)run;
-- (void)runSink;
-- (BOOL)wantsSink;
+- (void)runSink:(NSUInteger)itemCount;
+//+ (BOOL)wantsSink;
 
 @property (nonatomic, retain) TDRunnable *runnable;
 

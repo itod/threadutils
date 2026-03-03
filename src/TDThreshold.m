@@ -61,6 +61,8 @@
     
     [self decrement];
 
+    NSLog(@"%@", self);
+    
     if ([self reached]) {
         [self broadcast];
     }

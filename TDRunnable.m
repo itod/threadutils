@@ -48,7 +48,7 @@
 }
 
 
-- (BOOL)wantsSink {
++ (BOOL)wantsSink {
     return NO;
 }
 

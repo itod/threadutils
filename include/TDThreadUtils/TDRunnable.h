@@ -27,7 +27,7 @@
 // parallel sink. return YES for success
 - (BOOL)sinkData:(id)data error:(NSError **)outErr;
 
-- (BOOL)wantsSink;
++ (BOOL)wantsSink;
 
 @property (nonatomic, assign, readonly) id <TDRunnableDelegate>delegate;
 

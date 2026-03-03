@@ -11,7 +11,7 @@
 #import <TDThreadUtils/TDTrigger.h>
 
 @interface TDPipelineStage ()
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
+- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
 @end
 
 @interface TDPipeline ()
@@ -60,6 +60,27 @@
     id <TDChannel>ic = [[self newChannel] autorelease];
     id <TDChannel>oc = nil;
     id <TDChannel>sc = nil;
+    
+    id <TDChannel>countChannel = [TDBoundedBuffer boundedBufferWithSize:1];
+
+    [NSThread detachNewThreadWithBlock:^{
+        NSAssert(_launcher, @"");
+        //[_launcher launchWithPipeline:self outputChannel:oc];
+        
+        NSArray *items = [_launcher launchWithPipeline:self];
+        NSUInteger count = items.count;
+        [countChannel put:@(count)];
+        
+        NSUInteger i = 0;
+        for (id item in items) {
+            [ic put:item]; // yes ic of first stage is the oc for launcher.
+            self.launcherProgress = (++i / count);
+        }
+        NSLog(@"LAUNCHER DONE!!!");
+    }];
+    
+    NSUInteger count = [[countChannel take] unsignedIntegerValue];
+    [countChannel put:@(count)];
 
     NSAssert(_stages, @"");
     for (TDPipelineStage *stage in _stages) {
@@ -68,28 +89,43 @@
         oc = [[self newChannel] autorelease];
         sc = [[self newChannel] autorelease];
 
-        [stage setUpWithInputChannel:ic outputChannel:oc sinkChannel:sc];
+        [stage setUpWithItemCount:count inputChannel:ic outputChannel:oc sinkChannel:sc];
         
         ic = oc;
     }
     
-    oc = _stages.firstObject.inputChannel; // yes ic of first stage is the oc for launcher.
-    ic = _stages.lastObject.outputChannel; // yes oc of last stage is the ic for receiver.
-
-    [NSThread detachNewThreadWithBlock:^{
-        NSAssert(_launcher, @"");
-        [_launcher launchWithPipeline:self outputChannel:oc];
-    }];
+//    oc = _stages.firstObject.inputChannel; // yes ic of first stage is the oc for launcher.
+//    ic = _stages.lastObject.outputChannel; // yes oc of last stage is the ic for receiver.
     
-    TDTrigger *receiverDone = [TDTrigger trigger];
+    TDTrigger *receiverDoneTrigger = [TDTrigger trigger];
 
     [NSThread detachNewThreadWithBlock:^{
         NSAssert(_receiver, @"");
-        [_receiver receiveWithPipeline:self inputChannel:ic];
-        [receiverDone fire];
+        //[_receiver receiveWithPipeline:self inputChannel:ic];
+        
+        NSUInteger count = [[countChannel take] unsignedIntegerValue];
+        
+        NSUInteger i = 0;
+        for (;;) {
+            id item = [oc take]; // yes oc of last stage is the ic for receiver.
+            [_receiver receiveItem:item withPipeline:self];
+            
+            self.receiverProgress = (++i / count);
+            
+            if (i == count) {
+                break;
+            }
+        }
+        NSLog(@"RECEIVER DONE!!!");
+        [receiverDoneTrigger fire];
     }];
-    
-    [receiverDone await];
+
+    // wait until all stages are done
+//    for (TDPipelineStage *stage in _stages) {
+//        [stage await];
+//    }
+    // also wait until receiver is done
+    [receiverDoneTrigger await];
     
     return success;
 }

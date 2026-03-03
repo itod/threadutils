@@ -69,8 +69,8 @@
 }
 
 
-- (void)runSink {
-    NSAssert(_runnable.wantsSink, @"");
+- (void)runSink:(NSUInteger)itemCount {
+    NSAssert([[_runnable class] wantsSink], @"");
     NSAssert(_sinkChannel, @"");
     for (;;) {
         id input = [_sinkChannel take];
@@ -80,14 +80,18 @@
         if (![_runnable sinkData:input error:&err]) {
             if (err) NSLog(@"%@", err);
         }
+        
+        if (--itemCount == 0) {
+            break;
+        }
     }
 }
 
 
-- (BOOL)wantsSink {
-    NSAssert(_runnable, @"");
-    return _runnable.wantsSink;
-}
+//+ (BOOL)wantsSink {
+//    NSAssert(_runnable, @"");
+//    return _runnable.wantsSink;
+//}
 
 
 #pragma mark -
