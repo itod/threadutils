@@ -19,8 +19,6 @@
 @property (nonatomic, assign, readwrite) NSUInteger runnerCount;
 @property (nonatomic, copy, readwrite) NSArray<TDRunner *> *runners;
 
-@property (atomic, assign, readwrite) NSUInteger itemCount;
-
 @property (nonatomic, retain, readwrite) id <TDChannel>inputChannel;
 @property (nonatomic, retain, readwrite) id <TDChannel>outputChannel;
 @end
@@ -57,11 +55,10 @@
 #pragma mark -
 #pragma mark Private
 
-- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc {
+- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc {
     NSAssert(ic, @"");
     NSAssert(oc, @"");
 
-    self.itemCount = c;
     self.inputChannel = ic;
     self.outputChannel = oc;
 

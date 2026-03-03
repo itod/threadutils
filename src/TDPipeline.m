@@ -8,12 +8,12 @@
 
 #import <TDThreadUtils/TDPipeline.h>
 #import <TDThreadUtils/TDBoundedBuffer.h>
-#import <TDThreadUtils/TDLinkedQueue.h>
+//#import <TDThreadUtils/TDLinkedQueue.h>
 #import <TDThreadUtils/TDTrigger.h>
 #import <TDThreadUtils/TDRunnable.h>
 
 @interface TDPipelineStage ()
-- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc;
+- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc;
 @end
 
 @interface TDPipeline ()
@@ -88,7 +88,7 @@
         
         oc = [[self newChannel] autorelease];
 
-        [stage setUpWithItemCount:count inputChannel:ic outputChannel:oc];
+        [stage setUpWithInputChannel:ic outputChannel:oc];
         
         ic = oc;
     }
