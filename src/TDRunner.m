@@ -69,22 +69,6 @@
 }
 
 
-- (void)runSink:(NSUInteger)itemCount {
-    NSAssert([[_runnable class] wantsSink], @"");
-    NSAssert(_sinkChannel, @"");
-    
-    while (itemCount-- > 0) {
-        id input = [_sinkChannel take];
-        
-        NSAssert(_runnable, @"");
-        NSError *err = nil;
-        if (![_runnable sinkData:input error:&err]) {
-            if (err) NSLog(@"%@", err);
-        }
-    }
-}
-
-
 #pragma mark -
 #pragma mark TDRunnableDelegate
 

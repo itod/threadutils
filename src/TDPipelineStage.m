@@ -8,6 +8,7 @@
 
 #import <TDThreadUtils/TDPipelineStage.h>
 #import <TDThreadUtils/TDRunnable.h>
+#import <TDThreadUtils/TDChannel.h>
 #import <TDThreadUtils/TDTrigger.h>
 #import "TDRunner.h"
 
@@ -70,9 +71,7 @@
     self.sinkChannel = sc;
 
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
-    
-    //NSUInteger thresholdCount = 1; // 1 for -await above
-    
+        
     for (NSUInteger i = 0; i < _runnerCount; ++i) {
         TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc sinkChannel:sc number:i+1];
         TDRunnable *runnable = [[[_workerClass alloc] initWithDelegate:runner] autorelease];
@@ -86,19 +85,35 @@
     
     TDTrigger *sinkDoneTrigger = [_workerClass wantsSink] ? [TDTrigger trigger] : nil;
     
+    if ([_workerClass wantsSink]) {
+        [NSThread detachNewThreadWithBlock:^{
+            [self runSink:_itemCount];
+            [sinkDoneTrigger fire];
+        }];
+    }
+
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
             [runner run];
         }];
-        if ([_workerClass wantsSink]) {
-            [NSThread detachNewThreadWithBlock:^{
-                [runner runSink:_itemCount];
-                [sinkDoneTrigger fire];
-            }];
-        }
     }
     
     [sinkDoneTrigger await];
+}
+
+
+- (void)runSink:(NSUInteger)itemCount {
+    NSAssert([_workerClass wantsSink], @"");
+    NSAssert(_sinkChannel, @"");
+    
+    while (itemCount-- > 0) {
+        id input = [_sinkChannel take];
+        
+        NSError *err = nil;
+        if (![_workerClass sinkData:input error:&err]) {
+            if (err) NSLog(@"%@", err);
+        }
+    }
 }
 
 

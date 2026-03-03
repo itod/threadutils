@@ -21,12 +21,11 @@
 // designated initializer
 - (instancetype)initWithDelegate:(id <TDRunnableDelegate>)d;
 
-// main pipeline
+// main pipeline channel
 - (id)runWithInput:(id)input error:(NSError **)outErr;
 
-// parallel sink. return YES for success
-- (BOOL)sinkData:(id)data error:(NSError **)outErr;
-
+// parallel sink channel. return YES for success
++ (BOOL)sinkData:(id)data error:(NSError **)outErr;
 + (BOOL)wantsSink;
 
 @property (nonatomic, assign, readonly) id <TDRunnableDelegate>delegate;
