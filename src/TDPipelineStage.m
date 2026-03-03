@@ -21,8 +21,6 @@
 
 @property (atomic, assign, readwrite) NSUInteger itemCount;
 
-// Stage private API
-- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
 @property (nonatomic, retain, readwrite) id <TDChannel>inputChannel;
 @property (nonatomic, retain, readwrite) id <TDChannel>outputChannel;
 @property (nonatomic, retain, readwrite) id <TDChannel>sinkChannel;
@@ -83,6 +81,12 @@
     
     self.runners = runners;
     
+    for (TDRunner *runner in _runners) {
+        [NSThread detachNewThreadWithBlock:^{
+            [runner run];
+        }];
+    }
+
     TDTrigger *sinkDoneTrigger = [_workerClass wantsSink] ? [TDTrigger trigger] : nil;
     
     if ([_workerClass wantsSink]) {
@@ -92,12 +96,6 @@
         }];
     }
 
-    for (TDRunner *runner in _runners) {
-        [NSThread detachNewThreadWithBlock:^{
-            [runner run];
-        }];
-    }
-    
     [sinkDoneTrigger await];
 }
 

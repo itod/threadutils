@@ -8,6 +8,7 @@
 
 #import <TDThreadUtils/TDPipeline.h>
 #import <TDThreadUtils/TDBoundedBuffer.h>
+#import <TDThreadUtils/TDLinkedQueue.h>
 #import <TDThreadUtils/TDTrigger.h>
 #import <TDThreadUtils/TDRunnable.h>
 
@@ -82,18 +83,6 @@
     NSUInteger count = [[countChannel take] unsignedIntegerValue];
     [countChannel put:@(count)];
 
-    NSAssert(_stages, @"");
-    for (TDPipelineStage *stage in _stages) {
-        stage.delegate = self;
-        
-        oc = [[self newChannel] autorelease];
-        sc = [stage.workerClass wantsSink] ? [[self newChannel] autorelease] : nil;
-
-        [stage setUpWithItemCount:count inputChannel:ic outputChannel:oc sinkChannel:sc];
-        
-        ic = oc;
-    }
-    
     TDTrigger *receiverDoneTrigger = [TDTrigger trigger];
 
     [NSThread detachNewThreadWithBlock:^{
@@ -114,6 +103,18 @@
         [receiverDoneTrigger fire];
     }];
 
+    NSAssert(_stages, @"");
+    for (TDPipelineStage *stage in _stages) {
+        stage.delegate = self;
+        
+        oc = [[self newChannel] autorelease];
+        sc = [stage.workerClass wantsSink] ? [[self newChannel] autorelease] : nil;
+
+        [stage setUpWithItemCount:count inputChannel:ic outputChannel:oc sinkChannel:sc];
+        
+        ic = oc;
+    }
+    
     // wait until receiver is done
     [receiverDoneTrigger await];
     
@@ -125,7 +126,8 @@
 #pragma mark Private
 
 - (id <TDChannel>)newChannel {
-    return [[TDBoundedBuffer alloc] initWithSize:5]; // TODO how to configure this?
+    //return [TDLinkedQueue linkedQueue];
+    return [[TDBoundedBuffer alloc] initWithSize:7]; // TODO how to configure this?
 }
 
 
