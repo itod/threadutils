@@ -13,7 +13,7 @@
 #import <TDThreadUtils/TDRunnable.h>
 
 @interface TDPipelineStage ()
-- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc;
+- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc;
 @end
 
 @interface TDPipeline ()
@@ -61,7 +61,6 @@
 
     id <TDChannel>ic = [[self newChannel] autorelease];
     id <TDChannel>oc = nil;
-    id <TDChannel>sc = nil;
     
     id <TDChannel>countChannel = [TDBoundedBuffer boundedBufferWithSize:1];
 
@@ -88,9 +87,8 @@
         stage.delegate = self;
         
         oc = [[self newChannel] autorelease];
-        sc = [stage.workerClass wantsSink] ? [[self newChannel] autorelease] : nil;
 
-        [stage setUpWithItemCount:count inputChannel:ic outputChannel:oc sinkChannel:sc];
+        [stage setUpWithItemCount:count inputChannel:ic outputChannel:oc];
         
         ic = oc;
     }
@@ -126,8 +124,8 @@
 #pragma mark Private
 
 - (id <TDChannel>)newChannel {
-    return [TDLinkedQueue linkedQueue];
-//    return [[TDBoundedBuffer alloc] initWithSize:5]; // TODO how to configure this?
+//    return [TDLinkedQueue linkedQueue];
+    return [[TDBoundedBuffer alloc] initWithSize:5]; // TODO how to configure this?
 }
 
 

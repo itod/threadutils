@@ -23,7 +23,6 @@
 
 @property (nonatomic, retain, readwrite) id <TDChannel>inputChannel;
 @property (nonatomic, retain, readwrite) id <TDChannel>outputChannel;
-@property (nonatomic, retain, readwrite) id <TDChannel>sinkChannel;
 @end
 
 @implementation TDPipelineStage
@@ -51,7 +50,6 @@
 
     self.inputChannel = nil;
     self.outputChannel = nil;
-    self.sinkChannel = nil;
     [super dealloc];
 }
 
@@ -59,19 +57,18 @@
 #pragma mark -
 #pragma mark Private
 
-- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc sinkChannel:(id <TDChannel>)sc {
+- (void)setUpWithItemCount:(NSUInteger)c inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc {
     NSAssert(ic, @"");
     NSAssert(oc, @"");
 
     self.itemCount = c;
     self.inputChannel = ic;
     self.outputChannel = oc;
-    self.sinkChannel = sc;
 
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
         
     for (NSUInteger i = 0; i < _runnerCount; ++i) {
-        TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc sinkChannel:sc number:i+1];
+        TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc number:i+1];
         TDRunnable *runnable = [[[_workerClass alloc] initWithDelegate:runner] autorelease];
         runner.runnable = runnable;
         
@@ -85,32 +82,6 @@
         [NSThread detachNewThreadWithBlock:^{
             [runner run];
         }];
-    }
-
-    TDTrigger *sinkDoneTrigger = [_workerClass wantsSink] ? [TDTrigger trigger] : nil;
-    
-    if ([_workerClass wantsSink]) {
-        [NSThread detachNewThreadWithBlock:^{
-            [self runSink:_itemCount];
-            [sinkDoneTrigger fire];
-        }];
-    }
-
-    [sinkDoneTrigger await];
-}
-
-
-- (void)runSink:(NSUInteger)itemCount {
-    NSAssert([_workerClass wantsSink], @"");
-    NSAssert(_sinkChannel, @"");
-    
-    while (itemCount-- > 0) {
-        id input = [_sinkChannel take];
-        
-        NSError *err = nil;
-        if (![_workerClass sinkData:input error:&err]) {
-            if (err) NSLog(@"%@", err);
-        }
     }
 }
 

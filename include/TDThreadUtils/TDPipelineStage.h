@@ -34,7 +34,6 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 
 @property (nonatomic, retain, readonly) id <TDChannel>inputChannel;
 @property (nonatomic, retain, readonly) id <TDChannel>outputChannel;
-@property (nonatomic, retain, readonly) id <TDChannel>sinkChannel;
 
 @property (nonatomic, assign) id <TDPipelineStageDelegate>delegate;
 
