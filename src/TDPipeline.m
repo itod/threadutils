@@ -125,7 +125,7 @@
 
 - (id <TDChannel>)newChannel {
 //    return [TDLinkedQueue linkedQueue];
-    return [[TDBoundedBuffer alloc] initWithSize:5]; // TODO how to configure this?
+    return [[TDBoundedBuffer alloc] initWithSize:4]; // TODO how to configure this?
 }
 
 
