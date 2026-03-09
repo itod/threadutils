@@ -88,8 +88,8 @@
     TDPipelineStage *currStage = [en nextObject];
     TDPipelineStage *nextStage = nil;
     
-    TDCounter *finishCounter = nil;
     TDCounter *startCounter = nil;
+    TDCounter *finishCounter = nil;
     
     do {
         nextStage = [en nextObject];
