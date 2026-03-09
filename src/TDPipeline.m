@@ -13,10 +13,7 @@
 #import <TDThreadUtils/TDRunnable.h>
 
 @interface TDPipelineStage ()
-- (void)setUpWithInputChannel:(id <TDChannel>)ic
-                outputChannel:(id <TDChannel>)oc
-                 startTrigger:(TDTrigger *)startTrigger
-                  doneTrigger:(TDTrigger *)doneTrigger;
+- (void)setUpWithItemCount:(NSUInteger)itemCount inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger;
 @end
 
 @interface TDPipeline ()
@@ -109,7 +106,7 @@
             doneTrigger = nil;
         }
         
-        [currStage setUpWithInputChannel:ic outputChannel:oc startTrigger:startTrigger doneTrigger:doneTrigger];
+        [currStage setUpWithItemCount:count-1 inputChannel:ic outputChannel:oc startTrigger:startTrigger doneTrigger:doneTrigger];
         
         ic = oc;
         startTrigger = doneTrigger;

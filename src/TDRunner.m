@@ -10,6 +10,7 @@
 #import <TDThreadUtils/TDRunnable.h>
 #import <TDThreadUtils/TDChannel.h>
 #import <TDThreadUtils/TDTrigger.h>
+#import <TDThreadUtils/TDSemaphore.h>
 
 @interface TDRunner ()
 @property (nonatomic, retain) id <TDChannel>inputChannel;
@@ -54,7 +55,7 @@
 #pragma mark -
 #pragma mark Public
 
-- (void)runWithStartTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger {
+- (void)runWithStartTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger join:(TDSemaphore *)join {
     NSAssert(_inputChannel, @"");
     
     self.progress = 0.0;
@@ -81,6 +82,7 @@
         } else {
             NSError *err = nil;
             output = [_runnable runWithInput:input error:&err];
+            [join relinquish];
             if (err) {
                 NSLog(@"%@", err);
                 NSAssert(0, @"");
@@ -93,12 +95,12 @@
         
         if (stop) {
             if (doneTrigger) {
-                // -join
+                [join acquire];
                 NSLog(@"BOTTLENECK REACHED. CAN BEGIN");
                 NSLog(@"%@ firing trigger: %@", self, doneTrigger);
                 [doneTrigger fire];
             }
-            break;
+            // DO NOT BREAK HERE. CAUSES CRASH
         }
     }
 }

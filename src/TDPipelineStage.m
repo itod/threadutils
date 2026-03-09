@@ -10,6 +10,7 @@
 #import <TDThreadUtils/TDRunnable.h>
 #import <TDThreadUtils/TDChannel.h>
 #import <TDThreadUtils/TDTrigger.h>
+#import <TDThreadUtils/TDSemaphore.h>
 #import "TDRunner.h"
 
 @interface TDPipelineStage ()
@@ -65,7 +66,7 @@
 #pragma mark -
 #pragma mark Private
 
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger {
+- (void)setUpWithItemCount:(NSUInteger)itemCount inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger {
     NSAssert(ic, @"");
     NSAssert(oc, @"");
 
@@ -74,7 +75,7 @@
     
     self.startTrigger = startTrigger;
     self.doneTrigger = doneTrigger;
-
+    
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
         
     for (NSUInteger i = 0; i < _runnerCount; ++i) {
@@ -87,10 +88,12 @@
     }
     
     self.runners = runners;
-    
+
+    TDSemaphore *join = [TDSemaphore semaphoreWithValue:-(itemCount-1)];
+
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
-            [runner runWithStartTrigger:startTrigger doneTrigger:doneTrigger];
+            [runner runWithStartTrigger:startTrigger doneTrigger:doneTrigger join:join];
         }];
     }
 }

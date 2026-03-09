@@ -11,13 +11,14 @@
 
 @protocol TDChannel;
 @class TDTrigger;
+@class TDSemaphore;
 
 @interface TDRunner : NSObject <TDRunnableDelegate>
 
 + (TDRunner *)runnerWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 - (instancetype)initWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 
-- (void)runWithStartTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger;
+- (void)runWithStartTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger join:(TDSemaphore *)join;
 
 @property (nonatomic, retain) TDRunnable *runnable;
 
