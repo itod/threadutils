@@ -61,7 +61,7 @@
     
     if (startTrigger) {
         NSLog(@"BOTTLENECK WAITING");
-        NSLog(@"%@", self);
+        NSLog(@"%@ waiting on trigger: %@", self, startTrigger);
         [startTrigger await];
         NSLog(@"BOTTLENECK DONE WAITING");
         NSLog(@"%@", self);
@@ -76,7 +76,6 @@
         BOOL stop = NO;
         
         if ([NSNull null] == input) {
-            [_runnable halt];
             output = input;
             stop = YES;
         } else {
@@ -94,8 +93,9 @@
         
         if (stop) {
             if (doneTrigger) {
+                // -join
                 NSLog(@"BOTTLENECK REACHED. CAN BEGIN");
-                NSLog(@"%@", self);
+                NSLog(@"%@ firing trigger: %@", self, doneTrigger);
                 [doneTrigger fire];
             }
             break;

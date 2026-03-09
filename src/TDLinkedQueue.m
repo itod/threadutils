@@ -65,20 +65,22 @@
 
 
 - (NSString *)description {
-    NSMutableString *buf = [NSMutableString string];
+//    NSMutableString *buf = [NSMutableString string];
     
     [self lock];
 
     LQNode *node = _head;
+    NSUInteger size = 1;
 
     while (node) {
-        [buf appendFormat:@"%@%@", node.object, node.next ? @"->" : @""];
+//        [buf appendFormat:@"%@%@", node.object, node.next ? @"->" : @""];Z
         node = node.next;
+        ++size;
     }
     
     [self unlock];
     
-    return [NSString stringWithFormat:@"<%@ %p %@>", [self class], self, buf];
+    return [NSString stringWithFormat:@"<%@ %p (%lu) %@>", [self class], self, size, @""];
 }
 
 

@@ -51,9 +51,4 @@
     return nil;
 }
 
-
-- (void)halt {
-    // noop
-}
-
 @end

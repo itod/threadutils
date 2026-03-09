@@ -25,7 +25,6 @@
 
 // main pipeline channel
 - (id)runWithInput:(id)input error:(NSError **)outErr;
-- (void)halt;
 
 @property (nonatomic, assign, readonly) id <TDRunnableDelegate>delegate;
 
