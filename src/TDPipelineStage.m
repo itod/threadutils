@@ -89,7 +89,9 @@
     
     self.runners = runners;
 
-    TDSemaphore *join = [TDSemaphore semaphoreWithValue:-(itemCount-1)];
+    // -1 for [NSNull null] at end
+    // -1 for Semaphore test reverse: `_value > 0`
+    TDSemaphore *join = [TDSemaphore semaphoreWithValue:-(itemCount-2)];
 
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{

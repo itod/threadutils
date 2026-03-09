@@ -106,7 +106,7 @@
             doneTrigger = nil;
         }
         
-        [currStage setUpWithItemCount:count-1 inputChannel:ic outputChannel:oc startTrigger:startTrigger doneTrigger:doneTrigger];
+        [currStage setUpWithItemCount:count inputChannel:ic outputChannel:oc startTrigger:startTrigger doneTrigger:doneTrigger];
         
         ic = oc;
         startTrigger = doneTrigger;
