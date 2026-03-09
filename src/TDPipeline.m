@@ -91,7 +91,7 @@
     TDCounter *startCounter = nil;
     TDCounter *finishCounter = nil;
     
-    do {
+    while (currStage) {
         nextStage = [en nextObject];
         
         currStage.delegate = self;
@@ -110,7 +110,7 @@
         startCounter = finishCounter;
 
         currStage = nextStage;
-    } while (currStage);
+    }
     
 //    for (TDPipelineStage *stage in _stages) {
 //        stage.delegate = self;
