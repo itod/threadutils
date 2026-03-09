@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 @protocol TDChannel;
 @class TDPipelineStage;
 @class TDRunner;
-@class TDTrigger;
+@class TDSemaphore;
 
 @protocol TDPipelineStageDelegate <NSObject>
 - (void)pipelineStageProgressDidUpdate:(TDPipelineStage *)ps;
@@ -39,7 +39,7 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 @property (nonatomic, assign) id <TDPipelineStageDelegate>delegate;
 
 @property (nonatomic, assign, readonly) BOOL isBottleneck;
-@property (nonatomic, retain) TDTrigger *startTrigger;
-@property (nonatomic, retain) TDTrigger *doneTrigger;
+@property (nonatomic, retain) TDSemaphore *startTrigger;
+@property (nonatomic, retain) TDSemaphore *doneTrigger;
 @end
 

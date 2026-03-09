@@ -10,10 +10,11 @@
 #import <TDThreadUtils/TDBoundedBuffer.h>
 #import <TDThreadUtils/TDLinkedQueue.h>
 #import <TDThreadUtils/TDTrigger.h>
+#import <TDThreadUtils/TDSemaphore.h>
 #import <TDThreadUtils/TDRunnable.h>
 
 @interface TDPipelineStage ()
-- (void)setUpWithItemCount:(NSUInteger)itemCount inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger;
+- (void)setUpWithItemCount:(NSUInteger)itemCount inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startTrigger:(TDSemaphore *)startTrigger doneTrigger:(TDSemaphore *)doneTrigger;
 @end
 
 @interface TDPipeline ()
@@ -87,8 +88,8 @@
     TDPipelineStage *currStage = [en nextObject];
     TDPipelineStage *nextStage = nil;
     
-    TDTrigger *doneTrigger = nil;
-    TDTrigger *startTrigger = nil;
+    TDSemaphore *doneTrigger = nil;
+    TDSemaphore *startTrigger = nil;
     
     while (currStage) {
         nextStage = [en nextObject];
@@ -100,7 +101,10 @@
             NSLog(@"CURR: %@", currStage);
             NSLog(@"NEXT: %@", nextStage);
             oc = [[self newLinkedQueue] autorelease];
-            doneTrigger = [TDTrigger trigger];
+            
+            // -1 for [NSNull null] at end
+            // -1 for Semaphore test reverse: `_value > 0`
+            doneTrigger = [TDSemaphore semaphoreWithValue:-(count-2)];
         } else {
             oc = [[self newBoundedBuffer] autorelease];
             doneTrigger = nil;

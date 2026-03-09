@@ -9,7 +9,6 @@
 #import <TDThreadUtils/TDRunner.h>
 #import <TDThreadUtils/TDRunnable.h>
 #import <TDThreadUtils/TDChannel.h>
-#import <TDThreadUtils/TDTrigger.h>
 #import <TDThreadUtils/TDSemaphore.h>
 
 @interface TDRunner ()
@@ -55,7 +54,7 @@
 #pragma mark -
 #pragma mark Public
 
-- (void)runWithStartTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger join:(TDSemaphore *)join {
+- (void)runWithStartTrigger:(TDSemaphore *)startTrigger doneTrigger:(TDSemaphore *)doneTrigger {
     NSAssert(_inputChannel, @"");
     
     self.progress = 0.0;
@@ -63,7 +62,7 @@
     if (startTrigger) {
         NSLog(@"BOTTLENECK WAITING");
         NSLog(@"%@ waiting on trigger: %@", self, startTrigger);
-        [startTrigger await];
+        [startTrigger acquire];
         NSLog(@"BOTTLENECK DONE WAITING");
         NSLog(@"%@", self);
     }
@@ -82,7 +81,11 @@
         } else {
             NSError *err = nil;
             output = [_runnable runWithInput:input error:&err];
-            [join relinquish];
+            if (doneTrigger) {
+                [doneTrigger relinquish];
+                NSLog(@"COUNTER");
+                NSLog(@"%@", self);
+            }
             if (err) {
                 NSLog(@"%@", err);
                 NSAssert(0, @"");
@@ -94,12 +97,11 @@
         [_outputChannel put:output];
         
         if (stop) {
-            if (doneTrigger) {
-                [join acquire];
-                NSLog(@"BOTTLENECK REACHED. CAN BEGIN");
-                NSLog(@"%@ firing trigger: %@", self, doneTrigger);
-                [doneTrigger fire];
-            }
+//            if (doneTrigger) {
+//                NSLog(@"BOTTLENECK REACHED. CAN BEGIN");
+//                NSLog(@"%@ firing trigger: %@", self, doneTrigger);
+//                [doneTrigger relinquish];
+//            }
             // DO NOT BREAK HERE. CAUSES CRASH
         }
     }
