@@ -59,13 +59,7 @@
     
     self.progress = 0.0;
     
-    if (startCounter) {
-        NSLog(@"BOTTLENECK WAITING");
-        NSLog(@"%@ waiting on trigger: %@", self, startCounter);
-        [startCounter await];
-        NSLog(@"BOTTLENECK DONE WAITING");
-        NSLog(@"%@", self);
-    }
+    [startCounter await];
     
     for (;;) {
         id input = [_inputChannel take];
@@ -76,10 +70,9 @@
         
         NSError *err = nil;
         output = [_runnable runWithInput:input error:&err];
-        if (doneCounter) {
-            [doneCounter increment];
-            NSLog(@"COUNTER %@", self);
-        }
+        
+        [doneCounter increment];
+
         if (err) {
             NSLog(@"%@", err);
             NSAssert(0, @"");
