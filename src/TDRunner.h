@@ -10,13 +10,14 @@
 #import <TDThreadUtils/TDRunnable.h>
 
 @protocol TDChannel;
+@class TDTrigger;
 
 @interface TDRunner : NSObject <TDRunnableDelegate>
 
 + (TDRunner *)runnerWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 - (instancetype)initWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 
-- (void)run;
+- (void)runWithStartTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger;
 
 @property (nonatomic, retain) TDRunnable *runnable;
 

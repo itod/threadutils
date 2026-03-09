@@ -6,7 +6,7 @@
 //  Copyright © 2025 Todd Ditchendorf. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <TDThreadUtils/TDPipeline.h>
 
 @class TDRunnable;
 
@@ -17,11 +17,15 @@
 
 @interface TDRunnable : NSObject
 
++ (TDPipelineStageType)pipelineStageType;
++ (BOOL)isBottleneck;
+
 // designated initializer
 - (instancetype)initWithDelegate:(id <TDRunnableDelegate>)d;
 
 // main pipeline channel
 - (id)runWithInput:(id)input error:(NSError **)outErr;
+- (void)halt;
 
 @property (nonatomic, assign, readonly) id <TDRunnableDelegate>delegate;
 

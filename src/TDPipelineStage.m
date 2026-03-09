@@ -13,9 +13,7 @@
 #import "TDRunner.h"
 
 @interface TDPipelineStage ()
-@property (nonatomic, assign, readwrite) TDPipelineStageType type;
-@property (nonatomic, retain, readwrite) Class workerClass;
-
+@property (nonatomic, retain, readwrite) Class runnableClass;
 @property (nonatomic, assign, readwrite) NSUInteger runnerCount;
 @property (nonatomic, copy, readwrite) NSArray<TDRunner *> *runners;
 
@@ -25,16 +23,15 @@
 
 @implementation TDPipelineStage
 
-+ (TDPipelineStage *)pipelineStageWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c {
-    return [[[self alloc] initWithType:type runnableClass:cls runnerCount:c] autorelease];
++ (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c {
+    return [[[self alloc] initWithRunnableClass:cls runnerCount:c] autorelease];
 }
 
 
-- (instancetype)initWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c {
+- (instancetype)initWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c {
     self = [super init];
     if (self) {
-        self.type = type;
-        self.workerClass = cls;
+        self.runnableClass = cls;
         self.runnerCount = c;
     }
     return self;
@@ -43,7 +40,7 @@
 
 - (void)dealloc {
     self.delegate = nil;
-    self.workerClass = nil;
+    self.runnableClass = nil;
     self.runners = nil;
 
     self.inputChannel = nil;
@@ -52,10 +49,21 @@
 }
 
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ %p %@ (%lu) B?:%d>", [self class], self, _runnableClass, _runnerCount, self.isBottleneck];
+}
+
+
+- (BOOL)isBottleneck {
+    NSAssert(_runnableClass, @"");
+    return [_runnableClass isBottleneck];
+}
+
+
 #pragma mark -
 #pragma mark Private
 
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc {
+- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger {
     NSAssert(ic, @"");
     NSAssert(oc, @"");
 
@@ -66,7 +74,7 @@
         
     for (NSUInteger i = 0; i < _runnerCount; ++i) {
         TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc number:i+1];
-        TDRunnable *runnable = [[[_workerClass alloc] initWithDelegate:runner] autorelease];
+        TDRunnable *runnable = [[[_runnableClass alloc] initWithDelegate:runner] autorelease];
         runner.runnable = runnable;
         
         [runner addObserver:self forKeyPath:@"progress" options:0 context:NULL];
@@ -77,7 +85,7 @@
     
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
-            [runner run];
+            [runner runWithStartTrigger:startTrigger doneTrigger:doneTrigger];
         }];
     }
 }

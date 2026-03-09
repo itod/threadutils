@@ -21,6 +21,16 @@
 }
 
 
++ (TDPipelineStageType)pipelineStageType {
+    return TDPipelineStageTypeDeterminate;
+}
+
+
++ (BOOL)isBottleneck {
+    return NO;
+}
+
+
 - (instancetype)initWithDelegate:(id <TDRunnableDelegate>)d {
     self = [super init];
     if (self) {
@@ -39,6 +49,11 @@
 - (id)runWithInput:(id)input error:(NSError **)outErr {
     NSAssert2(0, @"%s is an abstract method and must be implemented in %@", __PRETTY_FUNCTION__, [self class]);
     return nil;
+}
+
+
+- (void)halt {
+    // noop
 }
 
 @end

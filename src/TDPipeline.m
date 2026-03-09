@@ -8,12 +8,15 @@
 
 #import <TDThreadUtils/TDPipeline.h>
 #import <TDThreadUtils/TDBoundedBuffer.h>
-//#import <TDThreadUtils/TDLinkedQueue.h>
+#import <TDThreadUtils/TDLinkedQueue.h>
 #import <TDThreadUtils/TDTrigger.h>
 #import <TDThreadUtils/TDRunnable.h>
 
 @interface TDPipelineStage ()
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc;
+- (void)setUpWithInputChannel:(id <TDChannel>)ic
+                outputChannel:(id <TDChannel>)oc
+                 startTrigger:(TDTrigger *)startTrigger
+                  doneTrigger:(TDTrigger *)doneTrigger;
 @end
 
 @interface TDPipeline ()
@@ -59,7 +62,7 @@
     self.launcherProgress = 0.0;
     self.receiverProgress = 0.0;
 
-    id <TDChannel>ic = [[self newChannel] autorelease];
+    id <TDChannel>ic = [[self newBoundedBuffer] autorelease];
     id <TDChannel>oc = nil;
     
     id <TDChannel>countChannel = [TDBoundedBuffer boundedBufferWithSize:1];
@@ -83,15 +86,46 @@
     [countChannel put:@(count)];
 
     NSAssert(_stages, @"");
-    for (TDPipelineStage *stage in _stages) {
-        stage.delegate = self;
+    NSEnumerator *en = [_stages objectEnumerator];
+    TDPipelineStage *currStage = [en nextObject];
+    TDPipelineStage *nextStage = nil;
+    
+    TDTrigger *doneTrigger = nil;
+    TDTrigger *startTrigger = nil;
+    
+    while (currStage) {
+        nextStage = [en nextObject];
         
-        oc = [[self newChannel] autorelease];
+        currStage.delegate = self;
 
-        [stage setUpWithInputChannel:ic outputChannel:oc];
+        if (nextStage.isBottleneck)  {
+            NSLog(@"NEXT STAGE IS BOTTLENECK");
+            NSLog(@"CURR: %@", currStage);
+            NSLog(@"NEXT: %@", nextStage);
+            oc = [[self newLinkedQueue] autorelease];
+            doneTrigger = [TDTrigger trigger];
+        } else {
+            oc = [[self newBoundedBuffer] autorelease];
+            doneTrigger = nil;
+        }
+        
+        [currStage setUpWithInputChannel:ic outputChannel:oc startTrigger:startTrigger doneTrigger:doneTrigger];
         
         ic = oc;
+        startTrigger = doneTrigger;
+
+        currStage = nextStage;
     }
+    
+//    for (TDPipelineStage *stage in _stages) {
+//        stage.delegate = self;
+//        
+//        oc = [[self newBoundedBuffer] autorelease];
+//
+//        [stage setUpWithInputChannel:ic outputChannel:oc];
+//        
+//        ic = oc;
+//    }
     
     TDTrigger *receiverDoneTrigger = [TDTrigger trigger];
 
@@ -123,9 +157,13 @@
 #pragma mark -
 #pragma mark Private
 
-- (id <TDChannel>)newChannel {
-//    return [TDLinkedQueue linkedQueue];
+- (id <TDChannel>)newBoundedBuffer {
     return [[TDBoundedBuffer alloc] initWithSize:5]; // TODO how to configure this?
+}
+
+
+- (id <TDChannel>)newLinkedQueue {
+    return [TDLinkedQueue linkedQueue];
 }
 
 

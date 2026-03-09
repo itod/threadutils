@@ -16,6 +16,7 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 @protocol TDChannel;
 @class TDPipelineStage;
 @class TDRunner;
+@class TDTrigger;
 
 @protocol TDPipelineStageDelegate <NSObject>
 - (void)pipelineStageProgressDidUpdate:(TDPipelineStage *)ps;
@@ -23,11 +24,11 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 
 @interface TDPipelineStage : NSObject
 
-+ (TDPipelineStage *)pipelineStageWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c;
-- (instancetype)initWithType:(TDPipelineStageType)type runnableClass:(Class)cls runnerCount:(NSUInteger)c;
++ (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c;
+- (instancetype)initWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c;
 
 @property (nonatomic, assign, readonly) TDPipelineStageType type;
-@property (nonatomic, retain, readonly) Class workerClass;
+@property (nonatomic, retain, readonly) Class runnableClass;
 
 @property (nonatomic, assign, readonly) NSUInteger runnerCount;
 @property (nonatomic, copy, readonly) NSArray<TDRunner *> *runners;
@@ -37,5 +38,8 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 
 @property (nonatomic, assign) id <TDPipelineStageDelegate>delegate;
 
+@property (nonatomic, assign, readonly) BOOL isBottleneck;
+@property (nonatomic, retain) TDTrigger *startTrigger;
+@property (nonatomic, retain) TDTrigger *doneTrigger;
 @end
 

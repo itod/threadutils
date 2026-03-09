@@ -9,6 +9,7 @@
 #import <TDThreadUtils/TDRunner.h>
 #import <TDThreadUtils/TDRunnable.h>
 #import <TDThreadUtils/TDChannel.h>
+#import <TDThreadUtils/TDTrigger.h>
 
 @interface TDRunner ()
 @property (nonatomic, retain) id <TDChannel>inputChannel;
@@ -48,20 +49,42 @@
 #pragma mark -
 #pragma mark Public
 
-- (void)run {
+- (void)runWithStartTrigger:(TDTrigger *)startTrigger doneTrigger:(TDTrigger *)doneTrigger {
     NSAssert(_inputChannel, @"");
     
     self.progress = 0.0;
+    
+    [startTrigger await];
     
     for (;;) {
         id input = [_inputChannel take];
         
         NSAssert(_runnable, @"");
-        NSError *err = nil;
-        id output = [_runnable runWithInput:input error:&err];
+        
+        id output = nil;
+        BOOL stop = NO;
+        
+        if ([NSNull null] == input) {
+            [_runnable halt];
+            output = input;
+            stop = YES;
+        } else {
+            NSError *err = nil;
+            output = [_runnable runWithInput:input error:&err];
+            if (err) {
+                NSLog(@"%@", err);
+                NSAssert(0, @"");
+                return;
+            }
+        }
         
         NSAssert(_outputChannel, @"");
         [_outputChannel put:output];
+        
+        if (stop) {
+            [doneTrigger fire];
+            break;
+        }
     }
 }
 
