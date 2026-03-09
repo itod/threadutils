@@ -97,9 +97,6 @@
         currStage.delegate = self;
 
         if (nextStage.isBottleneck)  {
-            NSLog(@"NEXT STAGE IS BOTTLENECK");
-            NSLog(@"CURR: %@", currStage);
-            NSLog(@"NEXT: %@", nextStage);
             oc = [[self newLinkedQueue] autorelease];
             
             doneCounter = [TDCounter counterWithValue:count];
