@@ -65,7 +65,7 @@
 #pragma mark -
 #pragma mark Private
 
-- (void)setUpWithItemCount:(NSUInteger)itemCount inputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startTrigger:(TDSemaphore *)startTrigger doneTrigger:(TDSemaphore *)doneTrigger {
+- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startTrigger:(TDSemaphore *)startTrigger doneTrigger:(TDSemaphore *)doneTrigger {
     NSAssert(ic, @"");
     NSAssert(oc, @"");
 
@@ -87,10 +87,6 @@
     }
     
     self.runners = runners;
-
-//    // -1 for [NSNull null] at end
-//    // -1 for Semaphore test reverse: `_value > 0`
-//    TDSemaphore *join = [TDSemaphore semaphoreWithValue:-(itemCount-2)];
 
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{

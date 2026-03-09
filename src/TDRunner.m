@@ -83,8 +83,7 @@
             output = [_runnable runWithInput:input error:&err];
             if (doneTrigger) {
                 [doneTrigger relinquish];
-                NSLog(@"COUNTER");
-                NSLog(@"%@", self);
+                NSLog(@"COUNTER %@", self);
             }
             if (err) {
                 NSLog(@"%@", err);
