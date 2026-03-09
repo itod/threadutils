@@ -2,8 +2,8 @@
 //  TDCounter.m
 //  TDThreadUtils
 //
-//  Created by Todd Ditchendorf on 5/31/13.
-//  Copyright (c) 2013 Todd Ditchendorf. All rights reserved.
+//  Created by Todd Ditchendorf on 3/09/26.
+//  Copyright (c) 2026 Todd Ditchendorf. All rights reserved.
 //
 
 #import <TDThreadUtils/TDCounter.h>
