@@ -52,7 +52,7 @@
     self.inputChannel = nil;
     self.outputChannel = nil;
     self.startCounter = nil;
-    self.doneCounter = nil;
+    self.finishCounter = nil;
     [super dealloc];
 }
 
@@ -70,7 +70,7 @@
 #pragma mark -
 #pragma mark Private
 
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startCounter:(TDCounter *)startCounter doneCounter:(TDCounter *)doneCounter {
+- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startCounter:(TDCounter *)startCounter finishCounter:(TDCounter *)finishCounter {
     NSAssert(ic, @"");
     NSAssert(oc, @"");
 
@@ -78,7 +78,7 @@
     self.outputChannel = oc;
     
     self.startCounter = startCounter;
-    self.doneCounter = doneCounter;
+    self.finishCounter = finishCounter;
     
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:self.runnerCount];
         
@@ -95,7 +95,7 @@
 
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
-            [runner runWithStartCounter:startCounter doneCounter:doneCounter];
+            [runner runWithStartCounter:startCounter finishCounter:finishCounter];
         }];
     }
 }

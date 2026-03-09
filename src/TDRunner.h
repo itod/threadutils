@@ -17,7 +17,7 @@
 + (TDRunner *)runnerWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 - (instancetype)initWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 
-- (void)runWithStartCounter:(TDCounter *)startCounter doneCounter:(TDCounter *)doneCounter;
+- (void)runWithStartCounter:(TDCounter *)startCounter finishCounter:(TDCounter *)finishCounter;
 
 @property (nonatomic, retain) TDRunnable *runnable;
 

@@ -54,7 +54,7 @@
 #pragma mark -
 #pragma mark Public
 
-- (void)runWithStartCounter:(TDCounter *)startCounter doneCounter:(TDCounter *)doneCounter {
+- (void)runWithStartCounter:(TDCounter *)startCounter finishCounter:(TDCounter *)finishCounter {
     NSAssert(_inputChannel, @"");
     
     self.progress = 0.0;
@@ -69,7 +69,7 @@
         NSError *err = nil;
         id output = [_runnable runWithInput:input error:&err];
         
-        [doneCounter increment];
+        [finishCounter increment];
 
         if (err) {
             NSLog(@"%@", err);

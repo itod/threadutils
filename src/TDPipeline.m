@@ -14,7 +14,7 @@
 #import <TDThreadUtils/TDRunnable.h>
 
 @interface TDPipelineStage ()
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startCounter:(TDCounter *)startCounter doneCounter:(TDCounter *)doneCounter;
+- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startCounter:(TDCounter *)startCounter finishCounter:(TDCounter *)finishCounter;
 @end
 
 @interface TDPipeline ()
@@ -88,29 +88,29 @@
     TDPipelineStage *currStage = [en nextObject];
     TDPipelineStage *nextStage = nil;
     
-    TDCounter *doneCounter = nil;
+    TDCounter *finishCounter = nil;
     TDCounter *startCounter = nil;
     
-    while (currStage) {
+    do {
         nextStage = [en nextObject];
         
         currStage.delegate = self;
 
         if (nextStage.isBottleneck)  {
             oc = [[self newLinkedQueue] autorelease];
-            doneCounter = [TDCounter counterWithValue:count];
+            finishCounter = [TDCounter counterWithValue:count];
         } else {
             oc = [[self newBoundedBuffer] autorelease];
-            doneCounter = nil;
+            finishCounter = nil;
         }
         
-        [currStage setUpWithInputChannel:ic outputChannel:oc startCounter:startCounter doneCounter:doneCounter];
+        [currStage setUpWithInputChannel:ic outputChannel:oc startCounter:startCounter finishCounter:finishCounter];
         
         ic = oc;
-        startCounter = doneCounter;
+        startCounter = finishCounter;
 
         currStage = nextStage;
-    }
+    } while (currStage);
     
 //    for (TDPipelineStage *stage in _stages) {
 //        stage.delegate = self;
