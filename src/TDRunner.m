@@ -9,7 +9,7 @@
 #import <TDThreadUtils/TDRunner.h>
 #import <TDThreadUtils/TDRunnable.h>
 #import <TDThreadUtils/TDChannel.h>
-#import <TDThreadUtils/TDSemaphore.h>
+#import <TDThreadUtils/TDCounter.h>
 
 @interface TDRunner ()
 @property (nonatomic, retain) id <TDChannel>inputChannel;
@@ -54,15 +54,15 @@
 #pragma mark -
 #pragma mark Public
 
-- (void)runWithStartTrigger:(TDSemaphore *)startTrigger doneTrigger:(TDSemaphore *)doneTrigger {
+- (void)runWithStartCounter:(TDCounter *)startCounter doneCounter:(TDCounter *)doneCounter {
     NSAssert(_inputChannel, @"");
     
     self.progress = 0.0;
     
-    if (startTrigger) {
+    if (startCounter) {
         NSLog(@"BOTTLENECK WAITING");
-        NSLog(@"%@ waiting on trigger: %@", self, startTrigger);
-        [startTrigger acquire];
+        NSLog(@"%@ waiting on trigger: %@", self, startCounter);
+        [startCounter await];
         NSLog(@"BOTTLENECK DONE WAITING");
         NSLog(@"%@", self);
     }
@@ -76,8 +76,8 @@
         
         NSError *err = nil;
         output = [_runnable runWithInput:input error:&err];
-        if (doneTrigger) {
-            [doneTrigger relinquish];
+        if (doneCounter) {
+            [doneCounter increment];
             NSLog(@"COUNTER %@", self);
         }
         if (err) {

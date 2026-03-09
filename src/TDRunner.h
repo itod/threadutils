@@ -10,14 +10,14 @@
 #import <TDThreadUtils/TDRunnable.h>
 
 @protocol TDChannel;
-@class TDSemaphore;
+@class TDCounter;
 
 @interface TDRunner : NSObject <TDRunnableDelegate>
 
 + (TDRunner *)runnerWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 - (instancetype)initWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc number:(NSUInteger)i;
 
-- (void)runWithStartTrigger:(TDSemaphore *)startTrigger doneTrigger:(TDSemaphore *)doneTrigger;
+- (void)runWithStartCounter:(TDCounter *)startCounter doneCounter:(TDCounter *)doneCounter;
 
 @property (nonatomic, retain) TDRunnable *runnable;
 

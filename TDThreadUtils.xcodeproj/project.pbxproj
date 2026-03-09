@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D33622422F5F18DA00815634 /* TDCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = D33622412F5F18DA00815634 /* TDCounter.m */; };
+		D33622442F5F18F000815634 /* TDCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = D33622432F5F18F000815634 /* TDCounter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D33849E91D67752100087F7D /* TDExchanger.h in Headers */ = {isa = PBXBuildFile; fileRef = D33849E81D67752100087F7D /* TDExchanger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D33849EB1D67752D00087F7D /* TDExchanger.m in Sources */ = {isa = PBXBuildFile; fileRef = D33849EA1D67752D00087F7D /* TDExchanger.m */; };
 		D33849ED1D67786800087F7D /* TDExchangerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D33849EC1D67786800087F7D /* TDExchangerTests.m */; };
@@ -64,6 +66,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D33622412F5F18DA00815634 /* TDCounter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDCounter.m; path = src/TDCounter.m; sourceTree = "<group>"; };
+		D33622432F5F18F000815634 /* TDCounter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCounter.h; path = include/TDThreadUtils/TDCounter.h; sourceTree = "<group>"; };
 		D33849E81D67752100087F7D /* TDExchanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDExchanger.h; path = include/TDThreadUtils/TDExchanger.h; sourceTree = SOURCE_ROOT; };
 		D33849EA1D67752D00087F7D /* TDExchanger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDExchanger.m; path = src/TDExchanger.m; sourceTree = SOURCE_ROOT; };
 		D33849EC1D67786800087F7D /* TDExchangerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDExchangerTests.m; path = tests/TDExchangerTests.m; sourceTree = SOURCE_ROOT; };
@@ -156,6 +160,8 @@
 				D3AF43AC1A658078005C309E /* TDThreadUtils.h */,
 				D3AF43A91A658078005C309E /* TDSemaphore.h */,
 				D3AF43B81A65809A005C309E /* TDSemaphore.m */,
+				D33622432F5F18F000815634 /* TDCounter.h */,
+				D33622412F5F18DA00815634 /* TDCounter.m */,
 				D3AF43A71A658078005C309E /* TDChannel.h */,
 				D3AF43A61A658078005C309E /* TDBoundedBuffer.h */,
 				D3AF43B61A65809A005C309E /* TDBoundedBuffer.m */,
@@ -232,6 +238,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D33622442F5F18F000815634 /* TDCounter.h in Headers */,
 				D3AF43CD1A65811F005C309E /* TDTest.h in Headers */,
 				D3AF43B31A658078005C309E /* TDSynchronousChannel.h in Headers */,
 				D37B0BD82DAD792400795C50 /* TDPipeline.h in Headers */,
@@ -299,7 +306,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2620;
+				LastUpgradeCheck = 2630;
 				ORGANIZATIONNAME = "Todd Ditchendorf";
 				TargetAttributes = {
 					D3C0C7401A641526004C8B9A = {
@@ -365,6 +372,7 @@
 				D386934F1F9C2D2400928048 /* TDLinkedQueue.m in Sources */,
 				D3AF43E51A659AFE005C309E /* TDTrigger.m in Sources */,
 				D3AF43BF1A65809A005C309E /* TDThreshold.m in Sources */,
+				D33622422F5F18DA00815634 /* TDCounter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,21 +1,21 @@
 //
-//  TDSemaphore.m
+//  TDCounter.m
 //  TDThreadUtils
 //
 //  Created by Todd Ditchendorf on 5/31/13.
 //  Copyright (c) 2013 Todd Ditchendorf. All rights reserved.
 //
 
-#import <TDThreadUtils/TDSemaphore.h>
+#import <TDThreadUtils/TDCounter.h>
 
-@interface TDSemaphore ()
+@interface TDCounter ()
 @property (assign) NSInteger value;
 @property (retain) NSCondition *monitor;
 @end
 
-@implementation TDSemaphore
+@implementation TDCounter
 
-+ (instancetype)semaphoreWithValue:(NSInteger)value {
++ (instancetype)counterWithValue:(NSInteger)value {
     return [[[self alloc] initWithValue:value] autorelease];
 }
 
@@ -37,7 +37,7 @@
 
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ %p %ld>", [self class], self, _value];
+    return [NSString stringWithFormat:@"<%@ %p (Remaining: %ld)>", [self class], self, _value];
 }
 
 
@@ -83,7 +83,7 @@
 }
 
 
-- (void)acquire {
+- (void)await {
     [[self retain] autorelease];
     [self lock];
     
@@ -91,15 +91,14 @@
         [self wait];
     }
     
-    [self down];
     [self unlock];
 }
 
 
-- (void)relinquish {
+- (void)increment {
     [[self retain] autorelease];
     [self lock];
-    [self up];
+    [self down];
 
     if ([self available]) {
         [self signal];
@@ -117,13 +116,8 @@
 }
 
 
-- (void)up {
-    self.value++;
-}
-
-
 - (BOOL)available {
-    return _value > 0;
+    return _value <= 0;
 }
 
 

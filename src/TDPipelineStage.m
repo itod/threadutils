@@ -9,7 +9,7 @@
 #import <TDThreadUtils/TDPipelineStage.h>
 #import <TDThreadUtils/TDRunnable.h>
 #import <TDThreadUtils/TDChannel.h>
-#import <TDThreadUtils/TDSemaphore.h>
+#import <TDThreadUtils/TDCounter.h>
 #import "TDRunner.h"
 
 @interface TDPipelineStage ()
@@ -45,8 +45,8 @@
 
     self.inputChannel = nil;
     self.outputChannel = nil;
-    self.startTrigger = nil;
-    self.doneTrigger = nil;
+    self.startCounter = nil;
+    self.doneCounter = nil;
     [super dealloc];
 }
 
@@ -65,15 +65,15 @@
 #pragma mark -
 #pragma mark Private
 
-- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startTrigger:(TDSemaphore *)startTrigger doneTrigger:(TDSemaphore *)doneTrigger {
+- (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startCounter:(TDCounter *)startCounter doneCounter:(TDCounter *)doneCounter {
     NSAssert(ic, @"");
     NSAssert(oc, @"");
 
     self.inputChannel = ic;
     self.outputChannel = oc;
     
-    self.startTrigger = startTrigger;
-    self.doneTrigger = doneTrigger;
+    self.startCounter = startCounter;
+    self.doneCounter = doneCounter;
     
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
         
@@ -90,7 +90,7 @@
 
     for (TDRunner *runner in _runners) {
         [NSThread detachNewThreadWithBlock:^{
-            [runner runWithStartTrigger:startTrigger doneTrigger:doneTrigger];
+            [runner runWithStartCounter:startCounter doneCounter:doneCounter];
         }];
     }
 }
