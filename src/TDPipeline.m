@@ -11,7 +11,7 @@
 #import <TDThreadUtils/TDLinkedQueue.h>
 #import <TDThreadUtils/TDTrigger.h>
 #import <TDThreadUtils/TDCounter.h>
-#import <TDThreadUtils/TDRunnable.h>
+#import <TDThreadUtils/TDWorker.h>
 
 @interface TDPipelineStage ()
 - (void)setUpWithInputChannel:(id <TDChannel>)ic outputChannel:(id <TDChannel>)oc startCounter:(TDCounter *)startCounter finishCounter:(TDCounter *)finishCounter;

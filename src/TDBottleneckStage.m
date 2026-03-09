@@ -6,9 +6,9 @@
 //
 
 #import "TDBottleneckStage.h"
-#import <TDThreadUtils/TDRunnable.h>
+#import <TDThreadUtils/TDWorker.h>
 
-@interface TDBottleneck : TDRunnable
+@interface TDBottleneck : TDWorker
 
 @end
 
@@ -27,12 +27,12 @@
 }
 
 
-- (NSUInteger)runnerCount {
+- (NSUInteger)workerCount {
     return 1;
 }
 
 
-- (Class)runnableClass {
+- (Class)workerClass {
     return [TDBottleneck class];
 }
 

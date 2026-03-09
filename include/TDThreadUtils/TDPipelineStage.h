@@ -25,13 +25,12 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 @interface TDPipelineStage : NSObject
 
 + (TDPipelineStage *)bottleneckStage;
-+ (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c;
-- (instancetype)initWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c;
++ (TDPipelineStage *)pipelineStageWithWorkerClass:(Class)cls workerCount:(NSUInteger)c;
+- (instancetype)initWithWorkerClass:(Class)cls workerCount:(NSUInteger)c;
 
-@property (nonatomic, assign, readonly) TDPipelineStageType type;
-@property (nonatomic, retain, readonly) Class runnableClass;
+@property (nonatomic, retain, readonly) Class workerClass;
+@property (nonatomic, assign, readonly) NSUInteger workerCount;
 
-@property (nonatomic, assign, readonly) NSUInteger runnerCount;
 @property (nonatomic, copy, readonly) NSArray<TDRunner *> *runners;
 
 @property (nonatomic, retain, readonly) id <TDChannel>inputChannel;

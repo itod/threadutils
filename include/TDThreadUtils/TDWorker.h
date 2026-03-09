@@ -6,12 +6,25 @@
 //  Copyright © 2025 Todd Ditchendorf. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <TDThreadUtils/TDPipeline.h>
 
-NS_ASSUME_NONNULL_BEGIN
+@class TDWorker;
+
+@protocol TDWorkerDelegate <NSObject>
+- (void)runnable:(TDWorker *)r updateProgress:(double)d;
+- (void)runnable:(TDWorker *)r updateTitleText:(NSString *)title infoText:(NSString *)info;
+@end
 
 @interface TDWorker : NSObject
 
-@end
++ (TDPipelineStageType)pipelineStageType;
 
-NS_ASSUME_NONNULL_END
+// designated initializer
+- (instancetype)initWithDelegate:(id <TDWorkerDelegate>)d;
+
+// main pipeline channel
+- (id)runWithInput:(id)input error:(NSError **)outErr;
+
+@property (nonatomic, assign, readonly) id <TDWorkerDelegate>delegate;
+
+@end

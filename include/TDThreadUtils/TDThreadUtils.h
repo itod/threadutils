@@ -32,4 +32,4 @@ FOUNDATION_EXPORT const unsigned char TDThreadUtilsVersionString[];
 #import <TDThreadUtils/TDPipeline.h>
 #import <TDThreadUtils/TDPipelineStage.h>
 #import <TDThreadUtils/TDRunner.h>
-#import <TDThreadUtils/TDRunnable.h>
+#import <TDThreadUtils/TDWorker.h>

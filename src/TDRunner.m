@@ -7,7 +7,7 @@
 //
 
 #import <TDThreadUtils/TDRunner.h>
-#import <TDThreadUtils/TDRunnable.h>
+#import <TDThreadUtils/TDWorker.h>
 #import <TDThreadUtils/TDChannel.h>
 #import <TDThreadUtils/TDCounter.h>
 
@@ -84,15 +84,15 @@
 
 
 #pragma mark -
-#pragma mark TDRunnableDelegate
+#pragma mark TDWorkerDelegate
 
-- (void)runnable:(TDRunnable *)r updateProgress:(double)d {
+- (void)runnable:(TDWorker *)r updateProgress:(double)d {
     NSAssert(_runnable == r, @"");
     self.progress = d;
 }
 
 
-- (void)runnable:(TDRunnable *)r updateTitleText:(NSString *)title infoText:(NSString *)info {
+- (void)runnable:(TDWorker *)r updateTitleText:(NSString *)title infoText:(NSString *)info {
     NSAssert(_runnable == r, @"");
     self.titleText = title;
     self.infoText = info;

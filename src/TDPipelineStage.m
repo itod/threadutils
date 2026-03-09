@@ -7,15 +7,15 @@
 //
 
 #import <TDThreadUtils/TDPipelineStage.h>
-#import <TDThreadUtils/TDRunnable.h>
+#import <TDThreadUtils/TDWorker.h>
 #import <TDThreadUtils/TDChannel.h>
 #import <TDThreadUtils/TDCounter.h>
 #import "TDRunner.h"
 #import "TDBottleneckStage.h"
 
 @interface TDPipelineStage ()
-@property (nonatomic, retain, readwrite) Class runnableClass;
-@property (nonatomic, assign, readwrite) NSUInteger runnerCount;
+@property (nonatomic, retain, readwrite) Class workerClass;
+@property (nonatomic, assign, readwrite) NSUInteger workerCount;
 @property (nonatomic, copy, readwrite) NSArray<TDRunner *> *runners;
 
 @property (nonatomic, retain, readwrite) id <TDChannel>inputChannel;
@@ -29,16 +29,16 @@
 }
 
 
-+ (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c {
-    return [[[self alloc] initWithRunnableClass:cls runnerCount:c] autorelease];
++ (TDPipelineStage *)pipelineStageWithWorkerClass:(Class)cls workerCount:(NSUInteger)c {
+    return [[[self alloc] initWithWorkerClass:cls workerCount:c] autorelease];
 }
 
 
-- (instancetype)initWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c {
+- (instancetype)initWithWorkerClass:(Class)cls workerCount:(NSUInteger)c {
     self = [super init];
     if (self) {
-        self.runnableClass = cls;
-        self.runnerCount = c;
+        self.workerClass = cls;
+        self.workerCount = c;
     }
     return self;
 }
@@ -46,7 +46,7 @@
 
 - (void)dealloc {
     self.delegate = nil;
-    self.runnableClass = nil;
+    self.workerClass = nil;
     self.runners = nil;
 
     self.inputChannel = nil;
@@ -58,7 +58,7 @@
 
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ %p %@ (%lu) B?:%d>", [self class], self, self.runnableClass, self.runnerCount, self.isBottleneck];
+    return [NSString stringWithFormat:@"<%@ %p %@ (%lu) B?:%d>", [self class], self, self.workerClass, self.workerCount, self.isBottleneck];
 }
 
 
@@ -80,11 +80,11 @@
     self.startCounter = startCounter;
     self.finishCounter = finishCounter;
     
-    NSMutableArray *runners = [NSMutableArray arrayWithCapacity:self.runnerCount];
+    NSMutableArray *runners = [NSMutableArray arrayWithCapacity:self.workerCount];
         
-    for (NSUInteger i = 0; i < self.runnerCount; ++i) {
+    for (NSUInteger i = 0; i < self.workerCount; ++i) {
         TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc number:i+1];
-        TDRunnable *runnable = [[[self.runnableClass alloc] initWithDelegate:runner] autorelease];
+        TDWorker *runnable = [[[self.workerClass alloc] initWithDelegate:runner] autorelease];
         runner.runnable = runnable;
         
         [runner addObserver:self forKeyPath:@"progress" options:0 context:NULL];

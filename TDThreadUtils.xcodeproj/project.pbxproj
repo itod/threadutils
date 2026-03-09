@@ -20,11 +20,11 @@
 		D36CB44720ED3F060029669D /* TDGamePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = D36CB44520ED3F060029669D /* TDGamePlayer.m */; };
 		D36CB44B20ED48BB0029669D /* TDGamePlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D36CB44A20ED48BB0029669D /* TDGamePlayerTests.m */; };
 		D36CB45420ED64260029669D /* TDGamePlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = D36CB45320ED64260029669D /* TDGamePlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D372971D2F55E0C9006E8E0A /* TDRunnable.m in Sources */ = {isa = PBXBuildFile; fileRef = D372971C2F55E0C9006E8E0A /* TDRunnable.m */; };
+		D372971D2F55E0C9006E8E0A /* TDWorker.m in Sources */ = {isa = PBXBuildFile; fileRef = D372971C2F55E0C9006E8E0A /* TDWorker.m */; };
 		D37B0BCB2DAD78E600795C50 /* TDPipeline.m in Sources */ = {isa = PBXBuildFile; fileRef = D37B0BCA2DAD78E600795C50 /* TDPipeline.m */; };
 		D37B0BCF2DAD78F900795C50 /* TDPipelineStage.m in Sources */ = {isa = PBXBuildFile; fileRef = D37B0BCE2DAD78F900795C50 /* TDPipelineStage.m */; };
 		D37B0BD82DAD792400795C50 /* TDPipeline.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BD52DAD792400795C50 /* TDPipeline.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D37B0BD92DAD792400795C50 /* TDRunnable.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BD72DAD792400795C50 /* TDRunnable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D37B0BD92DAD792400795C50 /* TDWorker.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BD72DAD792400795C50 /* TDWorker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D37B0BDA2DAD792400795C50 /* TDPipelineStage.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BD62DAD792400795C50 /* TDPipelineStage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D37B0BDD2DADC23300795C50 /* TDRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = D37B0BDC2DADC23300795C50 /* TDRunner.m */; };
 		D37B0BDE2DADC23300795C50 /* TDRunner.h in Headers */ = {isa = PBXBuildFile; fileRef = D37B0BDB2DADC23300795C50 /* TDRunner.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -81,12 +81,12 @@
 		D36CB44520ED3F060029669D /* TDGamePlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDGamePlayer.m; path = src/TDGamePlayer.m; sourceTree = "<group>"; };
 		D36CB44A20ED48BB0029669D /* TDGamePlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDGamePlayerTests.m; path = tests/TDGamePlayerTests.m; sourceTree = "<group>"; };
 		D36CB45320ED64260029669D /* TDGamePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDGamePlayer.h; path = include/TDThreadUtils/TDGamePlayer.h; sourceTree = "<group>"; };
-		D372971C2F55E0C9006E8E0A /* TDRunnable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDRunnable.m; path = src/TDRunnable.m; sourceTree = "<group>"; };
+		D372971C2F55E0C9006E8E0A /* TDWorker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDWorker.m; path = src/TDWorker.m; sourceTree = "<group>"; };
 		D37B0BCA2DAD78E600795C50 /* TDPipeline.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDPipeline.m; path = src/TDPipeline.m; sourceTree = "<group>"; };
 		D37B0BCE2DAD78F900795C50 /* TDPipelineStage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDPipelineStage.m; path = src/TDPipelineStage.m; sourceTree = "<group>"; };
 		D37B0BD52DAD792400795C50 /* TDPipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDPipeline.h; path = include/TDThreadUtils/TDPipeline.h; sourceTree = "<group>"; };
 		D37B0BD62DAD792400795C50 /* TDPipelineStage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDPipelineStage.h; path = include/TDThreadUtils/TDPipelineStage.h; sourceTree = "<group>"; };
-		D37B0BD72DAD792400795C50 /* TDRunnable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDRunnable.h; path = include/TDThreadUtils/TDRunnable.h; sourceTree = "<group>"; };
+		D37B0BD72DAD792400795C50 /* TDWorker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDWorker.h; path = include/TDThreadUtils/TDWorker.h; sourceTree = "<group>"; };
 		D37B0BDB2DADC23300795C50 /* TDRunner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDRunner.h; path = src/TDRunner.h; sourceTree = "<group>"; };
 		D37B0BDC2DADC23300795C50 /* TDRunner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDRunner.m; path = src/TDRunner.m; sourceTree = "<group>"; };
 		D386934D1F9C2D2400928048 /* TDLinkedQueue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDLinkedQueue.m; path = src/TDLinkedQueue.m; sourceTree = "<group>"; };
@@ -194,8 +194,8 @@
 				D33622EB2F5F280700815634 /* TDBottleneckStage.m */,
 				D37B0BDB2DADC23300795C50 /* TDRunner.h */,
 				D37B0BDC2DADC23300795C50 /* TDRunner.m */,
-				D37B0BD72DAD792400795C50 /* TDRunnable.h */,
-				D372971C2F55E0C9006E8E0A /* TDRunnable.m */,
+				D37B0BD72DAD792400795C50 /* TDWorker.h */,
+				D372971C2F55E0C9006E8E0A /* TDWorker.m */,
 			);
 			name = TDThreadUtils;
 			sourceTree = "<group>";
@@ -248,7 +248,7 @@
 				D3AF43CD1A65811F005C309E /* TDTest.h in Headers */,
 				D3AF43B31A658078005C309E /* TDSynchronousChannel.h in Headers */,
 				D37B0BD82DAD792400795C50 /* TDPipeline.h in Headers */,
-				D37B0BD92DAD792400795C50 /* TDRunnable.h in Headers */,
+				D37B0BD92DAD792400795C50 /* TDWorker.h in Headers */,
 				D37B0BDA2DAD792400795C50 /* TDPipelineStage.h in Headers */,
 				D3AF43B41A658078005C309E /* TDThreadUtils.h in Headers */,
 				D3AF43B11A658078005C309E /* TDSemaphore.h in Headers */,
@@ -369,7 +369,7 @@
 				D37B0BDD2DADC23300795C50 /* TDRunner.m in Sources */,
 				D3AF43BE1A65809A005C309E /* TDSynchronousChannel.m in Sources */,
 				D3AF43BB1A65809A005C309E /* TDBoundedBuffer.m in Sources */,
-				D372971D2F55E0C9006E8E0A /* TDRunnable.m in Sources */,
+				D372971D2F55E0C9006E8E0A /* TDWorker.m in Sources */,
 				D33622ED2F5F280700815634 /* TDBottleneckStage.m in Sources */,
 				D33849EB1D67752D00087F7D /* TDExchanger.m in Sources */,
 				D37B0BCF2DAD78F900795C50 /* TDPipelineStage.m in Sources */,

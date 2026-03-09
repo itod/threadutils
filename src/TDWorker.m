@@ -1,18 +1,18 @@
 //
-//  TDRunnable.m
+//  TDWorker.m
 //  TDThreadUtils
 //
 //  Created by Todd Ditchendorf on 4/14/25.
 //  Copyright © 2025 Todd Ditchendorf. All rights reserved.
 //
 
-#import <TDThreadUtils/TDRunnable.h>
+#import <TDThreadUtils/TDWorker.h>
 
-@interface TDRunnable ()
-@property (nonatomic, assign, readwrite) id <TDRunnableDelegate>delegate;
+@interface TDWorker ()
+@property (nonatomic, assign, readwrite) id <TDWorkerDelegate>delegate;
 @end
 
-@implementation TDRunnable
+@implementation TDWorker
 
 - (instancetype)init {
     NSAssert(0, @"");
@@ -26,7 +26,7 @@
 }
 
 
-- (instancetype)initWithDelegate:(id <TDRunnableDelegate>)d {
+- (instancetype)initWithDelegate:(id <TDWorkerDelegate>)d {
     self = [super init];
     if (self) {
         self.delegate = d;
