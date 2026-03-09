@@ -98,7 +98,6 @@
 
         if (nextStage.isBottleneck)  {
             oc = [[self newLinkedQueue] autorelease];
-            
             doneCounter = [TDCounter counterWithValue:count];
         } else {
             oc = [[self newBoundedBuffer] autorelease];
