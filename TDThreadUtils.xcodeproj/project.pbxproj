@@ -73,7 +73,7 @@
 		D36CB44520ED3F060029669D /* TDGamePlayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDGamePlayer.m; path = src/TDGamePlayer.m; sourceTree = "<group>"; };
 		D36CB44A20ED48BB0029669D /* TDGamePlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDGamePlayerTests.m; path = tests/TDGamePlayerTests.m; sourceTree = "<group>"; };
 		D36CB45320ED64260029669D /* TDGamePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDGamePlayer.h; path = include/TDThreadUtils/TDGamePlayer.h; sourceTree = "<group>"; };
-		D372971C2F55E0C9006E8E0A /* TDRunnable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TDRunnable.m; sourceTree = "<group>"; };
+		D372971C2F55E0C9006E8E0A /* TDRunnable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDRunnable.m; path = src/TDRunnable.m; sourceTree = "<group>"; };
 		D37B0BCA2DAD78E600795C50 /* TDPipeline.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDPipeline.m; path = src/TDPipeline.m; sourceTree = "<group>"; };
 		D37B0BCE2DAD78F900795C50 /* TDPipelineStage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDPipelineStage.m; path = src/TDPipelineStage.m; sourceTree = "<group>"; };
 		D37B0BD52DAD792400795C50 /* TDPipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDPipeline.h; path = include/TDThreadUtils/TDPipeline.h; sourceTree = "<group>"; };
