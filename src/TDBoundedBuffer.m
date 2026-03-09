@@ -123,7 +123,7 @@
     NSAssert(_takePermits, @"");
     
     [_takePermits acquire];
-    id obj = [[_buffer extract] autorelease];
+    id obj = [_buffer extract];
     [_putPermits relinquish];
     
     NSAssert(obj, @"");
