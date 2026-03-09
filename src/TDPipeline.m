@@ -102,9 +102,8 @@
             NSLog(@"NEXT: %@", nextStage);
             oc = [[self newLinkedQueue] autorelease];
             
-            // -1 for [NSNull null] at end
             // -1 for Semaphore test reverse: `_value > 0`
-            doneTrigger = [TDSemaphore semaphoreWithValue:-(count-2)];
+            doneTrigger = [TDSemaphore semaphoreWithValue:-(count-1)];
         } else {
             oc = [[self newBoundedBuffer] autorelease];
             doneTrigger = nil;

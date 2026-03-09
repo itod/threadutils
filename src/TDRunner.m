@@ -73,36 +73,21 @@
         NSAssert(_runnable, @"");
         
         id output = nil;
-        BOOL stop = NO;
         
-        if ([NSNull null] == input) {
-            output = input;
-            stop = YES;
-        } else {
-            NSError *err = nil;
-            output = [_runnable runWithInput:input error:&err];
-            if (doneTrigger) {
-                [doneTrigger relinquish];
-                NSLog(@"COUNTER %@", self);
-            }
-            if (err) {
-                NSLog(@"%@", err);
-                NSAssert(0, @"");
-                return;
-            }
+        NSError *err = nil;
+        output = [_runnable runWithInput:input error:&err];
+        if (doneTrigger) {
+            [doneTrigger relinquish];
+            NSLog(@"COUNTER %@", self);
+        }
+        if (err) {
+            NSLog(@"%@", err);
+            NSAssert(0, @"");
+            return;
         }
         
         NSAssert(_outputChannel, @"");
         [_outputChannel put:output];
-        
-        if (stop) {
-//            if (doneTrigger) {
-//                NSLog(@"BOTTLENECK REACHED. CAN BEGIN");
-//                NSLog(@"%@ firing trigger: %@", self, doneTrigger);
-//                [doneTrigger relinquish];
-//            }
-            // DO NOT BREAK HERE. CAUSES CRASH
-        }
     }
 }
 
