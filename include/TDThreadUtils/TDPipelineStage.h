@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 
 @interface TDPipelineStage : NSObject
 
++ (TDPipelineStage *)bottleneckStage;
 + (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c;
 - (instancetype)initWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c;
 

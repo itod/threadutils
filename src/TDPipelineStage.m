@@ -11,6 +11,7 @@
 #import <TDThreadUtils/TDChannel.h>
 #import <TDThreadUtils/TDCounter.h>
 #import "TDRunner.h"
+#import "TDBottleneckStage.h"
 
 @interface TDPipelineStage ()
 @property (nonatomic, retain, readwrite) Class runnableClass;
@@ -22,6 +23,11 @@
 @end
 
 @implementation TDPipelineStage
+
++ (TDPipelineStage *)bottleneckStage {
+    return [[[TDBottleneckStage alloc] init] autorelease];
+}
+
 
 + (TDPipelineStage *)pipelineStageWithRunnableClass:(Class)cls runnerCount:(NSUInteger)c {
     return [[[self alloc] initWithRunnableClass:cls runnerCount:c] autorelease];
@@ -52,13 +58,12 @@
 
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ %p %@ (%lu) B?:%d>", [self class], self, _runnableClass, _runnerCount, self.isBottleneck];
+    return [NSString stringWithFormat:@"<%@ %p %@ (%lu) B?:%d>", [self class], self, self.runnableClass, self.runnerCount, self.isBottleneck];
 }
 
 
 - (BOOL)isBottleneck {
-    NSAssert(_runnableClass, @"");
-    return [_runnableClass isBottleneck];
+    return NO;
 }
 
 
@@ -75,11 +80,11 @@
     self.startCounter = startCounter;
     self.doneCounter = doneCounter;
     
-    NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
+    NSMutableArray *runners = [NSMutableArray arrayWithCapacity:self.runnerCount];
         
-    for (NSUInteger i = 0; i < _runnerCount; ++i) {
+    for (NSUInteger i = 0; i < self.runnerCount; ++i) {
         TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc number:i+1];
-        TDRunnable *runnable = [[[_runnableClass alloc] initWithDelegate:runner] autorelease];
+        TDRunnable *runnable = [[[self.runnableClass alloc] initWithDelegate:runner] autorelease];
         runner.runnable = runnable;
         
         [runner addObserver:self forKeyPath:@"progress" options:0 context:NULL];

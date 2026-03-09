@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D33622422F5F18DA00815634 /* TDCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = D33622412F5F18DA00815634 /* TDCounter.m */; };
 		D33622442F5F18F000815634 /* TDCounter.h in Headers */ = {isa = PBXBuildFile; fileRef = D33622432F5F18F000815634 /* TDCounter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D33622EC2F5F280700815634 /* TDBottleneckStage.h in Headers */ = {isa = PBXBuildFile; fileRef = D33622EA2F5F280700815634 /* TDBottleneckStage.h */; };
+		D33622ED2F5F280700815634 /* TDBottleneckStage.m in Sources */ = {isa = PBXBuildFile; fileRef = D33622EB2F5F280700815634 /* TDBottleneckStage.m */; };
 		D33849E91D67752100087F7D /* TDExchanger.h in Headers */ = {isa = PBXBuildFile; fileRef = D33849E81D67752100087F7D /* TDExchanger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D33849EB1D67752D00087F7D /* TDExchanger.m in Sources */ = {isa = PBXBuildFile; fileRef = D33849EA1D67752D00087F7D /* TDExchanger.m */; };
 		D33849ED1D67786800087F7D /* TDExchangerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D33849EC1D67786800087F7D /* TDExchangerTests.m */; };
@@ -68,6 +70,8 @@
 /* Begin PBXFileReference section */
 		D33622412F5F18DA00815634 /* TDCounter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDCounter.m; path = src/TDCounter.m; sourceTree = "<group>"; };
 		D33622432F5F18F000815634 /* TDCounter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDCounter.h; path = include/TDThreadUtils/TDCounter.h; sourceTree = "<group>"; };
+		D33622EA2F5F280700815634 /* TDBottleneckStage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TDBottleneckStage.h; path = src/TDBottleneckStage.h; sourceTree = "<group>"; };
+		D33622EB2F5F280700815634 /* TDBottleneckStage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TDBottleneckStage.m; path = src/TDBottleneckStage.m; sourceTree = "<group>"; };
 		D33849E81D67752100087F7D /* TDExchanger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDExchanger.h; path = include/TDThreadUtils/TDExchanger.h; sourceTree = SOURCE_ROOT; };
 		D33849EA1D67752D00087F7D /* TDExchanger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDExchanger.m; path = src/TDExchanger.m; sourceTree = SOURCE_ROOT; };
 		D33849EC1D67786800087F7D /* TDExchangerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TDExchangerTests.m; path = tests/TDExchangerTests.m; sourceTree = SOURCE_ROOT; };
@@ -186,6 +190,8 @@
 				D37B0BCA2DAD78E600795C50 /* TDPipeline.m */,
 				D37B0BD62DAD792400795C50 /* TDPipelineStage.h */,
 				D37B0BCE2DAD78F900795C50 /* TDPipelineStage.m */,
+				D33622EA2F5F280700815634 /* TDBottleneckStage.h */,
+				D33622EB2F5F280700815634 /* TDBottleneckStage.m */,
 				D37B0BDB2DADC23300795C50 /* TDRunner.h */,
 				D37B0BDC2DADC23300795C50 /* TDRunner.m */,
 				D37B0BD72DAD792400795C50 /* TDRunnable.h */,
@@ -254,6 +260,7 @@
 				D3AF43B51A658078005C309E /* TDThreshold.h in Headers */,
 				D3AF43AE1A658078005C309E /* TDBoundedBuffer.h in Headers */,
 				D3AF43C81A65811F005C309E /* TDBaseTestCase.h in Headers */,
+				D33622EC2F5F280700815634 /* TDBottleneckStage.h in Headers */,
 				D33849E91D67752100087F7D /* TDExchanger.h in Headers */,
 				D3AF43AF1A658078005C309E /* TDChannel.h in Headers */,
 				D3AF43E71A659B01005C309E /* TDTrigger.h in Headers */,
@@ -363,6 +370,7 @@
 				D3AF43BE1A65809A005C309E /* TDSynchronousChannel.m in Sources */,
 				D3AF43BB1A65809A005C309E /* TDBoundedBuffer.m in Sources */,
 				D372971D2F55E0C9006E8E0A /* TDRunnable.m in Sources */,
+				D33622ED2F5F280700815634 /* TDBottleneckStage.m in Sources */,
 				D33849EB1D67752D00087F7D /* TDExchanger.m in Sources */,
 				D37B0BCF2DAD78F900795C50 /* TDPipelineStage.m in Sources */,
 				D3AF43BD1A65809A005C309E /* TDSemaphore.m in Sources */,

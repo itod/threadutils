@@ -26,11 +26,6 @@
 }
 
 
-+ (BOOL)isBottleneck {
-    return NO;
-}
-
-
 - (instancetype)initWithDelegate:(id <TDRunnableDelegate>)d {
     self = [super init];
     if (self) {

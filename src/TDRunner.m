@@ -47,7 +47,7 @@
 
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ %p %@ B?:%d>", [self class], self, _runnable, [[_runnable class] isBottleneck]];
+    return [NSString stringWithFormat:@"<%@ %p %@>", [self class], self, _runnable];
 }
 
 

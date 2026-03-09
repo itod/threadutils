@@ -18,7 +18,6 @@
 @interface TDRunnable : NSObject
 
 + (TDPipelineStageType)pipelineStageType;
-+ (BOOL)isBottleneck;
 
 // designated initializer
 - (instancetype)initWithDelegate:(id <TDRunnableDelegate>)d;
