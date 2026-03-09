@@ -66,10 +66,8 @@
         
         NSAssert(_runnable, @"");
         
-        id output = nil;
-        
         NSError *err = nil;
-        output = [_runnable runWithInput:input error:&err];
+        id output = [_runnable runWithInput:input error:&err];
         
         [doneCounter increment];
 
