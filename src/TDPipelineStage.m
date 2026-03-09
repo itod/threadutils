@@ -45,6 +45,8 @@
 
     self.inputChannel = nil;
     self.outputChannel = nil;
+    self.startTrigger = nil;
+    self.doneTrigger = nil;
     [super dealloc];
 }
 
@@ -69,6 +71,9 @@
 
     self.inputChannel = ic;
     self.outputChannel = oc;
+    
+    self.startTrigger = startTrigger;
+    self.doneTrigger = doneTrigger;
 
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:_runnerCount];
         

@@ -46,6 +46,11 @@
 }
 
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@ %p %@ B?:%d>", [self class], self, _runnable, [[_runnable class] isBottleneck]];
+}
+
+
 #pragma mark -
 #pragma mark Public
 
@@ -54,7 +59,13 @@
     
     self.progress = 0.0;
     
-    [startTrigger await];
+    if (startTrigger) {
+        NSLog(@"BOTTLENECK WAITING");
+        NSLog(@"%@", self);
+        [startTrigger await];
+        NSLog(@"BOTTLENECK DONE WAITING");
+        NSLog(@"%@", self);
+    }
     
     for (;;) {
         id input = [_inputChannel take];
@@ -82,7 +93,11 @@
         [_outputChannel put:output];
         
         if (stop) {
-            [doneTrigger fire];
+            if (doneTrigger) {
+                NSLog(@"BOTTLENECK REACHED. CAN BEGIN");
+                NSLog(@"%@", self);
+                [doneTrigger fire];
+            }
             break;
         }
     }
