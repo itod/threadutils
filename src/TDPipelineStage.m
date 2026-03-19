@@ -84,8 +84,8 @@
         
     for (NSUInteger i = 0; i < self.workerCount; ++i) {
         TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc number:i+1];
-        TDWorker *runnable = [[[self.workerClass alloc] initWithDelegate:runner] autorelease];
-        runner.runnable = runnable;
+        TDWorker *worker = [[[self.workerClass alloc] initWithDelegate:runner] autorelease];
+        runner.worker = worker;
         
         [runner addObserver:self forKeyPath:@"progress" options:0 context:NULL];
         [runners addObject:runner];

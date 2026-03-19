@@ -36,7 +36,7 @@
 
 
 - (void)dealloc {
-    self.runnable = nil;
+    self.worker = nil;
     self.inputChannel = nil;
     self.outputChannel = nil;
 
@@ -47,7 +47,7 @@
 
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"<%@ %p %@>", [self class], self, _runnable];
+    return [NSString stringWithFormat:@"<%@ %p %@>", [self class], self, _worker];
 }
 
 
@@ -64,10 +64,10 @@
     for (;;) {
         id input = [_inputChannel take];
         
-        NSAssert(_runnable, @"");
+        NSAssert(_worker, @"");
         
         NSError *err = nil;
-        id output = [_runnable runWithInput:input error:&err];
+        id output = [_worker runWithInput:input error:&err];
         
         [finishCounter increment];
 
@@ -87,13 +87,13 @@
 #pragma mark TDWorkerDelegate
 
 - (void)runnable:(TDWorker *)r updateProgress:(double)d {
-    NSAssert(_runnable == r, @"");
+    NSAssert(_worker == r, @"");
     self.progress = d;
 }
 
 
 - (void)runnable:(TDWorker *)r updateTitleText:(NSString *)title infoText:(NSString *)info {
-    NSAssert(_runnable == r, @"");
+    NSAssert(_worker == r, @"");
     self.titleText = title;
     self.infoText = info;
 }

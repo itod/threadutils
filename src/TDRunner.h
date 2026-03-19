@@ -19,7 +19,7 @@
 
 - (void)runWithStartCounter:(TDCounter *)startCounter finishCounter:(TDCounter *)finishCounter;
 
-@property (nonatomic, retain) TDWorker *runnable;
+@property (nonatomic, retain) TDWorker *worker;
 
 @property (nonatomic, assign) CGFloat progress;
 @property (nonatomic, copy) NSString *titleText;
