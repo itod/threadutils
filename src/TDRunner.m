@@ -67,7 +67,11 @@
         NSAssert(_worker, @"");
         
         NSError *err = nil;
-        id output = [_worker runWithInput:input error:&err];
+        id output = nil;
+        
+        @autoreleasepool {
+            output = [[_worker runWithInput:input error:&err] retain]; // +1
+        }
         
         [finishCounter increment];
 
@@ -78,7 +82,7 @@
         }
         
         NSAssert(_outputChannel, @"");
-        [_outputChannel put:output];
+        [_outputChannel put:[output autorelease]]; // -1
     }
 }
 
