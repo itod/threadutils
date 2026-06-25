@@ -158,7 +158,7 @@
 
 
 - (id <TDChannel>)newLinkedQueue {
-    return [TDLinkedQueue linkedQueue];
+    return [[TDLinkedQueue alloc] init];
 }
 
 
