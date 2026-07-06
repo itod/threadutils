@@ -64,7 +64,7 @@
     id <TDChannel>oc = nil;
     
     id <TDChannel>countChannel = [TDBoundedBuffer boundedBufferWithSize:1];
-
+    
     [NSThread detachNewThreadWithBlock:^{
         NSAssert(_launcher, @"");
         
@@ -153,7 +153,7 @@
 #pragma mark Private
 
 - (id <TDChannel>)newBoundedBuffer {
-    return [[TDBoundedBuffer alloc] initWithSize:5]; // TODO how to configure this?
+    return [[TDBoundedBuffer alloc] initWithSize:14]; // TODO how to configure this?
 }
 
 
