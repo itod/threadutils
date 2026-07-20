@@ -94,12 +94,12 @@
     self.runners = runners;
 
     for (TDRunner *runner in _runners) {
-//        [NSThread detachNewThreadWithBlock:^{
-//            [runner runWithStartCounter:startCounter finishCounter:finishCounter];
-//        }];
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [NSThread detachNewThreadWithBlock:^{
             [runner runWithStartCounter:startCounter finishCounter:finishCounter];
-        });
+        }];
+//        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//            [runner runWithStartCounter:startCounter finishCounter:finishCounter];
+//        });
     }
 }
 
