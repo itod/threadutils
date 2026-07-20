@@ -45,12 +45,14 @@
     NSParameterAssert(obj);
     NSAssert(_array, @"");
     
-    @synchronized(self) {
-        _array[_putIndex] = obj;
-        self.putIndex = (_putIndex + 1) % _size;
-    }
+    [obj retain]; // +1
     
-    NSAssert(_putIndex < _size, @"");
+    @synchronized(self) {
+        NSUInteger idx = self.putIndex;
+        _array[idx] = obj;
+        self.putIndex = (idx + 1) % _size;
+        NSAssert(self.putIndex < self.size, @"");
+    }
 }
 
 
@@ -59,13 +61,14 @@
     
     id obj = nil;
     @synchronized(self) {
-        obj = [[_array[_takeIndex] retain] autorelease];
-        _array[_takeIndex] = nil;
-        self.takeIndex = (_takeIndex + 1) % _size;
+        NSUInteger idx = self.takeIndex;
+        obj = _array[idx];
+        _array[idx] = nil;
+        self.takeIndex = (idx + 1) % _size;
+        NSAssert(self.takeIndex < self.size, @"");
     }
 
-    NSAssert(_takeIndex < _size, @"");
-    return obj;
+    return [obj autorelease]; // -1
 }
 
 @end
@@ -112,7 +115,7 @@
     NSAssert(_takePermits, @"");
     
     [_putPermits acquire];
-    [_buffer insert:[obj retain]];
+    [_buffer insert:obj];
     [_takePermits relinquish];
 }
 
