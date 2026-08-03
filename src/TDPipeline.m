@@ -77,7 +77,7 @@
             [ic put:item]; // yes ic of first stage is the oc for launcher.
             self.launcherProgress = (++i / count);
         }
-        NSLog(@"LAUNCHER DONE!!!");
+        //NSLog(@"LAUNCHER DONE!!!");
     }];
     
     NSUInteger count = [[countChannel take] unsignedIntegerValue];
@@ -138,7 +138,7 @@
         }
         
         [_receiver doneWithPipeline:self];
-        NSLog(@"RECEIVER DONE!!!");
+        //NSLog(@"RECEIVER DONE!!!");
         [receiverDoneTrigger fire];
     }];
     
