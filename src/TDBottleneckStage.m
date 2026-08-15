@@ -36,4 +36,9 @@
     return [TDBottleneck class];
 }
 
+
+- (NSString *)title {
+    return NSLocalizedString(@"BOTTLENECK", @"");
+}
+
 @end
