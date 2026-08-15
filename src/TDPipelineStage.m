@@ -68,7 +68,11 @@
 
 
 - (NSString *)title {
-    return [(id)_workerClass name];
+    if (self.isBottleneck) {
+        return NSLocalizedString(@"BOTTLENECK", @"");
+    } else {
+        return [(id)_workerClass name];
+    }
 }
 
 
