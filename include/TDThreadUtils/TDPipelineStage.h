@@ -41,5 +41,7 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 @property (nonatomic, assign, readonly) BOOL isBottleneck;
 @property (nonatomic, retain) TDCounter *startCounter;
 @property (nonatomic, retain) TDCounter *finishCounter;
+
+@property (nonatomic, copy, readonly) NSString *title;
 @end
 

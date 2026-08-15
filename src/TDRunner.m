@@ -92,13 +92,13 @@
 #pragma mark -
 #pragma mark TDWorkerDelegate
 
-- (void)runnable:(TDWorker *)r updateProgress:(double)d {
+- (void)worker:(TDWorker *)r updateProgress:(double)d {
     NSAssert(_worker == r, @"");
     self.progress = d;
 }
 
 
-- (void)runnable:(TDWorker *)r updateTitleText:(NSString *)title infoText:(NSString *)info {
+- (void)worker:(TDWorker *)r updateTitleText:(NSString *)title infoText:(NSString *)info {
     NSAssert(_worker == r, @"");
     self.titleText = title;
     self.infoText = info;

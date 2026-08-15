@@ -11,8 +11,8 @@
 @class TDWorker;
 
 @protocol TDWorkerDelegate <NSObject>
-- (void)runnable:(TDWorker *)r updateProgress:(double)d;
-- (void)runnable:(TDWorker *)r updateTitleText:(NSString *)title infoText:(NSString *)info;
+- (void)worker:(TDWorker *)r updateProgress:(double)d;
+- (void)worker:(TDWorker *)r updateTitleText:(NSString *)title infoText:(NSString *)info;
 @end
 
 @interface TDWorker : NSObject

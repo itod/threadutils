@@ -75,7 +75,8 @@
         NSUInteger i = 0;
         for (id item in items) {
             [ic put:item]; // yes ic of first stage is the oc for launcher.
-            self.launcherProgress = (++i / count);
+            self.launcherProgress = (++i / (double)count);
+            [self sendProgressDidUpdate];
         }
         //NSLog(@"LAUNCHER DONE!!!");
     }];
@@ -133,8 +134,8 @@
         while (i < count) {
             id item = [oc take]; // yes oc of last stage is the ic for receiver.
             [_receiver receiveItem:item withPipeline:self];
-            
-            self.receiverProgress = (++i / count);
+            self.receiverProgress = (++i / (double)count);
+            [self sendProgressDidUpdate];
         }
         
         [_receiver doneWithPipeline:self];
@@ -167,6 +168,11 @@
 
 - (void)pipelineStageProgressDidUpdate:(TDPipelineStage *)ps {
     NSAssert([_stages containsObject:ps], @"");
+    [self sendProgressDidUpdate];
+}
+
+
+- (void)sendProgressDidUpdate {
     if (_delegate) {
         [(id)_delegate performSelectorOnMainThread:@selector(pipelineProgressDidUpdate:) withObject:self waitUntilDone:NO];
     }

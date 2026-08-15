@@ -67,6 +67,11 @@
 }
 
 
+- (NSString *)title {
+    return [(id)_workerClass name];
+}
+
+
 #pragma mark -
 #pragma mark Private
 
