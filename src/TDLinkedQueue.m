@@ -33,6 +33,8 @@
 @end
 
 @interface TDLinkedQueue ()
+@property (assign) NSUInteger count;
+
 @property (nonatomic, retain) LQNode *head;
 @property (nonatomic, retain) LQNode *last;
 
@@ -99,6 +101,8 @@
         self.last = node;
     }
 
+    self.count++;
+
     [self signal];
     [self unlock];
 }
@@ -129,6 +133,8 @@
     }
     
     id result = [self doPoll];
+
+    self.count--;
 
     [self unlock];
     

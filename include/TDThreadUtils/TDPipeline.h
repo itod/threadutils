@@ -36,7 +36,7 @@
 
 @property (nonatomic, retain, readonly) id <TDLauncher>launcher;
 @property (nonatomic, retain, readonly) id <TDReceiver>receiver;
-@property (nonatomic, copy, readonly) NSArray *stages;
+@property (nonatomic, copy, readonly) NSArray<TDPipelineStage *> *stages;
 
 @property (nonatomic, assign) id <TDPipelineDelegate>delegate;
 

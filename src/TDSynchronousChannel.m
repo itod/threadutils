@@ -10,6 +10,7 @@
 #import <TDThreadUtils/TDSemaphore.h>
 
 @interface TDSynchronousChannel ()
+@property (assign) NSUInteger count;
 @property (retain) TDSemaphore *putPermit;
 @property (retain) TDSemaphore *takePermit;
 @property (retain) TDSemaphore *taken;
@@ -52,6 +53,7 @@
     [_putPermit acquire];
     NSAssert(!_item, @"");
     self.item = obj;
+    self.count++;
     [_takePermit relinquish];
     
     [_taken acquire]; // wait for someone to take it
@@ -67,6 +69,7 @@
     NSAssert(_item, @"");
     id obj = [[_item retain] autorelease];
     self.item = nil;
+    self.count--;
     [_putPermit relinquish];
     
     [_taken relinquish]; // signal you've taken it

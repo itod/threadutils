@@ -18,4 +18,6 @@
 
 - (BOOL)put:(id)obj beforeDate:(NSDate *)date;
 - (id)takeBeforeDate:(NSDate *)date;
+
+@property (assign, readonly) NSUInteger count;
 @end

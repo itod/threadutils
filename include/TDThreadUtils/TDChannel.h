@@ -11,4 +11,6 @@
 @protocol TDChannel <NSObject>
 - (void)put:(id)obj;
 - (id)take;
+
+@property (assign, readonly) NSUInteger count;
 @end

@@ -10,11 +10,12 @@
 #import <TDThreadUtils/TDSemaphore.h>
 
 @interface TDBufferArray : NSObject
-- (instancetype)initWithSize:(NSUInteger)size;
+- (instancetype)initWithCapacity:(NSUInteger)size;
 - (void)insert:(id)obj;
 - (id)extract;
 
-@property (assign) NSUInteger size;
+@property (assign) NSUInteger capacity;
+@property (assign) NSUInteger count;
 @property (assign) NSUInteger putIndex;
 @property (assign) NSUInteger takeIndex;
 @end
@@ -23,13 +24,14 @@
     id *_array;
 }
 
-- (instancetype)initWithSize:(NSUInteger)size {
-    NSParameterAssert(NSNotFound != size);
-    NSParameterAssert(size > 0);
+- (instancetype)initWithCapacity:(NSUInteger)capacity {
+    NSParameterAssert(NSNotFound != capacity);
+    NSParameterAssert(capacity > 0);
     self = [super init];
     if (self) {
-        self.size = size;
-        _array = malloc(sizeof(id) * _size);
+        self.capacity = capacity;
+        self.count = 0;
+        _array = malloc(sizeof(id) * _capacity);
     }
     return self;
 }
@@ -48,10 +50,11 @@
     [obj retain]; // +1
     
     @synchronized(self) {
+        self.count++;
         NSUInteger idx = self.putIndex;
         _array[idx] = obj;
-        self.putIndex = (idx + 1) % _size;
-        NSAssert(self.putIndex < self.size, @"");
+        self.putIndex = (idx + 1) % _capacity;
+        NSAssert(self.putIndex < self.capacity, @"");
     }
 }
 
@@ -61,11 +64,12 @@
     
     id obj = nil;
     @synchronized(self) {
+        self.count--;
         NSUInteger idx = self.takeIndex;
         obj = _array[idx];
         _array[idx] = nil;
-        self.takeIndex = (idx + 1) % _size;
-        NSAssert(self.takeIndex < self.size, @"");
+        self.takeIndex = (idx + 1) % _capacity;
+        NSAssert(self.takeIndex < self.capacity, @"");
     }
 
     return [obj autorelease]; // -1
@@ -92,7 +96,7 @@
     NSParameterAssert(size > 0);
     self = [super init];
     if (self) {
-        self.buffer = [[[TDBufferArray alloc] initWithSize:size] autorelease];
+        self.buffer = [[[TDBufferArray alloc] initWithCapacity:size] autorelease];
         self.putPermits = [TDSemaphore semaphoreWithValue:size];
         self.takePermits = [TDSemaphore semaphoreWithValue:0];
     }
@@ -162,6 +166,11 @@
         NSAssert(obj, @"");
     }
     return obj;
+}
+
+
+- (NSUInteger)count {
+    return _buffer.count;
 }
 
 @end
