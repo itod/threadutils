@@ -59,12 +59,12 @@
             return;
         }
         
-        [finishCounter increment];
-        
         [_buffer addObject:output];
         
+        [finishCounter increment];
+        
         if ([finishCounter attempt]) {
-            break; // junciton bottleneck complete. now perform the transformation below…
+            break; // junciton bottleneck complete. now perform the juction transformation below…
         }
     }
     
