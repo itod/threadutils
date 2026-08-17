@@ -10,8 +10,9 @@
 #import <TDThreadUtils/TDWorker.h>
 #import <TDThreadUtils/TDChannel.h>
 #import <TDThreadUtils/TDCounter.h>
-#import "TDRunner.h"
+#import <TDThreadUtils/TDRunner.h>
 #import "TDBottleneckStage.h"
+#import "TDJunctionStage.h"
 
 @interface TDPipelineStage ()
 @property (nonatomic, retain, readwrite) Class workerClass;
@@ -29,8 +30,18 @@
 }
 
 
++ (TDPipelineStage *)junctionStageWithWorkerClass:(Class)cls {
+    return [[[TDJunctionStage alloc] initWithWorkerClass:cls workerCount:1] autorelease];
+}
+
+
 + (TDPipelineStage *)pipelineStageWithWorkerClass:(Class)cls workerCount:(NSUInteger)c {
     return [[[self alloc] initWithWorkerClass:cls workerCount:c] autorelease];
+}
+
+
+- (Class)runnerClass {
+    return [TDRunner class];
 }
 
 

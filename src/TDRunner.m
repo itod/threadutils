@@ -62,7 +62,7 @@
     [startCounter await];
     
     for (;;) {
-        id input = [[[_inputChannel take] copy] autorelease];
+        id input = [[[_inputChannel take] retain] autorelease];
         
         NSAssert(_worker, @"");
         
@@ -70,7 +70,7 @@
         id output = nil;
         
         @autoreleasepool {
-            output = [[_worker runWithInput:input error:&err] copy]; // +1
+            output = [[_worker runWithInput:input error:&err] retain]; // +1
         }
         
         [output autorelease]; // -1

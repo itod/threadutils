@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 @interface TDPipelineStage : NSObject
 
 + (TDPipelineStage *)bottleneckStage;
++ (TDPipelineStage *)junctionStageWithWorkerClass:(Class)cls;
 + (TDPipelineStage *)pipelineStageWithWorkerClass:(Class)cls workerCount:(NSUInteger)c;
 - (instancetype)initWithWorkerClass:(Class)cls workerCount:(NSUInteger)c;
 

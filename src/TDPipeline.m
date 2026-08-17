@@ -97,7 +97,7 @@
         
         currStage.delegate = self;
 
-        if (nextStage.isBottleneck)  {
+        if (nextStage.isBottleneck || currStage.isBottleneck)  {
             oc = [[self newLinkedQueue] autorelease];
             finishCounter = [TDCounter counterWithValue:count];
         } else {
@@ -154,7 +154,7 @@
 #pragma mark Private
 
 - (id <TDChannel>)newBoundedBuffer {
-    return [[TDBoundedBuffer alloc] initWithSize:3]; // TODO how to configure this?
+    return [[TDBoundedBuffer alloc] initWithSize:10]; // TODO how to configure this?
 }
 
 
