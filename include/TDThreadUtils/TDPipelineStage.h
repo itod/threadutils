@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, TDPipelineStageType) {
 @property (nonatomic, assign) id <TDPipelineStageDelegate>delegate;
 
 @property (nonatomic, assign, readonly) BOOL isBottleneck;
+@property (nonatomic, assign, readonly) BOOL isJunction;
 @property (nonatomic, retain) TDCounter *startCounter;
 @property (nonatomic, retain) TDCounter *finishCounter;
 

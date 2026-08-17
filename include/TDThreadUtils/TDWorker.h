@@ -25,6 +25,9 @@
 // main pipeline channel
 - (id)runWithInput:(id)input error:(NSError **)outErr;
 
+// junction handling
+- (NSArray *)handleJunctionWithItems:(NSArray *)items error:(NSError **)outErr;
+
 @property (nonatomic, assign, readonly) id <TDWorkerDelegate>delegate;
 
 @end

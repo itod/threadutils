@@ -8,11 +8,11 @@
 #import "TDBottleneckStage.h"
 #import <TDThreadUtils/TDWorker.h>
 
-@interface TDBottleneck : TDWorker
+@interface TDBottleneckWorker : TDWorker
 
 @end
 
-@implementation TDBottleneck
+@implementation TDBottleneckWorker
 
 - (id)runWithInput:(id)input error:(NSError **)outErr {
     return input;
@@ -33,7 +33,7 @@
 
 
 - (Class)workerClass {
-    return [TDBottleneck class];
+    return [TDBottleneckWorker class];
 }
 
 

@@ -96,20 +96,32 @@
         nextStage = [en nextObject];
         
         currStage.delegate = self;
-
-        if (nextStage.isBottleneck || currStage.isBottleneck)  {
+        
+        if (nextStage.isBottleneck)  {
             oc = [[self newLinkedQueue] autorelease];
             finishCounter = [TDCounter counterWithValue:count];
+        } else if (nextStage.isJunction)  {
+            oc = [[self newLinkedQueue] autorelease];
+            finishCounter = [TDCounter counterWithValue:count];
+            // TODO any bottlenecks after this junction are now broken, bc we still have the old `count` and won't have the new one unt after the junction is handled at runtime
         } else {
             oc = [[self newBoundedBuffer] autorelease];
             finishCounter = nil;
         }
         
+        if (currStage.isJunction) {
+            finishCounter = [TDCounter counterWithValue:count];
+        }
+        
         [currStage setUpWithInputChannel:ic outputChannel:oc startCounter:startCounter finishCounter:finishCounter];
         
         ic = oc;
-        startCounter = finishCounter;
 
+        if (currStage.isJunction) {
+            finishCounter = nil; // junction listens to its own finish counter and does not expose that to the next stage
+        }
+
+        startCounter = finishCounter;
         currStage = nextStage;
     }
     

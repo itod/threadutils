@@ -40,7 +40,7 @@
 }
 
 
-- (Class)runnerClass {
++ (Class)runnerClass {
     return [TDRunner class];
 }
 
@@ -78,6 +78,11 @@
 }
 
 
+- (BOOL)isJunction {
+    return NO;
+}
+
+
 - (NSString *)title {
     return [(id)_workerClass name];
 }
@@ -97,9 +102,11 @@
     self.finishCounter = finishCounter;
     
     NSMutableArray *runners = [NSMutableArray arrayWithCapacity:self.workerCount];
-        
+    
+    Class runnerClass = [[self class] runnerClass];
+    
     for (NSUInteger i = 0; i < self.workerCount; ++i) {
-        TDRunner *runner = [TDRunner runnerWithInputChannel:ic outputChannel:oc number:i+1];
+        TDRunner *runner = [runnerClass runnerWithInputChannel:ic outputChannel:oc number:i+1];
         TDWorker *worker = [[[self.workerClass alloc] initWithDelegate:runner] autorelease];
         runner.worker = worker;
         

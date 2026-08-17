@@ -8,11 +8,22 @@
 
 #import "TDJunctionStage.h"
 #import "TDJunctionRunner.h"
+#import <TDThreadUtils/TDWorker.h>
 
 @implementation TDJunctionStage
 
-- (Class)runnerClass {
++ (Class)runnerClass {
     return [TDJunctionRunner class];
+}
+
+
+- (BOOL)isJunction {
+    return YES;
+}
+
+
+- (NSUInteger)workerCount {
+    return 1;
 }
 
 @end
